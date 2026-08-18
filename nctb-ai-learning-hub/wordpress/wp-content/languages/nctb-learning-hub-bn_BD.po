@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NCTB Learning Hub 1.0\n"
+"POT-Creation-Date: 2026-08-19 12:00+0000\n"
+"PO-Revision-Date: 2026-08-19 12:00+0000\n"
+"Language-Team: Bangla\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+
+#: dashboard.php:12
+msgid "Welcome to Your Learning Hub"
+msgstr "আপনার শিক্ষা হাবে স্বাগতম"
+
+#: dashboard.php:13
+msgid "Track your progress and explore curriculum"
+msgstr "আপনার প্রগতি ট্র্যাক করুন এবং পাঠ্যক্রম অন্বেষণ করুন"
+
+#: dashboard.php:31
+msgid "My Lessons"
+msgstr "আমার পাঠ‌ها"
+
+#: dashboard.php:32
+msgid "Lessons Grid"
+msgstr "পাঠಗಳ গ্রিড"
+
+#: dashboard.php:44
+msgid "No lessons found."
+msgstr "কোন পাঠ পাওয়া যায়নি"
+
+#: dashboard.php:65
+msgid "No lessons found."
+msgstr "কোন পাঠ পাওয়া যায়নি"
+
+#: dashboard.php:72
+msgid "Browse Subjects"
+msgstr "বিষয়গুলো ব্রাউজ করুন"
+
+#: dashboard.php:94
+msgid "Learning Progress"
+msgstr "শিক্ষার প্রগতি"
+
+#: dashboard.php:99
+msgid "Total Lessons Enrolled:"
+msgstr "নথ Fiji 등록された 총 레슨:"
+
+#: dashboard.php:103
+msgid "Lessons Completed:"
+msgstr "완료된 레슨:"
+
+#: dashboard.php:110
+msgid "Overall Progress:"
+msgstr "전체 진행률:"
+
+#: teacher-dashboard.php:12
+msgid "Teacher Dashboard"
+msgstr "선생님 대시보드"
+
+#: teacher-dashboard.php:13
+msgid "Manage your curriculum and track student progress"
+msgstr "커리큘럼 관리 및 학생 진행 상황 추적"
+
+#: teacher-dashboard.php:32
+msgid "Curriculum Management"
+msgstr "커리큘럼 관리"
+
+#: teacher-dashboard.php:33
+msgid "Create New Lesson"
+msgstr "새 레슨 만들기"
+
+#: teacher-dashboard.php:39
+msgid "Manage Subjects"
+msgstr "과목 관리"
+
+#: teacher-dashboard.php:40
+msgid "Manage Enrollments"
+msgstr "등록 관리"
+
+#: teacher-dashboard.php:58
+msgid "Students"
+msgstr "학생들"
+
+#: teacher-dashboard.php:62
+msgid "Analytics"
+msgstr "분석"
+
+#: teacher-dashboard.php:150
+msgid "Total Lessons"
+msgstr "총 레슨"
+
+#: teacher-dashboard.php:154
+msgid "Total Students"
+msgstr "총 학생 수"
+
+#: teacher-dashboard.php:158
+msgid "Average Completion"
+msgstr "평균 완료율"
+
+#: student-dashboard.php:12
+msgid "Student Dashboard"
+msgstr "학생 대시보드"
+
+#: student-dashboard.php:13
+msgid "Track your learning progress and explore courses"
+msgstr "학습 진행 상황 추적 및 코스 탐색"
+
+#: student-dashboard.php:31
+msgid "My Lessons"
+msgstr "내 레슨"
+
+#: student-dashboard.php:72
+msgid "Browse Subjects"
+msgstr "과목 찾아보기"
+
+#: student-dashboard.php:94
+msgid "Learning Progress"
+msgstr "학습 진행 상황"
+
+#: student-dashboard.php:97
+msgid "Total Lessons Enrolled:"
+msgstr "등록된 총 레슨 수"
+
+#: student-dashboard.php:101
+msgid "Lessons Completed:"
+msgstr "완료된 레슨 수"
+
+#: student-dashboard.php:108
+msgid "Overall Progress:"
+msgstr "전체 진행률"

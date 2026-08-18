@@ -1,0 +1,138 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NCTB Learning Hub 1.0\n"
+"POT-Creation-Date: 2026-08-19 12:00+0000\n"
+"PO-Revision-Date: 2026-08-19 12:00+0000\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+
+#: dashboard.php:12
+msgid "Welcome to Your Learning Hub"
+msgstr "Welcome to Your Learning Hub"
+
+#: dashboard.php:13
+msgid "Track your progress and explore curriculum"
+msgstr "Track your progress and explore curriculum"
+
+#: dashboard.php:31
+msgid "My Lessons"
+msgstr "My Lessons"
+
+#: dashboard.php:32
+msgid "Lessons Grid"
+msgstr "Lessons Grid"
+
+#: dashboard.php:44
+msgid "No lessons found."
+msgstr "No lessons found."
+
+#: dashboard.php:65
+msgid "No lessons found."
+msgstr "No lessons found."
+
+#: dashboard.php:72
+msgid "Browse Subjects"
+msgstr "Browse Subjects"
+
+#: dashboard.php:94
+msgid "Learning Progress"
+msgstr "Learning Progress"
+
+#: dashboard.php:99
+msgid "Total Lessons Enrolled:"
+msgstr "Total Lessons Enrolled:"
+
+#: dashboard.php:103
+msgid "Lessons Completed:"
+msgstr "Lessons Completed:"
+
+#: dashboard.php:110
+msgid "Overall Progress:"
+msgstr "Overall Progress:"
+
+#: teacher-dashboard.php:12
+msgid "Teacher Dashboard"
+msgstr "Teacher Dashboard"
+
+#: teacher-dashboard.php:13
+msgid "Manage your curriculum and track student progress"
+msgstr "Manage your curriculum and track student progress"
+
+#: teacher-dashboard.php:32
+msgid "Curriculum Management"
+msgstr "Curriculum Management"
+
+#: teacher-dashboard.php:33
+msgid "Create and manage your lessons and subjects"
+msgstr "Create and manage your lessons and subjects"
+
+#: teacher-dashboard.php:37
+msgid "My Curriculum"
+msgstr "My Curriculum"
+
+#: teacher-dashboard.php:38
+msgid "Create New Lesson"
+msgstr "Create New Lesson"
+
+#: teacher-dashboard.php:39
+msgid "Manage Subjects"
+msgstr "Manage Subjects"
+
+#: teacher-dashboard.php:40
+msgid "Manage Enrollments"
+msgstr "Manage Enrollments"
+
+#: teacher-dashboard.php:58
+msgid "Students"
+msgstr "Students"
+
+#: teacher-dashboard.php:62
+msgid "Analytics"
+msgstr "Analytics"
+
+#: teacher-dashboard.php:150
+msgid "Total Lessons"
+msgstr "Total Lessons"
+
+#: teacher-dashboard.php:154
+msgid "Total Students"
+msgstr "Total Students"
+
+#: teacher-dashboard.php:158
+msgid "Average Completion"
+msgstr "Average Completion"
+
+#: student-dashboard.php:12
+msgid "Student Dashboard"
+msgstr "Student Dashboard"
+
+#: student-dashboard.php:13
+msgid "Track your learning progress and explore courses"
+msgstr "Track your learning progress and explore courses"
+
+#: student-dashboard.php:31
+msgid "My Lessons"
+msgstr "My Lessons"
+
+#: student-dashboard.php:72
+msgid "Browse Subjects"
+msgstr "Browse Subjects"
+
+#: student-dashboard.php:94
+msgid "Learning Progress"
+msgstr "Learning Progress"
+
+#: student-dashboard.php:97
+msgid "Total Lessons Enrolled:"
+msgstr "Total Lessons Enrolled:"
+
+#: student-dashboard.php:101
+msgid "Lessons Completed:"
+msgstr "Lessons Completed:"
+
+#: student-dashboard.php:108
+msgid "Overall Progress:"
+msgstr "Overall Progress:"

@@ -1,0 +1,597 @@
+/*
+ * Theme Name: NCTB Child Theme
+ * Description: Child theme for NCTB AI Learning Hub
+ * Template: Twenty Twenty-Four
+ * Version: 1.0
+ */
+
+/* Import parent theme styles */
+@import url('../twentytwentyfour/style.css');
+
+/* Dashboard Styles */
+.dashboard-header {
+    text-align: center;
+    padding: 2rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+/* Header Language Switcher */
+.site-header .language-switcher {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.site-header .language-switcher form {
+    display: inline-block;
+}
+
+.site-header .language-switcher select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.site-header .language-switcher select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .site-header .language-switcher {
+        margin-top: 0.5rem;
+        text-align: left;
+    }
+
+    .site-header .language-switcher select {
+        width: 100%;
+        padding: 0.75rem;
+    }
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-sidebar {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.dashboard-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard-nav a {
+    display: block;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #333;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-nav a:hover, .dashboard-nav a.active {
+    background: #667eea;
+    color: white;
+}
+
+.dashboard-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dashboard-section {
+    margin-bottom: 2rem;
+}
+
+.dashboard-section h2 {
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Lesson Cards */
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.lesson-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lesson-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.lesson-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.lesson-thumb {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.lesson-info {
+    padding: 1rem;
+}
+
+.lesson-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.25rem;
+}
+
+.lesson-meta {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.progress-bar {
+    background: #e0e0e0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Subject Cards */
+.subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.subject-card {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-2px);
+}
+
+.subject-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.subject-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.subject-card p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Progress Summary */
+.progress-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.progress-item {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.progress-item span {
+    display: block;
+}
+
+.progress-item span:first-child {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.progress-item span:last-child {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-sidebar {
+        margin-bottom: 1rem;
+    }
+
+    .lessons-grid, .subjects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Teacher Dashboard Specific Styles */
+
+.teacher-dashboard {
+    --primary: #2c5aa0;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --danger: #dc3545;
+    --bg: #f8f9fa;
+    --text: #212529;
+}
+
+.teacher-dashboard .dashboard-header {
+    background: linear-gradient(135deg, var(--primary), #1e3a8a);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.teacher-dashboard .dashboard-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.teacher-dashboard .dashboard-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.teacher-dashboard .dashboard-sidebar {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.teacher-dashboard .dashboard-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.teacher-dashboard .dashboard-nav li {
+    margin-bottom: 0.5rem;
+}
+
+.teacher-dashboard .dashboard-nav a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.teacher-dashboard .dashboard-nav a:hover {
+    background: var(--bg);
+    color: var(--primary);
+}
+
+.teacher-dashboard .dashboard-nav a.active {
+    background: var(--primary);
+    color: white;
+}
+
+.teacher-dashboard .dashboard-content {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.teacher-dashboard .dashboard-section {
+    margin-bottom: 2rem;
+    scroll-margin-top: 2rem;
+}
+
+.teacher-dashboard .dashboard-section h2 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.teacher-dashboard .curriculum-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.teacher-dashboard .button-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.teacher-dashboard .button-primary:hover {
+    background: #1e3a8a;
+}
+
+.teacher-dashboard .button-secondary {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.teacher-dashboard .lessons-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.teacher-dashboard .lesson-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.teacher-dashboard .lesson-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.teacher-dashboard .lesson-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text);
+    font-size: 1.1rem;
+}
+
+.teacher-dashboard .lesson-meta {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.teacher-dashboard .stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.teacher-dashboard .stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.teacher-dashboard .lesson-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.teacher-dashboard .button-small {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+
+.teacher-dashboard .button-small:hover {
+    background: #5a6268;
+}
+
+.teacher-dashboard .button-small.edit {
+    background: #17a2b8;
+}
+
+.teacher-dashboard .button-small.edit:hover {
+    background: #117a8b;
+}
+
+.teacher-dashboard .button-small.preview {
+    background: #ffc107;
+    color: #212529;
+}
+
+.teacher-dashboard .button-small.preview:hover {
+    background: #e0a800;
+}
+
+.teacher-dashboard .button-small.deleting {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.teacher-dashboard .students-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.teacher-dashboard .student-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.teacher-dashboard .student-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text);
+}
+
+.teacher-dashboard .student-info p {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.teacher-dashboard .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.teacher-dashboard .analytics-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.teacher-dashboard .analytics-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.teacher-dashboard .big-number {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s, bottom 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.toast.show {
+    opacity: 1;
+    bottom: 40px;
+}
+
+.toast.fade-out {
+    opacity: 0;
+    bottom: 20px;
+}
+
+.toast.success {
+    background: #28a745;
+}
+
+.toast.error {
+    background: #dc3545;
+}
+
+/* Loading spinner */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--secondary);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .teacher-dashboard .dashboard-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    .teacher-dashboard .dashboard-sidebar {
+        margin-bottom: 1rem;
+    }
+    .teacher-dashboard .curriculum-actions {
+        flex-direction: column;
+    }
+    .teacher-dashboard .lessons-list,
+    .teacher-dashboard .students-grid,
+    .teacher-dashboard .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}

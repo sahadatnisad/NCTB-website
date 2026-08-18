@@ -14,7 +14,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./nctb-ai-learning-hub:/var/www/html
+      - ./nctb-ai-learning-hub/wordpress:/var/www/html
       - ./nctb-ai-learning-hub/wordpress/wp-content:/var/www/html/wp-content
     working_dir: /var/www/html
 
