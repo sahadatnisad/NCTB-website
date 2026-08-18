@@ -2,11 +2,7 @@
 /**
  * Central plugin loader / orchestrator.
  *
- * Singleton that wires the plugin's modules to WordPress. In Phase 0 it only
- * loads translations, guards upgrades, and instantiates empty admin/public
- * placeholders. Later phases register their services here (curriculum,
- * question engine, mastery, entitlements, AI adapter, REST controllers)
- * without touching the main plugin file.
+ * Singleton that wires the plugin's modules to WordPress.
  *
  * @package NCTB\LearningHub
  */
@@ -40,27 +36,30 @@ final class NCTB_Plugin {
 	}
 
 	/**
-	 * Private constructor — use instance().
+	 * Private constructor.
 	 */
 	private function __construct() {}
 
 	/**
-	 * Register hooks and load modules. Idempotent.
+	 * Register hooks and load modules.
 	 *
 	 * @return void
 	 */
 	public function run() {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
+		add_action( 'init', array( 'NCTB_Roles', 'register_roles' ) );
 
-		// Catch schema upgrades applied by replacing files (no reactivation).
+		// Register REST API endpoints.
+		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+
+		// Schema upgrades.
 		add_action( 'admin_init', array( 'NCTB_Migrations', 'run' ) );
 
 		$this->load_admin();
 		$this->load_public();
 
 		/**
-		 * Fires after the core plugin has booted. Later phases and add-ons
-		 * hook here to register their own services.
+		 * Fires after the core plugin has booted.
 		 */
 		do_action( 'nctb_lh_loaded' );
 	}
@@ -79,7 +78,17 @@ final class NCTB_Plugin {
 	}
 
 	/**
-	 * Load the admin-side placeholder (only in wp-admin).
+	 * Register REST routes.
+	 *
+	 * @return void
+	 */
+	public function register_rest_routes() {
+		$onboarding_rest = new NCTB_Onboarding_REST();
+		$onboarding_rest->register_routes();
+	}
+
+	/**
+	 * Load the admin-side controller.
 	 *
 	 * @return void
 	 */
@@ -92,7 +101,7 @@ final class NCTB_Plugin {
 	}
 
 	/**
-	 * Load the public/front-end placeholder.
+	 * Load the public/front-end controller.
 	 *
 	 * @return void
 	 */

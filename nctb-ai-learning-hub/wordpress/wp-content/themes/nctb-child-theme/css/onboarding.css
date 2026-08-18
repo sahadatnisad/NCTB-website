@@ -1,0 +1,450 @@
+/**
+ * NCTB Learning Hub — Onboarding & Dashboard Stylesheet
+ */
+
+:root {
+    --nctb-primary: #0284c7;
+    --nctb-primary-hover: #0369a1;
+    --nctb-secondary: #0f172a;
+    --nctb-accent: #10b981;
+    --nctb-bg: #f8fafc;
+    --nctb-card-bg: #ffffff;
+    --nctb-border: #e2e8f0;
+    --nctb-text-main: #1e293b;
+    --nctb-text-muted: #64748b;
+    --nctb-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hind Siliguri', sans-serif;
+}
+
+.nctb-onboarding-container,
+.nctb-dashboard-container {
+    font-family: var(--nctb-font-family);
+    max-width: 820px;
+    margin: 32px auto;
+    padding: 0 16px;
+    color: var(--nctb-text-main);
+}
+
+.nctb-onboarding-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.nctb-badge {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+}
+
+.nctb-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: var(--nctb-secondary);
+}
+
+.nctb-subtitle {
+    font-size: 15px;
+    color: var(--nctb-text-muted);
+    margin: 0;
+}
+
+/* Stepper Component */
+.nctb-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    gap: 8px;
+}
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.step-indicator.active {
+    opacity: 1;
+    font-weight: 600;
+    color: var(--nctb-primary);
+}
+
+.step-indicator.completed {
+    opacity: 0.9;
+    color: var(--nctb-accent);
+}
+
+.step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    font-size: 13px;
+}
+
+.step-indicator.active .step-num {
+    background: var(--nctb-primary);
+    color: #fff;
+}
+
+.step-indicator.completed .step-num {
+    background: var(--nctb-accent);
+    color: #fff;
+}
+
+.step-name {
+    font-size: 13px;
+}
+
+.step-line {
+    flex: 1;
+    max-width: 32px;
+    height: 2px;
+    background: #e2e8f0;
+}
+
+/* Card & Steps */
+.nctb-card {
+    background: var(--nctb-card-bg);
+    border: 1px solid var(--nctb-border);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.onboarding-step-view h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    color: var(--nctb-secondary);
+}
+
+.onboarding-step-view .desc {
+    font-size: 14px;
+    color: var(--nctb-text-muted);
+    margin: 0 0 20px 0;
+}
+
+/* Grid Options (Radio/Checkbox cards) */
+.nctb-grid-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.nctb-option-card {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--nctb-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.nctb-option-card:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.nctb-option-card input[type="radio"],
+.nctb-option-card input[type="checkbox"] {
+    margin-right: 12px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--nctb-primary);
+}
+
+.nctb-option-card:has(input:checked) {
+    border-color: var(--nctb-primary);
+    background: #f0f9ff;
+}
+
+.option-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--nctb-secondary);
+}
+
+.option-sub {
+    font-size: 12px;
+    color: var(--nctb-text-muted);
+    margin-top: 2px;
+}
+
+/* Inputs & Form Groups */
+.nctb-field-group {
+    margin-bottom: 20px;
+}
+
+.nctb-field-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: var(--nctb-secondary);
+}
+
+.nctb-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--nctb-border);
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.nctb-input:focus {
+    border-color: var(--nctb-primary);
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+/* Actions & Buttons */
+.nctb-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--nctb-border);
+}
+
+.nctb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.nctb-btn-primary {
+    background: var(--nctb-primary);
+    color: #fff;
+}
+
+.nctb-btn-primary:hover {
+    background: var(--nctb-primary-hover);
+}
+
+.nctb-btn-secondary {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.nctb-btn-secondary:hover {
+    background: #e2e8f0;
+}
+
+.nctb-btn-success {
+    background: #059669;
+    color: #fff;
+}
+
+.nctb-btn-success:hover {
+    background: #047857;
+}
+
+/* Alerts */
+.nctb-alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.alert-success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+.nctb-summary-box {
+    background: #f8fafc;
+    border: 1px solid var(--nctb-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.nctb-summary-box h3 {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+}
+
+.nctb-summary-box p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+/* --- Dashboard Specific Styles --- */
+.nctb-dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.nctb-welcome-text h1 {
+    margin: 0 0 4px 0;
+    font-size: 24px;
+}
+
+.nctb-welcome-text .lead {
+    margin: 0;
+    color: var(--nctb-text-muted);
+}
+
+.nctb-dash-meta-badge {
+    display: flex;
+    gap: 8px;
+}
+
+.badge-tag {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-lang {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.nctb-grid-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid var(--nctb-border);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stat-icon {
+    font-size: 28px;
+}
+
+.stat-num {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--nctb-secondary);
+}
+
+.stat-lbl {
+    font-size: 13px;
+    color: var(--nctb-text-muted);
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.card-header-flex h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.btn-text {
+    font-size: 13px;
+    color: var(--nctb-primary);
+    text-decoration: none;
+}
+
+.btn-text:hover {
+    text-decoration: underline;
+}
+
+.subjects-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+
+.subject-item-card {
+    background: #f8fafc;
+    border: 1px solid var(--nctb-border);
+    border-radius: 8px;
+    padding: 16px;
+    transition: all 0.2s ease;
+}
+
+.subject-item-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.sub-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--nctb-secondary);
+}
+
+.sub-en {
+    font-size: 12px;
+    color: var(--nctb-text-muted);
+    margin: 2px 0 8px 0;
+}
+
+.sub-status {
+    font-size: 11px;
+    color: #0369a1;
+    background: #e0f2fe;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+    .step-name {
+        display: none;
+    }
+    .nctb-stepper {
+        gap: 4px;
+    }
+    .step-line {
+        max-width: 16px;
+    }
+    .nctb-dash-header {
+        flex-direction: column;
+    }
+}

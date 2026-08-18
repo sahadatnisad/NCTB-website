@@ -13,9 +13,9 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 2 — Student accounts and onboarding**
+**PHASE 3 — Curriculum + Book + Unit + Lesson CMS**
 
-> Read the "PHASE 2" section in [README.md](./README.md#phase-2--student-accounts-and-onboarding) for full requirements before building.
+> Read the "PHASE 3" section in [README.md](./README.md#phase-3--curriculum--book--unit--lesson-cms) for full requirements before building.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -27,8 +27,8 @@
 |---|---|---|
 | 0 | Safe WordPress development environment | ✅ Done |
 | 1 | Visual shell and navigation | ✅ Done |
-| 2 | Student accounts and onboarding | 🔜 **NEXT** |
-| 3 | Curriculum + Book + Unit + Lesson CMS | ⬜ Not started |
+| 2 | Student accounts and onboarding | ✅ Done |
+| 3 | Curriculum + Book + Unit + Lesson CMS | 🔜 **NEXT** |
 | 4 | One gold-standard interactive lesson | ⬜ Not started |
 | 5 | Practice and question engine | ⬜ Not started |
 | 6 | Progress, mastery, mistakes, spaced revision | ⬜ Not started |
@@ -59,4 +59,8 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 1 — Visual shell and navigation
 - **Done:** 2026-08-19.
 - **What was built:** Standardized WordPress core layout with Docker compose integration (`http://localhost:8080`), responsive child theme (`nctb-child-theme`) with header, footer, mobile navigation, homepage template, and verified live plugin activation. All PHP files linted with 0 errors.
-- **Status:** Verified live on `http://localhost:8080`.
+
+### ✅ Phase 2 — Student accounts and onboarding
+- **Done:** 2026-08-19 by Antigravity.
+- **What was built:** `nctb_student` role and capabilities, `NCTB_Student_Profile` metadata manager, `NCTB_Onboarding_REST` API controller (`nctb/v1/student/*`), mobile-first multi-step onboarding wizard (`[nctb_onboarding]` / `page-onboarding.php`), `[nctb_student_dashboard]` shortcode / `page-dashboard.php`, client-side state persistence with resumability, nonces and cross-student isolation. Verified with 9 automated tests passing.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_2.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_2.md)
