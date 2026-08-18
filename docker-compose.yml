@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: nctb-wordpress
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+    volumes:
+      - ./nctb-ai-learning-hub:/var/www/html
+      - ./nctb-ai-learning-hub/wordpress/wp-content:/var/www/html/wp-content
+    working_dir: /var/www/html
+
+  db:
+    image: mysql:8.0
+    container_name: nctb-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - nctb_db_data:/var/lib/mysql
+
+volumes:
+  nctb_db_data:

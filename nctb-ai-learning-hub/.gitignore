@@ -1,0 +1,23 @@
+# --- Secrets & site config (never commit) ---
+wp-config.php
+wp-content/plugins/nctb-learning-hub/config/secrets.php
+
+# --- Runtime & user-generated content ---
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+wp-content/debug.log
+backups/
+
+# --- Dependencies / build artefacts ---
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+
+# --- OS / editor noise ---
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

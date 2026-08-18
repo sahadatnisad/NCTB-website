@@ -1,0 +1,12 @@
+# Never commit real secrets.
+config/secrets.php
+
+# Dependency + build artefacts.
+/vendor/
+/node_modules/
+composer.lock
+package-lock.json
+
+# OS / editor noise.
+.DS_Store
+Thumbs.db

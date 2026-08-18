@@ -1,0 +1,13 @@
+{
+	"name": "nctb/learning-hub-theme",
+	"description": "Presentation-only, mobile-first theme for the NCTB AI Learning Hub. No learning/business logic.",
+	"type": "wordpress-theme",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=8.0"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.9",
+		"wp-coding-standards/wpcs": "^3.0"
+	}
+}
