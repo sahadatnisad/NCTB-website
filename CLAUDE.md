@@ -13,10 +13,12 @@
 ## 🧭 Instructions for Claude Code CLI
 1. **Always read `BUILD_STATE.md` first** to see which Phase is active.
 2. **Current Active Phase:** **Phase 1 — Visual shell and navigation**
-   - Blocker to check: Standardize `nctb-ai-learning-hub/` WordPress core layout if needed.
-   - Build visual shell, header, navigation, and mobile-first responsive layout in `nctb-child-theme` and `nctb-learning-hub` plugin.
-3. **Use the file editing and bash execution tools actively.** You have full capability to create, edit, lint, and commit files.
-4. **When completing a Phase:** Update `BUILD_STATE.md` and create `docs/BUILD_REPORT_PHASE_<N>.md`.
+3. **File Editing Best Practices:**
+   - **Always read the target file with the `Read` tool before attempting an `Edit`.**
+   - Provide exact, character-accurate `old_string` matches including whitespace and indentation.
+   - If an `Edit` tool call fails, re-read the file lines or use the `Write` tool to output the complete updated file directly.
+4. **Use bash execution tools actively.** You have full permissions to create, edit, lint, test, and commit.
+5. **When completing a Phase:** Update `BUILD_STATE.md` and create `docs/BUILD_REPORT_PHASE_<N>.md`.
 
 ---
 
