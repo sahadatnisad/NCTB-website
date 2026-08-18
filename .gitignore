@@ -1,0 +1,14 @@
+# AI assistant configs & caches
+.claude/
+.gemini/
+.cursor/
+*.log
+
+# WordPress uploads and sensitive files
+wp-config.php
+*.sql
+*.tar.gz
+*.zip
+node_modules/
+.DS_Store
+Thumbs.db

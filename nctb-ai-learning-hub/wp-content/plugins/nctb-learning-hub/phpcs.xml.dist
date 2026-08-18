@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset name="NCTB Learning Hub">
+	<description>Coding standards for the NCTB Learning Hub plugin.</description>
+
+	<file>.</file>
+
+	<!-- Ignore vendor and build artefacts. -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/config/secrets.php</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg value="ps"/>
+
+	<!-- WordPress standards. -->
+	<rule ref="WordPress">
+		<!-- Allow short array syntax is a personal choice; keep WP default here. -->
+	</rule>
+
+	<!-- Enforce text domain. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="nctb-learning-hub"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- PHP cross-version compatibility. -->
+	<config name="testVersion" value="8.0-"/>
+	<rule ref="PHPCompatibilityWP"/>
+</ruleset>
