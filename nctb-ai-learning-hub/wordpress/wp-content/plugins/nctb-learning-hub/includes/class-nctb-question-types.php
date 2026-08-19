@@ -22,6 +22,8 @@ class NCTB_Question_Types {
 	const TYPE_FILL_IN_BLANK    = 'fill_in_blank';
 	const TYPE_SHORT_ANSWER     = 'short_answer';
 	const TYPE_ERROR_CORRECTION = 'error_correction';
+	const TYPE_MATH_NUMERIC     = 'math_numeric';
+	const TYPE_MATH_EXPRESSION  = 'math_expression';
 
 	const DIFFICULTY_EASY   = 'easy';
 	const DIFFICULTY_MEDIUM = 'medium';
@@ -62,6 +64,16 @@ class NCTB_Question_Types {
 				'label_en' => __( 'Error Correction', 'nctb-learning-hub' ),
 				'label_bn' => 'ভুল সংশোধন (Error Correction)',
 				'icon'     => '🔍',
+			),
+			self::TYPE_MATH_NUMERIC => array(
+				'label_en' => __( 'Math Numeric (Number / Fraction)', 'nctb-learning-hub' ),
+				'label_bn' => 'গাণিতিক মান / ভগ্নাংশ (Numeric)',
+				'icon'     => '🔢',
+			),
+			self::TYPE_MATH_EXPRESSION => array(
+				'label_en' => __( 'Math Algebraic Expression', 'nctb-learning-hub' ),
+				'label_bn' => 'বীজগাণিতিক সমীকরণ / রাশি (Expression)',
+				'icon'     => '📐',
 			),
 		);
 	}

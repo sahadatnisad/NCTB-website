@@ -60,6 +60,18 @@ class NCTB_Marking_Service {
 				$feedback   = $is_correct ? __( 'Correctly identified and fixed the error!', 'nctb-learning-hub' ) : __( 'Incorrect correction. Pay attention to verb tenses or subject-verb agreement.', 'nctb-learning-hub' );
 				break;
 
+			case NCTB_Question_Types::TYPE_MATH_NUMERIC:
+				$res        = self::mark_math_numeric( $question->correct_answer, $given_answer );
+				$is_correct = $res['is_correct'];
+				$feedback   = $is_correct ? __( 'গাণিতিক সমাধান সঠিক হয়েছে! চমৎকার।', 'nctb-learning-hub' ) : __( 'গণনাটি সঠিক হয়নি। সূত্র ও হিসাব পুনরায় পরীক্ষা করুন।', 'nctb-learning-hub' );
+				break;
+
+			case NCTB_Question_Types::TYPE_MATH_EXPRESSION:
+				$res        = self::mark_math_expression( $question->correct_answer, $given_answer );
+				$is_correct = $res['is_correct'];
+				$feedback   = $is_correct ? __( 'বীজগাণিতিক সমীকরণ / রাশিটি সম্পূর্ণ সঠিক!', 'nctb-learning-hub' ) : __( 'রাশিটি মেলেনি। চিহ্ন বা বন্ধনী পুনরায় পরীক্ষা করুন।', 'nctb-learning-hub' );
+				break;
+
 			default:
 				$is_correct = false;
 				$feedback   = __( 'Unknown question type.', 'nctb-learning-hub' );
@@ -145,21 +157,119 @@ class NCTB_Marking_Service {
 	}
 
 	/**
-	 * Normalize text for clean deterministic comparison:
-	 * lowercase, trim, remove non-alphanumeric punctuation, collapse whitespace.
+	 * Mark numeric mathematical values (decimals, fractions, negative numbers, percentages).
 	 *
-	 * @param string $text Raw text.
-	 * @return string Normalized text.
+	 * @param string $correct_string Target correct value (supports pipe separation e.g. "3/4 | 0.75").
+	 * @param string $student_answer Student submission.
+	 * @param float  $tolerance      Accepted float delta (default 0.001).
+	 * @return array<string,bool>
 	 */
-	public static function normalize_text( $text ) {
-		$text = html_entity_decode( $text, ENT_QUOTES, 'UTF-8' );
-		$text = mb_strtolower( trim( $text ), 'UTF-8' );
-		// Replace curly quotes with straight quotes
-		$text = str_replace( array( '’', '‘', '“', '”' ), array( "'", "'", '"', '"' ), $text );
-		// Remove trailing full stops, commas, question marks
-		$text = trim( $text, " \t\n\r\0\x0B.,?!;:" );
-		// Collapse multiple spaces
-		$text = preg_replace( '/\s+/', ' ', $text );
-		return $text;
+	protected static function mark_math_numeric( $correct_string, $student_answer, $tolerance = 0.001 ) {
+		$student_answer = self::convert_bengali_numerals( trim( $student_answer ) );
+		$student_num    = self::parse_numeric_value( $student_answer );
+
+		$variants = explode( '|', $correct_string );
+
+		foreach ( $variants as $variant ) {
+			$variant_clean = self::convert_bengali_numerals( trim( $variant ) );
+			// Exact string match check
+			if ( strcasecmp( $variant_clean, $student_answer ) === 0 ) {
+				return array( 'is_correct' => true );
+			}
+
+			// Numeric float comparison
+			$variant_num = self::parse_numeric_value( $variant_clean );
+			if ( null !== $student_num && null !== $variant_num ) {
+				if ( abs( $student_num - $variant_num ) <= $tolerance ) {
+					return array( 'is_correct' => true );
+				}
+			}
+		}
+
+		return array( 'is_correct' => false );
+	}
+
+	/**
+	 * Mark algebraic mathematical expressions (polynomials, formulas, equations).
+	 *
+	 * @param string $correct_string Target correct expression (supports pipe separation).
+	 * @param string $student_answer Student submission.
+	 * @return array<string,bool>
+	 */
+	protected static function mark_math_expression( $correct_string, $student_answer ) {
+		$norm_student = self::normalize_math_expression( $student_answer );
+		$variants     = explode( '|', $correct_string );
+
+		foreach ( $variants as $variant ) {
+			$norm_variant = self::normalize_math_expression( $variant );
+			if ( $norm_student === $norm_variant ) {
+				return array( 'is_correct' => true );
+			}
+		}
+
+		return array( 'is_correct' => false );
+	}
+
+	/**
+	 * Normalize algebraic expression string for clean comparison.
+	 *
+	 * @param string $expr Expression.
+	 * @return string
+	 */
+	public static function normalize_math_expression( $expr ) {
+		$expr = self::convert_bengali_numerals( $expr );
+		$expr = html_entity_decode( $expr, ENT_QUOTES, 'UTF-8' );
+		$expr = mb_strtolower( trim( $expr ), 'UTF-8' );
+		// Normalize latex symbols
+		$expr = str_replace( array( '\\cdot', '\\times', '*' ), '*', $expr );
+		$expr = str_replace( array( '\\frac', '{', '}' ), array( '', '(', ')' ), $expr );
+		$expr = str_replace( array( ' ', '\t', '\n' ), '', $expr );
+		return $expr;
+	}
+
+	/**
+	 * Parse string into float (supports fractions like "3/4" or percentages like "75%").
+	 *
+	 * @param string $val Value.
+	 * @return float|null
+	 */
+	public static function parse_numeric_value( $val ) {
+		$val = trim( $val );
+		if ( '' === $val ) {
+			return null;
+		}
+
+		// Check percentage: "75%" -> 0.75
+		if ( str_ends_with( $val, '%' ) ) {
+			$num = floatval( rtrim( $val, '%' ) );
+			return $num / 100.0;
+		}
+
+		// Check fraction: "3/4" -> 0.75
+		if ( preg_match( '/^(-?\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/', $val, $matches ) ) {
+			$denominator = floatval( $matches[2] );
+			if ( 0.0 !== $denominator ) {
+				return floatval( $matches[1] ) / $denominator;
+			}
+		}
+
+		if ( is_numeric( $val ) ) {
+			return floatval( $val );
+		}
+
+		return null;
+	}
+
+	/**
+	 * Convert Bengali digits (০-৯) to English ASCII digits (0-9).
+	 *
+	 * @param string $str Input string.
+	 * @return string
+	 */
+	public static function convert_bengali_numerals( $str ) {
+		$bn = array( '০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯' );
+		$en = array( '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' );
+		return str_replace( $bn, $en, (string) $str );
 	}
 }
+

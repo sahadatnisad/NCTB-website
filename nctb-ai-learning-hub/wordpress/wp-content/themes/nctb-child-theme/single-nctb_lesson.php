@@ -537,7 +537,39 @@ while ( have_posts() ) :
 			</a>
 		</div>
 	</main>
+
+	<!-- KaTeX / Math Formula Rendering Support -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" crossorigin="anonymous" onload="if(window.renderMathInElement){renderMathInElement(document.body);}"></script>
+
+	<!-- Virtual Math Input Keypad Helper -->
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		function reRenderMath() {
+			if (window.renderMathInElement) {
+				renderMathInElement(document.body, {
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					]
+				});
+			}
+		}
+
+		// Initial render
+		setTimeout(reRenderMath, 300);
+
+		// Re-render when activity step changes
+		document.querySelectorAll('.nctb-stepper-btn, .btn-next-step, .btn-prev-step').forEach(el => {
+			el.addEventListener('click', () => setTimeout(reRenderMath, 200));
+		});
+	});
+	</script>
 	<?php
 endwhile;
 
 get_footer();
+

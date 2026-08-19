@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 21 — Maths engine extension**
+**PHASE 22 — Science subjects (Physics, Chemistry, Biology)**
 
-> Read the "PHASE 21" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Implement math rendering (KaTeX), mathematical formula inputs, and deterministic formula equivalence checking.
+> Read the "PHASE 22" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Broaden science subject coverage via content ingestion (Physics, Chemistry, Biology revision notes, video masterclasses, and question banks).
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -48,8 +48,8 @@
 | 18 | Notes & explanations content type | ✅ Done |
 | 19 | AI as a paid product (students + teachers) | ✅ Done |
 | 20 | Add ICT (content-only proof) | ✅ Done |
-| 21 | Maths engine extension | 🔜 **NEXT** |
-| 22 | Science subjects (Physics, Chemistry, Biology) | ⬜ Not started |
+| 21 | Maths engine extension | ✅ Done |
+| 22 | Science subjects (Physics, Chemistry, Biology) | 🔜 **NEXT** |
 | 23 | Extend to Class 6–8 (JSC) | ⬜ Not started |
 | 24 | Teacher content depth & resources | ⬜ Not started |
 
@@ -163,6 +163,12 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Proved learning engine generality with zero engine code changes; built `NCTB_ICT_Seeder` (`class-nctb-ict-seeder.php`) seeding HSC Information & Communication Technology book, 4 units, 4 lessons, interactive activity blocks with HTML/C code blocks and logic gates truth tables (`wp_nctb_lesson_activities`), MCQs/Fill-in-the-blank practice questions with progressive hints (`wp_nctb_questions`), authentic Dhaka Board 2024 questions (`wp_nctb_board_questions`), ICT revision note (`nctb_note`), and ICT video module (`nctb_module`).
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_20.md`](./docs/build-history/BUILD_REPORT_PHASE_20.md)
+
+### ✅ Phase 21 — Maths engine extension
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Registered `math_numeric` and `math_expression` question types (`class-nctb-question-types.php`); implemented deterministic numeric tolerance and algebraic expression normalization in `NCTB_Marking_Service` (`class-nctb-marking-service.php`); built `NCTB_Math_Seeder` (`class-nctb-math-seeder.php`) seeding SSC General Mathematics book, Algebra and Trigonometry units/lessons, LaTeX equations, practice items, Dhaka Board 2024 questions, math revision note (`nctb_note`), and math video module (`nctb_module`); added KaTeX auto-rendering across dynamic stepper views on `single-nctb_lesson.php`.
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_21.md`](./docs/build-history/BUILD_REPORT_PHASE_21.md)
+
 
 
 
