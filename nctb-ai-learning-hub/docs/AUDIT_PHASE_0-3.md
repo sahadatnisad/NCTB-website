@@ -63,3 +63,20 @@ The dev `wp-config.php` had no `WP_DEBUG`/`WP_DEBUG_LOG` (enabled during this au
 1. Resolve the concurrency (Finding #1) — commit/stash Phase 4, single-track from here.
 2. Trash the 4 orphan pages + duplicate dashboard (Findings #2, #3).
 3. Wire dashboard → `/book/` and align subject identifiers (Findings #4, #5) — natural to fold into Phase 7.
+
+---
+
+## Fixes applied (2026-08-19, Claude)
+
+| Finding | Status | What was done |
+|---|---|---|
+| #2 Orphan pages (login, register, teacher, dashboard-3) | ✅ Fixed | Root cause: they were **manual local DB cruft**, not code. Deleted (ids 9,10,8,7). Real auth continues via WP-core `wp-login.php`. |
+| #3 Duplicate dashboard | ✅ Fixed | `dashboard-3` removed; single canonical `dashboard` page remains. |
+| (new) Pages not reproducible from repo | ✅ Fixed | Added `includes/class-nctb-pages.php` — idempotent provisioner that recreates the `onboarding` + `dashboard` pages (correct template + shortcode) on activation and on in-place upgrade. Verified: idempotent (no dupes) and fresh-install safe (delete → recreated with `page-onboarding.php`/`[nctb_onboarding]`). |
+| #4 Dashboard stale "Phase 3" text / no browse link | ✅ Fixed | Dashboard subject cards now link to the live `/book/` browse; removed the "coming soon (Phase 3)" text. |
+| #6 Dev `WP_DEBUG` off | ✅ Fixed (local) | Enabled `WP_DEBUG`/`WP_DEBUG_LOG` in the dev `wp-config.php` (git-ignored). |
+| #5 Subject slug ↔ taxonomy mismatch | ⏳ Deferred | Design alignment (profile slug `english_1st` vs term `English 1st Paper`); best folded into the Phase 7 dashboard. Left as-is to avoid touching the concurrently-edited seeder. |
+
+**Verification:** all changed PHP lints clean; whole plugin loads (v0.5.0); all pages HTTP 200; zero PHP warnings/notices (empty debug.log); orphan pages gone; onboarding+dashboard present.
+
+**Commit note:** at fix time the working tree also contained Antigravity's in-progress **Phase 5** work in the *same* shared files (`nctb-learning-hub.php`, `class-nctb-plugin.php`). To avoid committing unfinished Phase 5, these fixes were left uncommitted on disk to be captured by the next clean full-tree commit. **Action item: serialize agents — one phase at a time (per `AGENTS.md`).**

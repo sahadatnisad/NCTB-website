@@ -48,6 +48,7 @@ final class NCTB_Plugin {
 	public function run() {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( 'NCTB_Roles', 'register_roles' ) );
+		add_action( 'init', array( 'NCTB_Student_Views', 'init' ) );
 
 		// Curriculum backbone (CPTs, taxonomies, editor meta boxes, admin).
 		$this->load_curriculum();
@@ -97,6 +98,9 @@ final class NCTB_Plugin {
 
 		$practice_rest = new NCTB_Practice_REST();
 		$practice_rest->register_routes();
+
+		$progress_rest = new NCTB_Progress_REST();
+		$progress_rest->register_routes();
 	}
 
 	/**

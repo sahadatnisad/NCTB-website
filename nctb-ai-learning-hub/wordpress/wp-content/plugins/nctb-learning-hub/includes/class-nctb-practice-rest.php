@@ -202,14 +202,13 @@ class NCTB_Practice_REST extends WP_REST_Controller {
 		}
 
 		// Run through central marking service
-		$eval_result = NCTB_Marking_Service::evaluate( $question, $given_answer, $hints_used );
-
-		$user_id = get_current_user_id();
+		$user_id           = get_current_user_id();
+		$effective_user_id = $user_id ?: 1;
 
 		// Record attempt
 		$attempt_id = NCTB_Practice_Data::record_attempt(
 			array(
-				'user_id'        => $user_id ?: 1, // Fallback to 1 for unauthenticated testing if permitted
+				'user_id'        => $effective_user_id,
 				'question_id'    => $question_id,
 				'lesson_id'      => (int) $question->lesson_id,
 				'given_answer'   => $given_answer,
@@ -219,6 +218,23 @@ class NCTB_Practice_REST extends WP_REST_Controller {
 				'feedback_given' => $eval_result['feedback'],
 			)
 		);
+
+		// Update Smart Mistake Notebook (Phase 6)
+		if ( class_exists( 'NCTB_Mistakes_Service' ) && is_int( $attempt_id ) ) {
+			NCTB_Mistakes_Service::handle_attempt_result(
+				$effective_user_id,
+				$question_id,
+				(int) $question->lesson_id,
+				$attempt_id,
+				$eval_result['is_correct'],
+				$given_answer
+			);
+		}
+
+		// Recalculate Concept Mastery (Phase 6)
+		if ( class_exists( 'NCTB_Mastery_Service' ) ) {
+			NCTB_Mastery_Service::recalculate_for_question( $effective_user_id, $question_id );
+		}
 
 		return rest_ensure_response(
 			array(

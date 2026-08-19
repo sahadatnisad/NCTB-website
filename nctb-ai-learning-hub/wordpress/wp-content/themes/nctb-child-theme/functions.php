@@ -54,8 +54,8 @@ function nctb_theme_enqueue_assets() {
 		wp_get_theme()->get( 'Version' )
 	);
 
-	// Curriculum browse styles — only on the book/unit/lesson screens.
-	if ( is_singular( array( 'nctb_book', 'nctb_unit', 'nctb_lesson' ) ) || is_post_type_archive( 'nctb_book' ) ) {
+	// Curriculum browse & student study styles.
+	if ( is_singular( array( 'nctb_book', 'nctb_unit', 'nctb_lesson' ) ) || is_post_type_archive( 'nctb_book' ) || is_page( array( 'mistakes', 'revision', 'progress', 'dashboard' ) ) ) {
 		wp_enqueue_style(
 			'nctb-curriculum',
 			get_stylesheet_directory_uri() . '/css/curriculum.css',
@@ -64,8 +64,8 @@ function nctb_theme_enqueue_assets() {
 		);
 	}
 
-	// Interactive lesson script — only on single lesson screens.
-	if ( is_singular( 'nctb_lesson' ) ) {
+	// Interactive lesson & student study script.
+	if ( is_singular( 'nctb_lesson' ) || is_page( array( 'mistakes', 'revision', 'progress', 'dashboard' ) ) ) {
 		wp_enqueue_script(
 			'nctb-lesson-interactive',
 			get_stylesheet_directory_uri() . '/js/lesson-interactive.js',

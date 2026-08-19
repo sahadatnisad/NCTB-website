@@ -98,6 +98,22 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Local storage might be unavailable in private mode
 		}
 
+		// Sync to backend progress endpoint (Phase 6)
+		if (lessonId) {
+			try {
+				fetch('/wp-json/nctb/v1/progress/step', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						lesson_id: parseInt(lessonId, 10),
+						step_num: currentStep,
+						total_steps: totalSteps,
+						is_completed: (currentStep >= totalSteps)
+					})
+				}).catch(function() {});
+			} catch (e) {}
+		}
+
 		// Update URL hash for linkability
 		if (updateHash !== false) {
 			if (history.replaceState) {
@@ -611,3 +627,95 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 		}
 	}
+
+	/* ------------------------------------------------------------------ */
+	/* Phase 6 — Mistakes & Spaced Revision Client Actions                */
+	/* ------------------------------------------------------------------ */
+
+	// Resolve mistake button
+	document.addEventListener('click', function(e) {
+		var btn = e.target.closest('.btn-resolve-mistake');
+		if (!btn) return;
+
+		var mistakeId = btn.getAttribute('data-mistake-id');
+		var card = document.getElementById('mistake-card-' + mistakeId);
+		if (!mistakeId || !card) return;
+
+		btn.disabled = true;
+		btn.textContent = '⏳ Updating...';
+
+		fetch('/wp-json/nctb/v1/mistakes/resolve', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ mistake_id: parseInt(mistakeId, 10) })
+		})
+		.then(function(res) { return res.json(); })
+		.then(function(data) {
+			if (data.success) {
+				card.style.transition = 'all 0.3s ease';
+				card.style.opacity = '0';
+				card.style.transform = 'translateY(-10px)';
+				setTimeout(function() {
+					card.remove();
+					var remaining = document.querySelectorAll('.nctb-mistake-card');
+					if (remaining.length === 0) {
+						var list = document.querySelector('.nctb-mistakes-list');
+						if (list) {
+							list.innerHTML = '<div class="nctb-empty-state"><div class="empty-icon">🎉</div><h3>Your mistake notebook is clear!</h3><p>Great job! You have no active mistakes waiting for review.</p><a href="/book/" class="nctb-btn nctb-btn-primary">📚 Browse Lessons</a></div>';
+						}
+					}
+				}, 300);
+			} else {
+				btn.disabled = false;
+				btn.textContent = '✅ Mark as Mastered';
+			}
+		})
+		.catch(function() {
+			btn.disabled = false;
+			btn.textContent = '✅ Mark as Mastered';
+		});
+	});
+
+	// Complete revision button
+	document.addEventListener('click', function(e) {
+		var btn = e.target.closest('.btn-complete-revision');
+		if (!btn) return;
+
+		var reviewId = btn.getAttribute('data-review-id');
+		var card = document.getElementById('revision-card-' + reviewId);
+		if (!reviewId || !card) return;
+
+		btn.disabled = true;
+		btn.textContent = '⏳ Marking...';
+
+		fetch('/wp-json/nctb/v1/revision/complete', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ review_id: parseInt(reviewId, 10), score: 1.0 })
+		})
+		.then(function(res) { return res.json(); })
+		.then(function(data) {
+			if (data.success) {
+				card.style.transition = 'all 0.3s ease';
+				card.style.opacity = '0';
+				card.style.transform = 'translateY(-10px)';
+				setTimeout(function() {
+					card.remove();
+					var remaining = document.querySelectorAll('.nctb-revision-card');
+					if (remaining.length === 0) {
+						var list = document.querySelector('.nctb-revision-list');
+						if (list) {
+							list.innerHTML = '<div class="nctb-empty-state"><div class="empty-icon">🌟</div><h3>All caught up for today!</h3><p>You have completed all scheduled spaced revisions. Check back tomorrow!</p><a href="/book/" class="nctb-btn nctb-btn-primary">📚 Continue Learning</a></div>';
+						}
+					}
+				}, 300);
+			} else {
+				btn.disabled = false;
+				btn.textContent = '✅ Mark Reviewed Today';
+			}
+		})
+		.catch(function() {
+			btn.disabled = false;
+			btn.textContent = '✅ Mark Reviewed Today';
+		});
+	});

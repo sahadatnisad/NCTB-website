@@ -26,6 +26,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<nav class="nctb-nav">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav-link">হোম (Home)</a>
 			<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="nav-link">পাঠ্যবই (Learn)</a>
+			<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="nav-link">ভুলখাতা (Mistakes)</a>
+			<a href="<?php echo esc_url( home_url( '/revision' ) ); ?>" class="nav-link">রিভিশন (Revision)</a>
+			<a href="<?php echo esc_url( home_url( '/progress' ) ); ?>" class="nav-link">অগ্রগতি (Progress)</a>
 			<?php if ( is_user_logged_in() ) :
 				$current_user_id = get_current_user_id();
 				$is_complete = class_exists( 'NCTB_Student_Profile' ) && NCTB_Student_Profile::is_onboarding_complete( $current_user_id );

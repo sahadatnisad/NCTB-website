@@ -43,6 +43,21 @@ class NCTB_Pages {
 				'content'   => '[nctb_student_dashboard]',
 				'template'  => 'page-dashboard.php',
 			),
+			'mistakes'   => array(
+				'title'     => __( 'My Mistakes', 'nctb-learning-hub' ),
+				'content'   => '[nctb_mistakes]',
+				'template'  => 'page-mistakes.php',
+			),
+			'revision'   => array(
+				'title'     => __( 'Revision Due', 'nctb-learning-hub' ),
+				'content'   => '[nctb_revision_due]',
+				'template'  => 'page-revision.php',
+			),
+			'progress'   => array(
+				'title'     => __( 'Learning Progress', 'nctb-learning-hub' ),
+				'content'   => '[nctb_progress]',
+				'template'  => 'page-progress.php',
+			),
 		);
 	}
 

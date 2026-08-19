@@ -39,6 +39,7 @@ class NCTB_Migrations {
 			'0.3.0' => array( __CLASS__, 'upgrade_to_0_3_0' ),
 			'0.4.0' => array( __CLASS__, 'upgrade_to_0_4_0' ),
 			'0.5.0' => array( __CLASS__, 'upgrade_to_0_5_0' ),
+			'0.6.0' => array( __CLASS__, 'upgrade_to_0_6_0' ),
 		);
 	}
 
@@ -219,6 +220,102 @@ class NCTB_Migrations {
 		dbDelta( $sql_options );
 		dbDelta( $sql_question_concepts );
 		dbDelta( $sql_attempts );
+	}
+
+	/**
+	 * Phase 6 schema: Progress, Mastery, Mistakes, and Spaced Revision tables.
+	 *
+	 * Creates:
+	 *   - nctb_progress: lesson completion and activity step position
+	 *   - nctb_mastery: concept-level mastery scores and levels (novice -> mastered)
+	 *   - nctb_mistakes: smart mistake notebook with decay/mastery states
+	 *   - nctb_review_schedule: spaced repetition calendar and due queue
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_6_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate = $wpdb->get_charset_collate();
+		$progress        = self::table( 'progress' );
+		$mastery         = self::table( 'mastery' );
+		$mistakes        = self::table( 'mistakes' );
+		$review_schedule = self::table( 'review_schedule' );
+
+		$sql_progress = "CREATE TABLE {$progress} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			lesson_id BIGINT UNSIGNED NOT NULL,
+			unit_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			book_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			status VARCHAR(20) NOT NULL DEFAULT 'in_progress',
+			last_activity_step INT NOT NULL DEFAULT 1,
+			completed_activities TEXT NULL,
+			completed_at DATETIME NULL,
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_lesson (user_id, lesson_id),
+			KEY user_id (user_id),
+			KEY status (status)
+		) {$charset_collate};";
+
+		$sql_mastery = "CREATE TABLE {$mastery} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			concept_id BIGINT UNSIGNED NOT NULL,
+			mastery_score FLOAT NOT NULL DEFAULT 0.0,
+			mastery_level VARCHAR(20) NOT NULL DEFAULT 'novice',
+			total_attempts INT NOT NULL DEFAULT 0,
+			correct_attempts INT NOT NULL DEFAULT 0,
+			last_attempt_at DATETIME NULL,
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_concept (user_id, concept_id),
+			KEY user_id (user_id)
+		) {$charset_collate};";
+
+		$sql_mistakes = "CREATE TABLE {$mistakes} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			question_id BIGINT UNSIGNED NOT NULL,
+			lesson_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			last_attempt_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			wrong_answer TEXT NOT NULL,
+			status VARCHAR(20) NOT NULL DEFAULT 'active',
+			error_count INT NOT NULL DEFAULT 1,
+			correct_streak INT NOT NULL DEFAULT 0,
+			last_error_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			resolved_at DATETIME NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_question (user_id, question_id),
+			KEY user_id (user_id),
+			KEY status (status)
+		) {$charset_collate};";
+
+		$sql_schedule = "CREATE TABLE {$review_schedule} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			item_type VARCHAR(32) NOT NULL DEFAULT 'question',
+			item_id BIGINT UNSIGNED NOT NULL,
+			lesson_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			interval_days INT NOT NULL DEFAULT 1,
+			ease_factor FLOAT NOT NULL DEFAULT 2.5,
+			repetition_count INT NOT NULL DEFAULT 0,
+			due_date DATE NOT NULL,
+			status VARCHAR(20) NOT NULL DEFAULT 'pending',
+			last_reviewed_at DATETIME NULL,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY user_due (user_id, due_date),
+			KEY user_status (user_id, status)
+		) {$charset_collate};";
+
+		dbDelta( $sql_progress );
+		dbDelta( $sql_mastery );
+		dbDelta( $sql_mistakes );
+		dbDelta( $sql_schedule );
 	}
 
 	/**
