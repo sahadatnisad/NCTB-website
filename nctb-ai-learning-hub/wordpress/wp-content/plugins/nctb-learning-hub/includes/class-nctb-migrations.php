@@ -36,12 +36,13 @@ class NCTB_Migrations {
 	 */
 	protected static function get_steps() {
 		return array(
-			'0.3.0' => array( __CLASS__, 'upgrade_to_0_3_0' ),
-			'0.4.0' => array( __CLASS__, 'upgrade_to_0_4_0' ),
-			'0.5.0' => array( __CLASS__, 'upgrade_to_0_5_0' ),
-			'0.6.0' => array( __CLASS__, 'upgrade_to_0_6_0' ),
-			'0.8.0' => array( __CLASS__, 'upgrade_to_0_8_0' ),
-			'0.9.0' => array( __CLASS__, 'upgrade_to_0_9_0' ),
+			'0.3.0'  => array( __CLASS__, 'upgrade_to_0_3_0' ),
+			'0.4.0'  => array( __CLASS__, 'upgrade_to_0_4_0' ),
+			'0.5.0'  => array( __CLASS__, 'upgrade_to_0_5_0' ),
+			'0.6.0'  => array( __CLASS__, 'upgrade_to_0_6_0' ),
+			'0.8.0'  => array( __CLASS__, 'upgrade_to_0_8_0' ),
+			'0.9.0'  => array( __CLASS__, 'upgrade_to_0_9_0' ),
+			'0.10.0' => array( __CLASS__, 'upgrade_to_0_10_0' ),
 		);
 	}
 
@@ -420,6 +421,60 @@ class NCTB_Migrations {
 
 		dbDelta( $sql_ai_conv );
 		dbDelta( $sql_ai_usage );
+	}
+
+	/**
+	 * Phase 10 schema: Writing submissions & Speaking submissions tables.
+	 *
+	 * Creates:
+	 *   - nctb_writing_submissions: stores iterative drafts (task->brainstorm->draft->feedback->revision->final)
+	 *   - nctb_speaking_submissions: stores student audio speaking attempts & feedback
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_10_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate = $wpdb->get_charset_collate();
+		$writing_table   = self::table( 'writing_submissions' );
+		$speaking_table  = self::table( 'speaking_submissions' );
+
+		$sql_writing = "CREATE TABLE {$writing_table} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			lesson_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			activity_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			stage VARCHAR(32) NOT NULL DEFAULT 'draft',
+			draft_text LONGTEXT NOT NULL,
+			feedback_text TEXT NULL,
+			feedback_scores TEXT NULL,
+			status VARCHAR(20) NOT NULL DEFAULT 'in_progress',
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY user_lesson (user_id, lesson_id),
+			KEY user_activity (user_id, activity_id)
+		) {$charset_collate};";
+
+		$sql_speaking = "CREATE TABLE {$speaking_table} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			lesson_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			activity_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			audio_url VARCHAR(255) NOT NULL DEFAULT '',
+			duration_seconds INT NOT NULL DEFAULT 0,
+			transcript_text TEXT NULL,
+			feedback_text TEXT NULL,
+			status VARCHAR(20) NOT NULL DEFAULT 'completed',
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY user_lesson (user_id, lesson_id),
+			KEY user_activity (user_id, activity_id)
+		) {$charset_collate};";
+
+		dbDelta( $sql_writing );
+		dbDelta( $sql_speaking );
 	}
 
 	/**

@@ -864,3 +864,188 @@ document.addEventListener('DOMContentLoaded', function() {
 			sendTutorQuery('free_chat', text);
 		});
 	}
+
+	/* ------------------------------------------------------------------ */
+	/* Phase 10 — Writing, Listening & Speaking Interactivity             */
+	/* ------------------------------------------------------------------ */
+
+	// 1. Writing Workbench
+	document.querySelectorAll('.nctb-writing-workbench').forEach(function(wb) {
+		var actId       = parseInt(wb.getAttribute('data-activity-id'), 10);
+		var textarea    = wb.querySelector('.writing-textarea');
+		var wordCountEl = wb.querySelector('.word-count-val');
+		var btnSave     = wb.querySelector('.btn-save-draft');
+		var btnFeedback = wb.querySelector('.btn-get-feedback');
+		var btnFinal    = wb.querySelector('.btn-submit-final');
+		var feedbackBox = wb.querySelector('.writing-feedback-display');
+		var pills       = wb.querySelectorAll('.stage-pill');
+
+		function updateWordCount() {
+			if (!textarea || !wordCountEl) return;
+			var text = textarea.value.trim();
+			var words = text ? text.split(/\s+/).length : 0;
+			wordCountEl.textContent = words;
+		}
+
+		if (textarea) {
+			textarea.addEventListener('input', updateWordCount);
+		}
+
+		if (btnSave && textarea) {
+			btnSave.addEventListener('click', function() {
+				var text = textarea.value.trim();
+				if (!text) return;
+				btnSave.textContent = '💾 Saving...';
+
+				fetch('/wp-json/nctb/v1/skills/writing/draft', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						lesson_id: parseInt(lessonContainer.getAttribute('data-lesson-id'), 10),
+						activity_id: actId,
+						stage: 'draft',
+						draft_text: text
+					})
+				})
+				.then(function(res) { return res.json(); })
+				.then(function(data) {
+					btnSave.textContent = '✅ Saved';
+					setTimeout(function() { btnSave.textContent = '💾 Save Draft'; }, 2000);
+				});
+			});
+		}
+
+		if (btnFeedback && textarea) {
+			btnFeedback.addEventListener('click', function() {
+				var text = textarea.value.trim();
+				if (!text) {
+					alert('Please write your draft before requesting feedback.');
+					return;
+				}
+				btnFeedback.textContent = '✨ Analyzing Draft...';
+
+				fetch('/wp-json/nctb/v1/skills/writing/feedback', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						lesson_id: parseInt(lessonContainer.getAttribute('data-lesson-id'), 10),
+						activity_id: actId,
+						draft_text: text
+					})
+				})
+				.then(function(res) { return res.json(); })
+				.then(function(data) {
+					btnFeedback.textContent = '✨ Get AI Feedback';
+					if (feedbackBox && data.feedback_text) {
+						var formatted = data.feedback_text
+							.replace(/\n\n/g, '<br><br>')
+							.replace(/\n/g, '<br>')
+							.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+							.replace(/\*(.*?)\*/g, '<em>$1</em>');
+						feedbackBox.innerHTML = formatted;
+						feedbackBox.style.display = 'block';
+
+						if (btnFinal) btnFinal.style.display = 'inline-block';
+						pills.forEach(function(p) {
+							if (p.getAttribute('data-stage') === 'feedback') p.classList.add('active');
+						});
+					}
+				});
+			});
+		}
+
+		if (btnFinal && textarea) {
+			btnFinal.addEventListener('click', function() {
+				var text = textarea.value.trim();
+				if (!text) return;
+				btnFinal.textContent = '🏆 Submitting...';
+
+				fetch('/wp-json/nctb/v1/skills/writing/final', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						lesson_id: parseInt(lessonContainer.getAttribute('data-lesson-id'), 10),
+						activity_id: actId,
+						final_text: text
+					})
+				})
+				.then(function(res) { return res.json(); })
+				.then(function() {
+					btnFinal.textContent = '🎉 Submitted Final!';
+					pills.forEach(function(p) {
+						if (p.getAttribute('data-stage') === 'final') p.classList.add('active');
+					});
+				});
+			});
+		}
+	});
+
+	// 2. Listening Transcript Toggle
+	document.querySelectorAll('.btn-toggle-transcript').forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			var box = btn.nextElementSibling;
+			if (box) {
+				box.style.display = (box.style.display === 'none' || box.style.display === '') ? 'block' : 'none';
+			}
+		});
+	});
+
+	// 3. Speaking Practice Recorder
+	document.querySelectorAll('.nctb-speaking-workbench').forEach(function(sw) {
+		var actId        = parseInt(sw.getAttribute('data-activity-id'), 10);
+		var btnRecord    = sw.querySelector('.btn-record-speaking');
+		var btnStop      = sw.querySelector('.btn-stop-speaking');
+		var timerEl      = sw.querySelector('.speaking-timer-val');
+		var feedbackBox  = sw.querySelector('.speaking-feedback-box');
+		var timerInterval = null;
+		var secondsCount  = 0;
+
+		if (btnRecord && btnStop) {
+			btnRecord.addEventListener('click', function() {
+				btnRecord.style.display = 'none';
+				btnStop.style.display   = 'inline-block';
+				if (timerEl) {
+					timerEl.style.display = 'inline-block';
+					secondsCount = 0;
+					timerEl.textContent = '00:00';
+					timerInterval = setInterval(function() {
+						secondsCount++;
+						var mins = String(Math.floor(secondsCount / 60)).padStart(2, '0');
+						var secs = String(secondsCount % 60).padStart(2, '0');
+						timerEl.textContent = mins + ':' + secs;
+					}, 1000);
+				}
+			});
+
+			btnStop.addEventListener('click', function() {
+				clearInterval(timerInterval);
+				btnStop.textContent = '⏳ Evaluating...';
+
+				fetch('/wp-json/nctb/v1/skills/speaking/submit', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						lesson_id: parseInt(lessonContainer.getAttribute('data-lesson-id'), 10),
+						activity_id: actId,
+						duration_seconds: Math.max(5, secondsCount),
+						transcript_text: 'Student read historical passage aloud'
+					})
+				})
+				.then(function(res) { return res.json(); })
+				.then(function(data) {
+					btnStop.style.display   = 'none';
+					btnRecord.style.display = 'inline-block';
+					btnRecord.textContent   = '🔄 Record Again';
+					if (feedbackBox && data.feedback_text) {
+						var formatted = data.feedback_text
+							.replace(/\n\n/g, '<br><br>')
+							.replace(/\n/g, '<br>')
+							.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+							.replace(/\*(.*?)\*/g, '<em>$1</em>');
+						feedbackBox.innerHTML = formatted;
+						feedbackBox.style.display = 'block';
+					}
+				});
+			});
+		}
+	});

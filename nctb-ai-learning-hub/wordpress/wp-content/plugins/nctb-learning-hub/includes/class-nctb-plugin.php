@@ -111,6 +111,9 @@ final class NCTB_Plugin {
 
 		$ai_rest = new NCTB_AI_REST();
 		$ai_rest->register_routes();
+
+		$skills_rest = new NCTB_Skills_REST();
+		$skills_rest->register_routes();
 	}
 
 	/**

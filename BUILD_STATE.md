@@ -13,10 +13,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 10 — Writing, listening & speaking enhancements**
+**PHASE 11 — Board-question database**
 
-> Read the "PHASE 10" section in [README.md](./README.md#phase-10--writing-listening--speaking-enhancements) for full requirements before building.
-> Move from grammar/reading practice to complete English skill development. Build writing draft & iterative feedback pipeline (Task → Brainstorm → Draft → AI Feedback → Revision → Final), audio listening player with activity questions, and optional speaking recorder. Save student drafts privately.
+> Read the "PHASE 11" section in [README.md](./README.md#phase-11--board-question-database) for full requirements before building.
+> Connect learning to authentic exam practice. Build verified board question repository with Year/Board/Topic/Concept metadata, source reference, and verified answers/explanations; filter/search page; attach relevant board questions to lessons. AI-generated items must be strictly separated from authentic board questions.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -36,8 +36,8 @@
 | 7 | Functional student dashboard | ✅ Done |
 | 8 | Payments and entitlements | ✅ Done |
 | 9 | Contextual AI tutor | ✅ Done |
-| 10 | Writing, listening & speaking | 🔜 **NEXT** |
-| 11 | Board-question database | ⬜ Not started |
+| 10 | Writing, listening & speaking | ✅ Done |
+| 11 | Board-question database | 🔜 **NEXT** |
 | 12 | Board pattern analytics | ⬜ Not started |
 | 13 | English MVP content library | ⬜ Not started |
 | 14 | Private beta: security, performance & QA | ⬜ Not started |
@@ -99,5 +99,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 9 — Contextual AI tutor
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Server-side AI provider adapter (`NCTB_AI_Adapter`) for Anthropic/OpenAI/Mock; Context builder (`NCTB_AI_Context_Builder`) assembling grounded prompts with curriculum data, vocabulary, outcomes, and student mistake context; Socratic scaffolding guardrails (never giving away quiz answers, anti-hallucination for board exams); daily quota tracker (`NCTB_AI_Usage`) with `wp_nctb_ai_conversations` and `wp_nctb_ai_usage` tables via migration `0.9.0`; slide-out AI Tutor Drawer in `single-nctb_lesson.php` with 5 quick action chips (`explain`, `bangla`, `hint`, `example`, `why_wrong`); REST endpoints under `nctb/v1/tutor/*`.
-- **Verified (runtime, Docker):** 19 automated tests passing (0 failures); all 71 PHP files linted clean; all 9 platform routes returning HTTP 200.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_9.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_9.md)
+
+### ✅ Phase 10 — Writing, listening & speaking enhancements
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** 6-stage iterative writing pipeline service (`NCTB_Writing_Service`) with multi-criteria rubric feedback breakdown (Structure, Grammar, Vocabulary, Revision plan); Listening player service (`NCTB_Listening_Service`) with audio duration and transcript toggle; Speaking practice service (`NCTB_Speaking_Service`) with recording timer, submission logging, and formative pronunciation feedback with non-official disclaimer; custom tables `wp_nctb_writing_submissions` and `wp_nctb_speaking_submissions` via migration `0.10.0`; embedded interactive workbenches in `single-nctb_lesson.php`; Skills REST endpoints under `nctb/v1/skills/*`.
+- **Verified (runtime, Docker):** 17 automated tests passing (0 failures); all 74 PHP files linted clean; all 9 platform routes returning HTTP 200.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_10.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_10.md)

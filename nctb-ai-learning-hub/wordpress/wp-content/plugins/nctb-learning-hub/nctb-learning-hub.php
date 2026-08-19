@@ -3,7 +3,7 @@
  * Plugin Name:       NCTB Learning Hub
  * Plugin URI:        https://example.com/nctb-learning-hub
  * Description:       Lesson-by-lesson digital companion to the Bangladesh NCTB curriculum. Contains all learning and business logic (curriculum, lessons, practice, mastery, revision, entitlements, AI tutor). Presentation lives in the theme.
- * Version:           0.9.0
+ * Version:           0.10.0
  * Requires at least: 6.4
  * Requires PHP:      8.0
  * Author:            NCTB AI Learning Hub
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Current plugin version.
  */
-define( 'NCTB_LH_VERSION', '0.9.0' );
+define( 'NCTB_LH_VERSION', '0.10.0' );
 
 /**
  * Absolute filesystem path to the plugin directory, with trailing slash.
@@ -87,6 +87,10 @@ require_once NCTB_LH_PATH . 'includes/class-nctb-ai-context-builder.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-ai-usage.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-ai-tutor.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-ai-rest.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-writing-service.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-listening-service.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-speaking-service.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-skills-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-activator.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-deactivator.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-plugin.php';

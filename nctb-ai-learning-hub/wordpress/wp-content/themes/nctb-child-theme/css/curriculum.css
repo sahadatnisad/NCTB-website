@@ -2201,3 +2201,146 @@
 	font-size: 1.1rem;
 	flex-shrink: 0;
 }
+
+/* ------------------------------------------------------------------ */
+/* Phase 10 — Writing, Listening & Speaking Skills Styles             */
+/* ------------------------------------------------------------------ */
+
+/* Writing Workbench */
+.nctb-writing-workbench {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	padding: 1.5rem;
+	margin: 1.25rem 0;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.writing-stepper-stages {
+	display: flex;
+	gap: 0.5rem;
+	overflow-x: auto;
+	padding-bottom: 0.75rem;
+	margin-bottom: 1.25rem;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+.writing-stepper-stages .stage-pill {
+	background: #f1f5f9;
+	color: #64748b;
+	font-size: 0.78rem;
+	font-weight: 700;
+	padding: 0.3rem 0.75rem;
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+.writing-stepper-stages .stage-pill.active {
+	background: #0b6e4f;
+	color: #ffffff;
+}
+
+.writing-textarea {
+	width: 100%;
+	border: 1.5px solid #cbd5e1;
+	border-radius: 10px;
+	padding: 0.85rem 1rem;
+	font-size: 0.95rem;
+	font-family: inherit;
+	line-height: 1.5;
+	resize: vertical;
+	margin-top: 0.5rem;
+	box-sizing: border-box;
+}
+
+.writing-textarea:focus {
+	border-color: #0b6e4f;
+	outline: none;
+}
+
+.writing-bar-meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 0.75rem;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.word-counter {
+	font-size: 0.85rem;
+	color: #64748b;
+}
+
+.writing-actions-row {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.writing-feedback-display {
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 10px;
+	padding: 1.25rem;
+	margin-top: 1.25rem;
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+
+/* Listening Player */
+.nctb-listening-player-box {
+	background: #f0fdf4;
+	border: 1.5px solid #86efac;
+	border-radius: 14px;
+	padding: 1.5rem;
+	margin: 1.25rem 0;
+}
+
+.listening-player-head {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+}
+
+.listening-player-head .player-icon {
+	font-size: 2rem;
+}
+
+.listening-player-head h4 {
+	margin: 0 0 0.25rem;
+	color: #064e3b;
+	font-size: 1.1rem;
+}
+
+.listening-player-head .audio-len {
+	font-size: 0.8rem;
+	color: #047857;
+	font-weight: 600;
+}
+
+/* Speaking Workbench */
+.nctb-speaking-workbench {
+	background: #fff7ed;
+	border: 1.5px solid #fed7aa;
+	border-radius: 14px;
+	padding: 1.5rem;
+	margin: 1.25rem 0;
+}
+
+.speaking-badge {
+	display: inline-block;
+	background: #ea580c;
+	color: #ffffff;
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 0.2rem 0.6rem;
+	border-radius: 999px;
+	margin-bottom: 0.5rem;
+}
+
+.speaking-controls-row {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 1rem;
+}

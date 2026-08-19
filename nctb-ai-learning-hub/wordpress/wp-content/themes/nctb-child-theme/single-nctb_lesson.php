@@ -298,6 +298,98 @@ while ( have_posts() ) :
 									<?php
 								endif;
 							endif;
+
+							// Phase 10: Writing Workbench Module
+							if ( 'writing' === $act->activity_type ) :
+								?>
+								<div class="nctb-writing-workbench" data-activity-id="<?php echo esc_attr( $act->id ); ?>">
+									<div class="writing-stepper-stages">
+										<span class="stage-pill active" data-stage="draft">1. 📝 Draft</span>
+										<span class="stage-pill" data-stage="feedback">2. 💡 AI Feedback</span>
+										<span class="stage-pill" data-stage="revision">3. ✍️ Revision</span>
+										<span class="stage-pill" data-stage="final">4. 🏆 Final Polish</span>
+									</div>
+
+									<div class="writing-input-area">
+										<label for="writing-textarea-<?php echo esc_attr( $act->id ); ?>">
+											<strong><?php esc_html_e( 'Write your response below (100–150 words):', 'nctb-theme' ); ?></strong>
+										</label>
+										<textarea id="writing-textarea-<?php echo esc_attr( $act->id ); ?>" class="writing-textarea" rows="6" placeholder="<?php esc_attr_e( 'Type your draft here...', 'nctb-theme' ); ?>"></textarea>
+										
+										<div class="writing-bar-meta">
+											<span class="word-counter"><?php esc_html_e( 'Words:', 'nctb-theme' ); ?> <strong class="word-count-val">0</strong></span>
+											<div class="writing-actions-row">
+												<button type="button" class="nctb-btn nctb-btn-secondary btn-save-draft">
+													💾 <?php esc_html_e( 'Save Draft', 'nctb-theme' ); ?>
+												</button>
+												<button type="button" class="nctb-btn nctb-btn-primary btn-get-feedback">
+													✨ <?php esc_html_e( 'Get AI Feedback', 'nctb-theme' ); ?>
+												</button>
+												<button type="button" class="nctb-btn nctb-btn-success btn-submit-final" style="display:none;">
+													🏆 <?php esc_html_e( 'Submit Final', 'nctb-theme' ); ?>
+												</button>
+											</div>
+										</div>
+									</div>
+
+									<div class="writing-feedback-display" style="display:none;"></div>
+								</div>
+								<?php
+							endif;
+
+							// Phase 10: Listening Player Module
+							if ( 'listening' === $act->activity_type ) :
+								$track = class_exists( 'NCTB_Listening_Service' ) ? NCTB_Listening_Service::get_audio_track( $act->id ) : array();
+								?>
+								<div class="nctb-listening-player-box" data-activity-id="<?php echo esc_attr( $act->id ); ?>">
+									<div class="listening-player-head">
+										<div class="player-icon">🎧</div>
+										<div class="player-info">
+											<h4><?php echo esc_html( $track['title'] ?? 'Listening Comprehension' ); ?></h4>
+											<span class="audio-len">⏱️ <?php echo esc_html( (string) round( ( $track['duration_seconds'] ?? 120 ) / 60, 1 ) ); ?> mins</span>
+										</div>
+									</div>
+
+									<audio class="nctb-audio-element" controls style="width:100%; margin: 1rem 0;">
+										<source src="<?php echo esc_url( $track['audio_url'] ?? '' ); ?>" type="audio/ogg">
+										<?php esc_html_e( 'Your browser does not support audio playback.', 'nctb-theme' ); ?>
+									</audio>
+
+									<div class="listening-transcript-section">
+										<button type="button" class="nctb-btn nctb-btn-secondary btn-toggle-transcript">
+											📜 <?php esc_html_e( 'Show / Hide Audio Transcript', 'nctb-theme' ); ?>
+										</button>
+										<div class="listening-transcript-text" style="display:none; margin-top: 0.75rem; background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.9rem;">
+											<?php echo nl2br( esc_html( $track['transcript'] ?? '' ) ); ?>
+										</div>
+									</div>
+								</div>
+								<?php
+							endif;
+
+							// Phase 10: Speaking Practice Module
+							if ( 'speaking' === $act->activity_type ) :
+								?>
+								<div class="nctb-speaking-workbench" data-activity-id="<?php echo esc_attr( $act->id ); ?>">
+									<div class="speaking-prompt-box">
+										<div class="speaking-badge">🎙️ <?php esc_html_e( 'Speaking Practice', 'nctb-theme' ); ?></div>
+										<p><?php esc_html_e( 'Record yourself reading the key lesson sentences aloud to build clear pronunciation and fluency.', 'nctb-theme' ); ?></p>
+									</div>
+
+									<div class="speaking-controls-row">
+										<button type="button" class="nctb-btn nctb-btn-primary btn-record-speaking">
+											🔴 <?php esc_html_e( 'Start Speaking', 'nctb-theme' ); ?>
+										</button>
+										<button type="button" class="nctb-btn nctb-btn-secondary btn-stop-speaking" style="display:none;">
+											⏹️ <?php esc_html_e( 'Stop & Submit', 'nctb-theme' ); ?>
+										</button>
+										<span class="speaking-timer-val" style="display:none; font-weight: bold; color: #dc2626;">00:00</span>
+									</div>
+
+									<div class="speaking-feedback-box" style="display:none; margin-top: 1rem; background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 1rem; font-size: 0.9rem;"></div>
+								</div>
+								<?php
+							endif;
 							?>
 						</div>
 
