@@ -42,8 +42,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php // Teacher / Educator Hub menu. ?>
 				<a href="<?php echo esc_url( home_url( '/teacher-dashboard' ) ); ?>" class="nav-link" data-en="Teacher Hub" data-bn="শিক্ষক ড্যাশবোর্ড">Teacher Hub</a>
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="nav-link" data-en="Curriculum" data-bn="পাঠ্যবই">Curriculum</a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_note' ) ); ?>" class="nav-link" data-en="Notes" data-bn="নোটসমূহ">Notes</a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_module' ) ); ?>" class="nav-link" data-en="Courses" data-bn="ভিডিও কোর্স">Courses</a>
 				<a href="<?php echo esc_url( home_url( '/board-questions' ) ); ?>" class="nav-link" data-en="Question Bank" data-bn="প্রশ্নব্যাংক">Question Bank</a>
-				<a href="<?php echo esc_url( home_url( '/board-analytics' ) ); ?>" class="nav-link" data-en="Error Analytics" data-bn="অ্যানালিটিক্স">Error Analytics</a>
+				<a href="<?php echo esc_url( home_url( '/board-analytics' ) ); ?>" class="nav-link" data-en="Analytics" data-bn="অ্যানালিটিক্স">Analytics</a>
 				<a href="<?php echo esc_url( home_url( '/teacher-onboarding' ) ); ?>" class="nav-link" data-en="Profile" data-bn="প্রোফাইল">Profile</a>
 				<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" class="nctb-btn-sm btn-logout" data-en="Logout" data-bn="লগআউট">Logout</a>
 
@@ -51,8 +53,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php // Marketing menu (visitors, and everyone on public pages). ?>
 				<a href="<?php echo esc_url( home_url( '/how-it-works/' ) ); ?>" class="nav-link" data-en="How it works" data-bn="কীভাবে চলে">How it works</a>
 				<a href="<?php echo esc_url( home_url( '/subjects/' ) ); ?>" class="nav-link" data-en="Subjects" data-bn="বিষয়সমূহ">Subjects</a>
-				<a href="<?php echo esc_url( home_url( '/ssc-english/' ) ); ?>" class="nav-link" data-en="SSC English" data-bn="এসএসসি ইংরেজি">SSC English</a>
-				<a href="<?php echo esc_url( home_url( '/hsc-english/' ) ); ?>" class="nav-link" data-en="HSC English" data-bn="এইচএসসি ইংরেজি">HSC English</a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_note' ) ); ?>" class="nav-link" data-en="Free Notes" data-bn="ফ্রি নোট">Free Notes</a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_module' ) ); ?>" class="nav-link" data-en="Video Courses" data-bn="ভিডিও কোর্স">Video Courses</a>
 				<a href="<?php echo esc_url( home_url( '/board-questions/' ) ); ?>" class="nav-link" data-en="Board Archive" data-bn="বোর্ড প্রশ্ন">Board Archive</a>
 				<a href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>" class="nav-link" data-en="Pricing" data-bn="মূল্য">Pricing</a>
 				<a href="<?php echo esc_url( home_url( '/teacher-onboarding/' ) ); ?>" class="nav-link" data-en="For Teachers" data-bn="শিক্ষকদের জন্য" style="color:#1E6F5C;font-weight:600;">For Teachers</a>
@@ -67,6 +69,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php else : ?>
 				<?php // Student app menu (logged in, on learning pages). ?>
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="nav-link" data-en="Learn" data-bn="পাঠ্যবই">Learn</a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_note' ) ); ?>" class="nav-link" data-en="Notes" data-bn="নোটসমূহ">Notes</a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_module' ) ); ?>" class="nav-link" data-en="Courses" data-bn="ভিডিও কোর্স">Courses</a>
 				<a href="<?php echo esc_url( home_url( '/board-questions' ) ); ?>" class="nav-link" data-en="Board" data-bn="বোর্ড প্রশ্ন">Board</a>
 				<a href="<?php echo esc_url( home_url( '/board-analytics' ) ); ?>" class="nav-link" data-en="Analytics" data-bn="অ্যানালিটিক্স">Analytics</a>
 				<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="nav-link" data-en="Mistakes" data-bn="ভুলখাতা">Mistakes</a>

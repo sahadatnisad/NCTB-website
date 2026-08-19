@@ -300,33 +300,66 @@ $nctb_login_url = wp_login_url( home_url( '/onboarding' ) );
 		<div class="mkt-wrap">
 			<div class="mkt-center">
 				<span class="mkt-eyebrow"><?php esc_html_e( 'Curriculum Coverage', 'nctb-theme' ); ?></span>
-				<h2 class="mkt-h2"><?php esc_html_e( 'Built for SSC & HSC Board Candidates', 'nctb-theme' ); ?></h2>
-				<p class="mkt-lead"><?php esc_html_e( 'Master the exact English textbooks assigned by the National Curriculum and Textbook Board.', 'nctb-theme' ); ?></p>
+				<h2 class="mkt-h2"><?php esc_html_e( 'Comprehensive NCTB Curriculum (Class 8 to Intermediate)', 'nctb-theme' ); ?></h2>
+				<p class="mkt-lead"><?php esc_html_e( 'Interactive lessons, formula sheets, past board questions, and practical video labs across core NCTB subjects.', 'nctb-theme' ); ?></p>
 			</div>
 
-			<div class="mkt-levels-grid">
+			<div class="mkt-levels-grid" style="grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:24px;">
 				<div class="mkt-level-card">
 					<div>
-						<span class="tag"><?php esc_html_e( 'Classes 9–10', 'nctb-theme' ); ?></span>
-						<h3><?php esc_html_e( 'SSC English (1st & 2nd Paper)', 'nctb-theme' ); ?></h3>
-						<p><?php esc_html_e( 'Lesson-by-lesson reading passages, vocabulary drills, grammar foundations, writing practice, and authentic past board questions.', 'nctb-theme' ); ?></p>
+						<span class="tag">🇬🇧 <?php esc_html_e( 'SSC & HSC', 'nctb-theme' ); ?></span>
+						<h3><?php esc_html_e( 'English (1st & 2nd Paper)', 'nctb-theme' ); ?></h3>
+						<p><?php esc_html_e( 'Reading passages, vocabulary drills, grammar rules, writing feedback, and 10 Education Boards exam database.', 'nctb-theme' ); ?></p>
 					</div>
-					<a href="<?php echo esc_url( home_url( '/ssc-english/' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore SSC English Syllabus', 'nctb-theme' ); ?> →</a>
+					<a href="<?php echo esc_url( home_url( '/ssc-english/' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore English', 'nctb-theme' ); ?> →</a>
 				</div>
 
 				<div class="mkt-level-card">
 					<div>
-						<span class="tag"><?php esc_html_e( 'Classes 11–12', 'nctb-theme' ); ?></span>
-						<h3><?php esc_html_e( 'HSC English (1st & 2nd Paper)', 'nctb-theme' ); ?></h3>
-						<p><?php esc_html_e( 'Advanced passage comprehension, theme writing, flow charts, vocabulary in context, and statistical board pattern analytics.', 'nctb-theme' ); ?></p>
+						<span class="tag">💻 <?php esc_html_e( 'Class 11–12', 'nctb-theme' ); ?></span>
+						<h3><?php esc_html_e( 'ICT (তথ্য ও যোগাযোগ প্রযুক্তি)', 'nctb-theme' ); ?></h3>
+						<p><?php esc_html_e( 'Number systems, logic gates truth tables, HTML web tables, and C programming conditional loops.', 'nctb-theme' ); ?></p>
 					</div>
-					<a href="<?php echo esc_url( home_url( '/hsc-english/' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore HSC English Syllabus', 'nctb-theme' ); ?> →</a>
+					<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore ICT', 'nctb-theme' ); ?> →</a>
+				</div>
+
+				<div class="mkt-level-card">
+					<div>
+						<span class="tag">📐 <?php esc_html_e( 'Class 8, 9–10', 'nctb-theme' ); ?></span>
+						<h3><?php esc_html_e( 'Mathematics (সাধারণ গণিত)', 'nctb-theme' ); ?></h3>
+						<p><?php esc_html_e( 'Algebraic formulas, profit/interest calculations, trigonometry identities, and KaTeX math problem solving.', 'nctb-theme' ); ?></p>
+					</div>
+					<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore Mathematics', 'nctb-theme' ); ?> →</a>
+				</div>
+
+				<div class="mkt-level-card">
+					<div>
+						<span class="tag">🧪 <?php esc_html_e( 'Classes 9–10', 'nctb-theme' ); ?></span>
+						<h3><?php esc_html_e( 'Science (Physics, Chemistry, Biology)', 'nctb-theme' ); ?></h3>
+						<p><?php esc_html_e( 'Equations of motion, periodic table group trends, and cell organelles summary notes with diagrams.', 'nctb-theme' ); ?></p>
+					</div>
+					<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_note' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore Science Notes', 'nctb-theme' ); ?> →</a>
 				</div>
 			</div>
 
-			<p class="mkt-center" style="margin-top:36px;font-size:0.92rem;color:var(--text-soft);">
-				<?php esc_html_e( 'Coming later: ICT • Bangla • Mathematics • General Science', 'nctb-theme' ); ?>
-			</p>
+			<!-- Quick Feature Cards Row -->
+			<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;margin-top:40px;">
+				<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;">
+					<h3 style="margin-top:0;font-size:1.15rem;color:var(--primary);">📄 <?php esc_html_e( 'Revision Notes & Formula Sheets', 'nctb-theme' ); ?></h3>
+					<p style="font-size:0.9rem;color:var(--text-soft);"><?php esc_html_e( 'Free printable formula sheets and chapter summaries for quick revision before exams.', 'nctb-theme' ); ?></p>
+					<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_note' ) ); ?>" style="font-weight:600;color:var(--primary);font-size:0.9rem;"><?php esc_html_e( 'Browse Formula Sheets', 'nctb-theme' ); ?> ➔</a>
+				</div>
+				<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;">
+					<h3 style="margin-top:0;font-size:1.15rem;color:var(--primary);">📽️ <?php esc_html_e( 'Video Masterclasses & Labs', 'nctb-theme' ); ?></h3>
+					<p style="font-size:0.9rem;color:var(--text-soft);"><?php esc_html_e( 'Low-bandwidth YouTube video courses with chapter checklists for students and teachers.', 'nctb-theme' ); ?></p>
+					<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_module' ) ); ?>" style="font-weight:600;color:var(--primary);font-size:0.9rem;"><?php esc_html_e( 'Watch Video Modules', 'nctb-theme' ); ?> ➔</a>
+				</div>
+				<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;">
+					<h3 style="margin-top:0;font-size:1.15rem;color:var(--primary);">🎓 <?php esc_html_e( 'Shikkhok Hub (শিক্ষক পোর্টাল)', 'nctb-theme' ); ?></h3>
+					<p style="font-size:0.9rem;color:var(--text-soft);"><?php esc_html_e( '45-minute lesson plans, quiz handouts, slide deck outlines, and AI lesson planner tools for educators.', 'nctb-theme' ); ?></p>
+					<a href="<?php echo esc_url( home_url( '/teacher-onboarding/' ) ); ?>" style="font-weight:600;color:var(--primary);font-size:0.9rem;"><?php esc_html_e( 'Join as Teacher', 'nctb-theme' ); ?> ➔</a>
+				</div>
+			</div>
 		</div>
 	</section>
 
