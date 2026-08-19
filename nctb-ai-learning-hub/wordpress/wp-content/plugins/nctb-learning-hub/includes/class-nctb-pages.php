@@ -73,6 +73,46 @@ class NCTB_Pages {
 				'content'   => '[nctb_board_analytics]',
 				'template'  => 'page-board-analytics.php',
 			),
+			'how-it-works'    => array(
+				'title'     => __( 'How It Works', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-how-it-works.php',
+			),
+			'subjects'        => array(
+				'title'     => __( 'Subjects Directory', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-subjects.php',
+			),
+			'ssc-english'     => array(
+				'title'     => __( 'SSC English', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-ssc-english.php',
+			),
+			'hsc-english'     => array(
+				'title'     => __( 'HSC English', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-hsc-english.php',
+			),
+			'pricing'         => array(
+				'title'     => __( 'Pricing & Passes', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-pricing.php',
+			),
+			'faq'             => array(
+				'title'     => __( 'FAQ', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-faq.php',
+			),
+			'contact'         => array(
+				'title'     => __( 'Contact & Support', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-contact.php',
+			),
+			'privacy-policy'  => array(
+				'title'     => __( 'Privacy Policy', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-privacy-policy.php',
+			),
 		);
 	}
 

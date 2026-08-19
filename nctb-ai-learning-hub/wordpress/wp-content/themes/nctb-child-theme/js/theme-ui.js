@@ -1,9 +1,7 @@
 /**
- * NCTB theme UI: language toggle (English default ⇄ Bangla) and dark mode.
+ * NCTB theme UI: language toggle, dark mode, and interactive product showcase tabs.
  *
- * Language toggle swaps the text of any element that provides both
- * data-en and data-bn attributes. English is the default.
- * Preferences persist in localStorage.
+ * @package NCTB\Theme
  */
 ( function () {
 	'use strict';
@@ -31,7 +29,6 @@
 
 		var label = document.getElementById( 'nctb-lang-label' );
 		if ( label ) {
-			// Show the language you can switch TO.
 			label.textContent = 'bn' === lang ? 'English' : 'বাংলা';
 		}
 	}
@@ -44,6 +41,34 @@
 		}
 	}
 
+	function initShowcaseTabs() {
+		var tabBtns = document.querySelectorAll( '.showcase-tabs-nav .tab-btn' );
+		var panels = document.querySelectorAll( '.showcase-tab-panels .showcase-panel' );
+
+		if ( ! tabBtns.length || ! panels.length ) {
+			return;
+		}
+
+		tabBtns.forEach( function ( btn ) {
+			btn.addEventListener( 'click', function () {
+				var targetId = this.getAttribute( 'data-tab' );
+
+				tabBtns.forEach( function ( b ) { b.classList.remove( 'active' ); } );
+				panels.forEach( function ( p ) {
+					p.style.display = 'none';
+					p.classList.remove( 'active' );
+				} );
+
+				this.classList.add( 'active' );
+				var activePanel = document.getElementById( targetId );
+				if ( activePanel ) {
+					activePanel.style.display = 'block';
+					activePanel.classList.add( 'active' );
+				}
+			} );
+		} );
+	}
+
 	function ready( fn ) {
 		if ( 'loading' !== document.readyState ) { fn(); } else { document.addEventListener( 'DOMContentLoaded', fn ); }
 	}
@@ -51,6 +76,7 @@
 	ready( function () {
 		applyLang( getLang() );
 		applyTheme( getTheme() );
+		initShowcaseTabs();
 
 		var langBtn = document.getElementById( 'nctb-lang-toggle' );
 		if ( langBtn ) {
