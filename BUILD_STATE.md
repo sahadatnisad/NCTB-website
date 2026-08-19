@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 18 — Notes & explanations content type**
+**PHASE 19 — AI as a paid product (students + teachers)**
 
-> Read the "PHASE 18" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Implement `nctb_note` CPT with rich markdown/LaTeX math formulas, graphical diagram support, and printable/offline revision sheet views.
+> Read the "PHASE 19" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Implement tiered token passes (Student AI Boost, Teacher AI Lesson Planner/Quiz Generator), token usage meters, and specialized teacher AI tool prompts.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -45,8 +45,8 @@
 | 15 | Production launch readiness | ✅ Done |
 | 16 | Teacher role & unified portal | ✅ Done |
 | 17 | Modules & video-course system | ✅ Done |
-| 18 | Notes & explanations content type | 🔜 **NEXT** |
-| 19 | AI as a paid product (students + teachers) | ⬜ Not started |
+| 18 | Notes & explanations content type | ✅ Done |
+| 19 | AI as a paid product (students + teachers) | 🔜 **NEXT** |
 | 20 | Add ICT (content-only proof) | ⬜ Not started |
 | 21 | Maths engine extension | ⬜ Not started |
 | 22 | Science subjects (Physics, Chemistry, Biology) | ⬜ Not started |
@@ -148,6 +148,12 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Registered `nctb_module` CPT & `module_category` taxonomy (`NCTB_Module_CPT`); added custom table `wp_nctb_module_progress` via migration `0.17.0` (`NCTB_Migrations`); built Module Service (`NCTB_Module_Service`) with lecture completion calculation and sample course seeders; created Module REST API controller (`NCTB_Module_REST`); built single course player template (`single-nctb_module.php`) with low-bandwidth YouTube facade and playlist checklist sidebar, course archive (`archive-nctb_module.php`), and complete CSS styling.
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_17.md`](./docs/build-history/BUILD_REPORT_PHASE_17.md)
+
+### ✅ Phase 18 — Notes & explanations content type
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Registered `nctb_note` CPT & `note_type` taxonomy (`NCTB_Note_CPT`); built Notes Service (`NCTB_Notes_Service`) with lesson linkage and seeded starter grammar/formula sheets; created Notes REST API controller (`NCTB_Notes_REST`); built single note reading template (`single-nctb_note.php`) with KaTeX LaTeX math/formula rendering and `@media print` clean PDF handout styles, notes archive directory (`archive-nctb_note.php`), and complete CSS styling.
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_18.md`](./docs/build-history/BUILD_REPORT_PHASE_18.md)
+
 
 
 

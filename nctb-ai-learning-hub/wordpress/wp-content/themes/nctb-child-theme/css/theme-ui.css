@@ -689,5 +689,189 @@ html[data-theme="dark"] .topic-frequency-sample .topic-row { background: #0f172a
 	color: #64748b;
 }
 
+/* ==========================================================================
+   Revision Notes & Print Styles (Phase 18)
+   ========================================================================== */
+.nctb-note-article-screen {
+	max-width: 860px;
+	margin: 32px auto;
+	padding: 0 16px;
+}
+.note-container {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 20px;
+	padding: 40px;
+	box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+}
+.note-top-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 24px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid #f1f5f9;
+}
+.note-badge-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 16px;
+	flex-wrap: wrap;
+}
+.note-type-tag, .note-subject-tag, .note-difficulty-tag {
+	padding: 4px 12px;
+	border-radius: 20px;
+	font-size: 13px;
+	font-weight: 500;
+}
+.note-type-tag {
+	background: #e0e7ff;
+	color: #3730a3;
+}
+.note-subject-tag {
+	background: #f1f5f9;
+	color: #334155;
+}
+.note-difficulty-tag {
+	background: #fef08a;
+	color: #854d0e;
+}
+.note-title {
+	font-size: 28px;
+	margin: 0 0 12px;
+	color: #0f172a;
+	line-height: 1.35;
+}
+.note-lead {
+	font-size: 16px;
+	color: #64748b;
+	line-height: 1.6;
+	margin: 0 0 24px;
+}
+.note-article-body {
+	line-height: 1.8;
+	font-size: 16px;
+	color: #1e293b;
+	margin-bottom: 40px;
+}
+.note-article-body h2 {
+	margin-top: 28px;
+	font-size: 22px;
+	color: #0f172a;
+}
+.note-article-body h3 {
+	margin-top: 20px;
+	font-size: 18px;
+	color: #1e293b;
+}
+.note-highlight-box {
+	background: #f0fdf4;
+	border-left: 4px solid #1E6F5C;
+	padding: 20px;
+	border-radius: 8px;
+	margin: 20px 0;
+}
+.note-article-footer {
+	padding-top: 24px;
+	border-top: 1px solid #e2e8f0;
+}
+.footer-meta-box {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	background: #f8fafc;
+	padding: 20px 24px;
+	border-radius: 12px;
+}
+.footer-meta-box h4 {
+	margin: 0 0 4px;
+	font-size: 16px;
+}
+.footer-meta-box p {
+	margin: 0;
+	font-size: 14px;
+	color: #64748b;
+}
+
+/* Notes Directory Cards */
+.notes-cards-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 24px;
+}
+.note-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+.note-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.note-card-badges {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+.note-type-chip, .note-sub-chip {
+	padding: 3px 8px;
+	border-radius: 6px;
+	font-size: 12px;
+	background: #f1f5f9;
+	color: #475569;
+}
+.note-card h3 {
+	margin: 0 0 8px;
+	font-size: 18px;
+}
+.note-card h3 a {
+	color: #0f172a;
+	text-decoration: none;
+}
+.note-card-desc {
+	font-size: 14px;
+	color: #64748b;
+	line-height: 1.6;
+	flex: 1;
+	margin: 0 0 16px;
+}
+.note-read-link {
+	color: #1E6F5C;
+	font-weight: 600;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+/* Print Stylesheet for clean PDF revision handouts */
+@media print {
+	header, footer, .note-top-bar, .note-article-footer, .nctb-ui-controls {
+		display: none !important;
+	}
+	body {
+		background: #ffffff !important;
+		color: #000000 !important;
+		font-size: 12pt !important;
+	}
+	.note-container {
+		border: none !important;
+		padding: 0 !important;
+		box-shadow: none !important;
+	}
+	.nctb-table {
+		width: 100% !important;
+		border-collapse: collapse !important;
+	}
+	.nctb-table th, .nctb-table td {
+		border: 1px solid #333 !important;
+		padding: 6px !important;
+	}
+}
+
+
 
 
