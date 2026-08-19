@@ -41,6 +41,7 @@ class NCTB_Migrations {
 			'0.5.0' => array( __CLASS__, 'upgrade_to_0_5_0' ),
 			'0.6.0' => array( __CLASS__, 'upgrade_to_0_6_0' ),
 			'0.8.0' => array( __CLASS__, 'upgrade_to_0_8_0' ),
+			'0.9.0' => array( __CLASS__, 'upgrade_to_0_9_0' ),
 		);
 	}
 
@@ -370,6 +371,55 @@ class NCTB_Migrations {
 
 		dbDelta( $sql_entitlements );
 		dbDelta( $sql_audit );
+	}
+
+	/**
+	 * Phase 9 schema: AI Tutor conversations and usage tracking tables.
+	 *
+	 * Creates:
+	 *   - nctb_ai_conversations: lesson-anchored interaction history (privacy-minimized)
+	 *   - nctb_ai_usage: daily request and token usage counters per student
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_9_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate = $wpdb->get_charset_collate();
+		$ai_conv         = self::table( 'ai_conversations' );
+		$ai_usage        = self::table( 'ai_usage' );
+
+		$sql_ai_conv = "CREATE TABLE {$ai_conv} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			lesson_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			action_type VARCHAR(32) NOT NULL DEFAULT 'explain',
+			user_prompt TEXT NOT NULL,
+			ai_response TEXT NOT NULL,
+			provider VARCHAR(32) NOT NULL DEFAULT 'mock',
+			tokens_used INT NOT NULL DEFAULT 0,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY user_lesson (user_id, lesson_id),
+			KEY user_created (user_id, created_at)
+		) {$charset_collate};";
+
+		$sql_ai_usage = "CREATE TABLE {$ai_usage} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			usage_date DATE NOT NULL,
+			request_count INT NOT NULL DEFAULT 0,
+			prompt_tokens INT NOT NULL DEFAULT 0,
+			completion_tokens INT NOT NULL DEFAULT 0,
+			last_request_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_date (user_id, usage_date),
+			KEY user_id (user_id)
+		) {$charset_collate};";
+
+		dbDelta( $sql_ai_conv );
+		dbDelta( $sql_ai_usage );
 	}
 
 	/**

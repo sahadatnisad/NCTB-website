@@ -326,18 +326,57 @@ while ( have_posts() ) :
 				?>
 			</div>
 
-			<!-- Sticky / Contextual Tutor Bar (Phase 9 Bridge) -->
+			<!-- Sticky / Contextual Tutor Bar (Phase 9 Live) -->
 			<div class="nctb-tutor-callout-bar">
 				<div class="tutor-callout-inner">
 					<div class="tutor-text">
 						<span class="tutor-bot-icon">🤖</span>
-						<span><strong><?php esc_html_e( 'Need help with this lesson?', 'nctb-theme' ); ?></strong> <?php esc_html_e( 'Ask the AI Tutor for instant explanations in Bangla or English.', 'nctb-theme' ); ?></span>
+						<span><strong><?php esc_html_e( 'Need help with this lesson?', 'nctb-theme' ); ?></strong> <?php esc_html_e( 'Ask your contextual AI Tutor for instant explanations in Bangla or English.', 'nctb-theme' ); ?></span>
 					</div>
-					<button type="button" class="nctb-btn-tutor-trigger" id="btn-tutor-trigger" title="<?php esc_attr_e( 'AI Tutor Engine arrives in Phase 9', 'nctb-theme' ); ?>">
-						💬 <?php esc_html_e( 'Ask AI Tutor (Phase 9)', 'nctb-theme' ); ?>
+					<button type="button" class="nctb-btn-tutor-trigger" id="btn-tutor-trigger" title="<?php esc_attr_e( 'Open AI Tutor Drawer', 'nctb-theme' ); ?>">
+						💬 <?php esc_html_e( 'Ask AI Tutor', 'nctb-theme' ); ?>
 					</button>
 				</div>
 			</div>
+
+			<!-- AI Tutor Slide-Out Drawer (Phase 9) -->
+			<div class="nctb-tutor-drawer-overlay" id="nctb-tutor-overlay" style="display:none;"></div>
+			<aside class="nctb-tutor-drawer" id="nctb-tutor-drawer" aria-label="<?php esc_attr_e( 'Contextual AI Tutor', 'nctb-theme' ); ?>">
+				<div class="tutor-drawer-head">
+					<div class="tutor-head-title">
+						<span class="bot-badge">🤖</span>
+						<h3><?php esc_html_e( 'NCTB AI Tutor', 'nctb-theme' ); ?></h3>
+					</div>
+					<div class="tutor-head-actions">
+						<span class="tutor-quota-badge" id="tutor-quota-badge" title="<?php esc_attr_e( 'Daily interactions remaining', 'nctb-theme' ); ?>">⚡ 50 left</span>
+						<button type="button" class="btn-close-tutor" id="btn-close-tutor" aria-label="<?php esc_attr_e( 'Close AI Tutor', 'nctb-theme' ); ?>">✕</button>
+					</div>
+				</div>
+
+				<div class="tutor-quick-chips" id="tutor-quick-chips">
+					<button type="button" class="tutor-chip" data-action="explain">💡 <?php esc_html_e( 'Explain Step', 'nctb-theme' ); ?></button>
+					<button type="button" class="tutor-chip" data-action="bangla">🇧🇩 <?php esc_html_e( 'বাংলায় ব্যাখ্যা', 'nctb-theme' ); ?></button>
+					<button type="button" class="tutor-chip" data-action="hint">🔍 <?php esc_html_e( 'Give a Hint', 'nctb-theme' ); ?></button>
+					<button type="button" class="tutor-chip" data-action="example">📝 <?php esc_html_e( 'Sentence Example', 'nctb-theme' ); ?></button>
+					<button type="button" class="tutor-chip" data-action="why_wrong">❓ <?php esc_html_e( 'Why was I wrong?', 'nctb-theme' ); ?></button>
+				</div>
+
+				<div class="tutor-messages-stream" id="tutor-messages-stream">
+					<div class="tutor-msg msg-ai">
+						<div class="msg-bubble">
+							👋 <strong><?php esc_html_e( 'Hello! I am your NCTB Lesson Tutor.', 'nctb-theme' ); ?></strong><br>
+							<?php esc_html_e( 'I am grounded in this lesson\'s concepts. Tap any quick button above or ask me any question about vocabulary, grammar, or reading comprehension!', 'nctb-theme' ); ?>
+						</div>
+					</div>
+				</div>
+
+				<form class="tutor-input-box" id="tutor-input-form">
+					<input type="text" id="tutor-user-input" class="tutor-input-field" placeholder="<?php esc_attr_e( 'Ask a question in Bangla or English...', 'nctb-theme' ); ?>" autocomplete="off">
+					<button type="submit" class="nctb-btn nctb-btn-primary btn-send-tutor" id="btn-send-tutor">
+						➤
+					</button>
+				</form>
+			</aside>
 		<?php endif; ?>
 
 		<div class="nctb-lesson-foot">

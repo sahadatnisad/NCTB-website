@@ -108,6 +108,9 @@ final class NCTB_Plugin {
 
 		$entitlements_rest = new NCTB_Entitlements_REST();
 		$entitlements_rest->register_routes();
+
+		$ai_rest = new NCTB_AI_REST();
+		$ai_rest->register_routes();
 	}
 
 	/**

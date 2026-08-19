@@ -719,3 +719,148 @@ document.addEventListener('DOMContentLoaded', function() {
 			btn.textContent = '✅ Mark Reviewed Today';
 		});
 	});
+
+	/* ------------------------------------------------------------------ */
+	/* Phase 9 — Contextual AI Tutor Client Interactivity                 */
+	/* ------------------------------------------------------------------ */
+
+	var tutorDrawerEl   = document.getElementById('nctb-tutor-drawer');
+	var tutorOverlayEl  = document.getElementById('nctb-tutor-overlay');
+	var tutorTriggerBtn = document.getElementById('btn-tutor-trigger');
+	var tutorCloseBtn   = document.getElementById('btn-close-tutor');
+	var tutorStreamEl   = document.getElementById('tutor-messages-stream');
+	var tutorFormEl     = document.getElementById('tutor-input-form');
+	var tutorInputEl    = document.getElementById('tutor-user-input');
+	var tutorQuotaEl    = document.getElementById('tutor-quota-badge');
+
+	function openTutorDrawer() {
+		if (tutorDrawerEl && tutorOverlayEl) {
+			tutorDrawerEl.classList.add('open');
+			tutorOverlayEl.style.display = 'block';
+			if (tutorInputEl) {
+				tutorInputEl.focus();
+			}
+		}
+	}
+
+	function closeTutorDrawer() {
+		if (tutorDrawerEl && tutorOverlayEl) {
+			tutorDrawerEl.classList.remove('open');
+			tutorOverlayEl.style.display = 'none';
+		}
+	}
+
+	if (tutorTriggerBtn) {
+		tutorTriggerBtn.addEventListener('click', openTutorDrawer);
+	}
+	if (tutorCloseBtn) {
+		tutorCloseBtn.addEventListener('click', closeTutorDrawer);
+	}
+	if (tutorOverlayEl) {
+		tutorOverlayEl.addEventListener('click', closeTutorDrawer);
+	}
+
+	document.addEventListener('keydown', function(e) {
+		if (e.key === 'Escape' && tutorDrawerEl && tutorDrawerEl.classList.contains('open')) {
+			closeTutorDrawer();
+		}
+	});
+
+	function appendTutorMessage(text, role) {
+		if (!tutorStreamEl) return null;
+
+		var msgDiv = document.createElement('div');
+		msgDiv.className = 'tutor-msg msg-' + (role === 'user' ? 'user' : 'ai');
+
+		var bubble = document.createElement('div');
+		bubble.className = 'msg-bubble';
+		// Support simple markdown rendering
+		var formatted = text
+			.replace(/\n\n/g, '<br><br>')
+			.replace(/\n/g, '<br>')
+			.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+			.replace(/\*(.*?)\*/g, '<em>$1</em>');
+		bubble.innerHTML = formatted;
+
+		msgDiv.appendChild(bubble);
+		tutorStreamEl.appendChild(msgDiv);
+		tutorStreamEl.scrollTop = tutorStreamEl.scrollHeight;
+
+		return msgDiv;
+	}
+
+	function sendTutorQuery(actionType, customPrompt) {
+		if (!lessonContainer) return;
+		var lessonId = parseInt(lessonContainer.getAttribute('data-lesson-id'), 10);
+		if (!lessonId) return;
+
+		var userText = customPrompt;
+		if (!userText) {
+			if (actionType === 'explain') userText = '💡 Explain this step simply';
+			else if (actionType === 'bangla') userText = '🇧🇩 বাংলায় বুঝিয়ে দিন';
+			else if (actionType === 'hint') userText = '🔍 Give me a clue for this';
+			else if (actionType === 'example') userText = '📝 Show an example sentence';
+			else if (actionType === 'why_wrong') userText = '❓ Why was my attempt wrong?';
+			else userText = 'Help me with this lesson';
+		}
+
+		appendTutorMessage(userText, 'user');
+
+		// Typing indicator
+		var typingDiv = document.createElement('div');
+		typingDiv.className = 'tutor-msg msg-ai typing';
+		typingDiv.innerHTML = '<div class="msg-bubble"><span class="dots">💭 AI Tutor is thinking...</span></div>';
+		tutorStreamEl.appendChild(typingDiv);
+		tutorStreamEl.scrollTop = tutorStreamEl.scrollHeight;
+
+		fetch('/wp-json/nctb/v1/tutor/ask', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				lesson_id: lessonId,
+				action_type: actionType,
+				prompt: customPrompt || '',
+				step_num: currentStep
+			})
+		})
+		.then(function(res) { return res.json(); })
+		.then(function(data) {
+			typingDiv.remove();
+			if (data.success && data.content) {
+				appendTutorMessage(data.content, 'ai');
+				if (tutorQuotaEl && data.remaining !== undefined) {
+					tutorQuotaEl.textContent = '⚡ ' + data.remaining + ' left';
+				}
+			} else {
+				appendTutorMessage(data.message || 'Sorry, I could not process your request.', 'ai');
+			}
+		})
+		.catch(function() {
+			typingDiv.remove();
+			appendTutorMessage('Network error. Please try again.', 'ai');
+		});
+	}
+
+	// Quick chips click
+	var quickChipsContainer = document.getElementById('tutor-quick-chips');
+	if (quickChipsContainer) {
+		quickChipsContainer.addEventListener('click', function(e) {
+			var chip = e.target.closest('.tutor-chip');
+			if (!chip) return;
+			var action = chip.getAttribute('data-action');
+			if (action) {
+				sendTutorQuery(action, '');
+			}
+		});
+	}
+
+	// Input form submit
+	if (tutorFormEl && tutorInputEl) {
+		tutorFormEl.addEventListener('submit', function(e) {
+			e.preventDefault();
+			var text = tutorInputEl.value.trim();
+			if (!text) return;
+			tutorInputEl.value = '';
+			sendTutorQuery('free_chat', text);
+		});
+	}

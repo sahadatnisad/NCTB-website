@@ -13,10 +13,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 9 — Contextual AI tutor**
+**PHASE 10 — Writing, listening & speaking enhancements**
 
-> Read the "PHASE 9" section in [README.md](./README.md#phase-9--contextual-ai-tutor) for full requirements before building.
-> Build the lesson-anchored contextual AI tutor. System prompts strictly grounded in current lesson text, outcomes, and vocabulary; server-side AI adapter; token budget tracker; chat drawer interface in theme. Never reveal quiz answers directly; always scaffold thinking.
+> Read the "PHASE 10" section in [README.md](./README.md#phase-10--writing-listening--speaking-enhancements) for full requirements before building.
+> Move from grammar/reading practice to complete English skill development. Build writing draft & iterative feedback pipeline (Task → Brainstorm → Draft → AI Feedback → Revision → Final), audio listening player with activity questions, and optional speaking recorder. Save student drafts privately.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -35,8 +35,8 @@
 | 6 | Progress, mastery, mistakes, spaced revision | ✅ Done |
 | 7 | Functional student dashboard | ✅ Done |
 | 8 | Payments and entitlements | ✅ Done |
-| 9 | Contextual AI tutor | 🔜 **NEXT** |
-| 10 | Writing, listening & speaking | ⬜ Not started |
+| 9 | Contextual AI tutor | ✅ Done |
+| 10 | Writing, listening & speaking | 🔜 **NEXT** |
 | 11 | Board-question database | ⬜ Not started |
 | 12 | Board pattern analytics | ⬜ Not started |
 | 13 | English MVP content library | ⬜ Not started |
@@ -94,5 +94,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 8 — Payments and entitlements
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Centralized Entitlement Service (`NCTB_Entitlements`) evaluating free status, direct purchases, unit/book packs, subscriptions, and admin grants; custom tables `wp_nctb_entitlements` and `wp_nctb_entitlement_audit` via migration `0.8.0`; WooCommerce integration listener (`NCTB_Commerce`); Access-denied paywall banner component; Admin Entitlements manager screen under Lessons (`edit.php?post_type=nctb_lesson&page=nctb-entitlements`); My Purchases page (`/purchases/`); REST API endpoints under `nctb/v1/entitlements/*`.
-- **Verified (runtime, Docker):** 17 automated tests passing (0 failures); all 58 PHP files linted clean; all 9 platform routes returning HTTP 200.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_8.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_8.md)
+
+### ✅ Phase 9 — Contextual AI tutor
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Server-side AI provider adapter (`NCTB_AI_Adapter`) for Anthropic/OpenAI/Mock; Context builder (`NCTB_AI_Context_Builder`) assembling grounded prompts with curriculum data, vocabulary, outcomes, and student mistake context; Socratic scaffolding guardrails (never giving away quiz answers, anti-hallucination for board exams); daily quota tracker (`NCTB_AI_Usage`) with `wp_nctb_ai_conversations` and `wp_nctb_ai_usage` tables via migration `0.9.0`; slide-out AI Tutor Drawer in `single-nctb_lesson.php` with 5 quick action chips (`explain`, `bangla`, `hint`, `example`, `why_wrong`); REST endpoints under `nctb/v1/tutor/*`.
+- **Verified (runtime, Docker):** 19 automated tests passing (0 failures); all 71 PHP files linted clean; all 9 platform routes returning HTTP 200.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_9.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_9.md)
