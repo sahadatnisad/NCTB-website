@@ -146,6 +146,8 @@ final class NCTB_Plugin {
 
 			$board_admin = new NCTB_Board_Admin();
 			$board_admin->init();
+
+			NCTB_Content_Library_Admin::init();
 		}
 	}
 

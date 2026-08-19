@@ -14,11 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 13 — English MVP content library**
+**PHASE 14 — Private beta, security, performance and quality review**
 
-> Read the "PHASE 13" section in [README.md](./README.md#phase-13--english-mvp-content-library) and [docs/plans/dashboard-plan-1.md](./docs/plans/dashboard-plan-1.md) for full requirements before building.
-> Scale the proven system: 20–30 high-quality SSC English lessons; 20–30 high-quality HSC English lessons; question banks; vocabulary; verified board-question links; selected audio/writing/speaking activities; human review workflow.
-> Content workflow: **Official NCTB material → Curriculum mapping → Learning outcomes → Lesson decomposition → Micro-concepts → Draft → Activities → Questions → Board questions → AI assistance → Human review → Publish.**
+> Read the "PHASE 14" section in [README.md](./README.md) and [docs/plans/dashboard-plan-1.md](./docs/plans/dashboard-plan-1.md) for full requirements before building.
+> Test: mobile usability, low-bandwidth behavior, broken links, lesson progress persistence, authorization, capability checks, SQL injection resistance, XSS escaping, student privacy protection, AI prompt abuse resistance, backups/restore, and performance caching.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -41,8 +40,8 @@
 | 10 | Writing, listening & speaking | ✅ Done |
 | 11 | Board-question database | ✅ Done |
 | 12 | Board pattern analytics | ✅ Done |
-| 13 | English MVP content library | 🔜 **NEXT** |
-| 14 | Private beta: security, performance & QA | ⬜ Not started |
+| 13 | English MVP content library | ✅ Done |
+| 14 | Private beta: security, performance & QA | 🔜 **NEXT** |
 | 15 | Public English launch | ⬜ Not started |
 | 16 | Complete English | ⬜ Not started |
 | 17 | Add ICT | ⬜ Not started |
