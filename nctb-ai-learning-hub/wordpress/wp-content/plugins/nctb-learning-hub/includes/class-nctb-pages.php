@@ -68,6 +68,11 @@ class NCTB_Pages {
 				'content'   => '[nctb_board_questions]',
 				'template'  => 'page-board-questions.php',
 			),
+			'board-analytics' => array(
+				'title'     => __( 'Board Pattern Analytics', 'nctb-learning-hub' ),
+				'content'   => '[nctb_board_analytics]',
+				'template'  => 'page-board-analytics.php',
+			),
 		);
 	}
 

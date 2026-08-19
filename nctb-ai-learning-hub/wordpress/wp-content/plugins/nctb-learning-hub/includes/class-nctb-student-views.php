@@ -30,6 +30,7 @@ class NCTB_Student_Views {
 		add_shortcode( 'nctb_progress', array( __CLASS__, 'render_progress' ) );
 		add_shortcode( 'nctb_my_purchases', array( __CLASS__, 'render_purchases' ) );
 		add_shortcode( 'nctb_board_questions', array( __CLASS__, 'render_board_questions' ) );
+		add_shortcode( 'nctb_board_analytics', array( __CLASS__, 'render_board_analytics' ) );
 	}
 
 	/**
@@ -432,6 +433,158 @@ class NCTB_Student_Views {
 						</article>
 					<?php endforeach; ?>
 				<?php endif; ?>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render Board Pattern Analytics shortcode.
+	 *
+	 * @return string HTML output.
+	 */
+	public static function render_board_analytics() {
+		$selected_level = sanitize_key( $_GET['level'] ?? 'hsc' );
+		$report         = class_exists( 'NCTB_Board_Analytics_Service' ) ? NCTB_Board_Analytics_Service::get_full_analytics_report( $selected_level ) : array();
+
+		ob_start();
+		?>
+		<div class="nctb-student-screen nctb-board-analytics-screen">
+			<header class="nctb-screen-header">
+				<div class="screen-badge">📊 <?php esc_html_e( 'Historical Exam Intelligence', 'nctb-learning-hub' ); ?></div>
+				<h1><?php esc_html_e( 'Board Exam Pattern Analytics', 'nctb-learning-hub' ); ?></h1>
+				<p class="lead"><?php esc_html_e( 'বিগত বছরগুলোর (২০১৮–২০২৪) বোর্ড পরীক্ষার প্রামাণ্য প্রশ্ন বিন্যাস ও টপিকভিত্তিক পরিসংখ্যান।', 'nctb-learning-hub' ); ?></p>
+			</header>
+
+			<!-- Prominent Historical-Only Notice Banner -->
+			<div class="nctb-analytics-disclaimer-banner">
+				<div class="disclaimer-icon">⚠️</div>
+				<div class="disclaimer-text">
+					<strong><?php esc_html_e( 'ঐতিহাসিক পর্যালোচনা সংক্রান্ত বিজ্ঞপ্তি (Historical Analysis Only):', 'nctb-learning-hub' ); ?></strong>
+					<span><?php echo esc_html( $report['disclaimer'] ?? 'This analysis reflects historical examination patterns and does not predict future exam questions.' ); ?></span>
+				</div>
+			</div>
+
+			<!-- Level Switcher -->
+			<div class="nctb-analytics-level-switcher">
+				<a href="<?php echo esc_url( add_query_arg( 'level', 'hsc' ) ); ?>" class="level-tab-btn <?php echo 'hsc' === $selected_level ? 'active' : ''; ?>">
+					🎓 HSC English Analytics
+				</a>
+				<a href="<?php echo esc_url( add_query_arg( 'level', 'ssc' ) ); ?>" class="level-tab-btn <?php echo 'ssc' === $selected_level ? 'active' : ''; ?>">
+					🎒 SSC English Analytics
+				</a>
+			</div>
+
+			<!-- Top Metrics KPI Row -->
+			<div class="nctb-analytics-kpi-grid">
+				<div class="kpi-card">
+					<span class="kpi-icon">📝</span>
+					<div class="kpi-info">
+						<span class="kpi-val"><?php echo esc_html( (string) ( $report['kpis']['total_questions'] ?? 0 ) ); ?></span>
+						<span class="kpi-lbl"><?php esc_html_e( 'Total Exam Questions', 'nctb-learning-hub' ); ?></span>
+					</div>
+				</div>
+
+				<div class="kpi-card">
+					<span class="kpi-icon">🎯</span>
+					<div class="kpi-info">
+						<span class="kpi-val"><?php echo esc_html( (string) ( $report['kpis']['total_marks'] ?? 0 ) ); ?></span>
+						<span class="kpi-lbl"><?php esc_html_e( 'Total Marks Evaluated', 'nctb-learning-hub' ); ?></span>
+					</div>
+				</div>
+
+				<div class="kpi-card">
+					<span class="kpi-icon">🏛️</span>
+					<div class="kpi-info">
+						<span class="kpi-val"><?php echo esc_html( (string) ( $report['kpis']['total_boards'] ?? 0 ) ); ?></span>
+						<span class="kpi-lbl"><?php esc_html_e( 'Education Boards', 'nctb-learning-hub' ); ?></span>
+					</div>
+				</div>
+
+				<div class="kpi-card">
+					<span class="kpi-icon">📅</span>
+					<div class="kpi-info">
+						<span class="kpi-val"><?php echo esc_html( $report['kpis']['years_span'] ?? '2018–2024' ); ?></span>
+						<span class="kpi-lbl"><?php esc_html_e( 'Historical Archive Span', 'nctb-learning-hub' ); ?></span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main 2-Column Analytics Breakdown -->
+			<div class="nctb-analytics-breakdown-grid">
+				<!-- High Frequency Topics -->
+				<div class="analytics-card">
+					<div class="card-head">
+						<h3>🔥 <?php esc_html_e( 'High-Frequency Exam Topics', 'nctb-learning-hub' ); ?></h3>
+						<small><?php esc_html_e( 'Historical recurrence rank', 'nctb-learning-hub' ); ?></small>
+					</div>
+
+					<div class="topic-frequency-list">
+						<?php if ( empty( $report['topic_frequency'] ) ) : ?>
+							<p class="empty-text"><?php esc_html_e( 'No historical topic data available for this level.', 'nctb-learning-hub' ); ?></p>
+						<?php else : ?>
+							<?php
+							$max_q = max( 1, (int) ( $report['topic_frequency'][0]->question_count ?? 1 ) );
+							foreach ( $report['topic_frequency'] as $idx => $tf ) :
+								$pct = min( 100, round( ( (int) $tf->question_count / $max_q ) * 100 ) );
+							?>
+								<div class="topic-bar-row">
+									<div class="topic-row-info">
+										<span class="topic-rank">#<?php echo esc_html( (string) ( $idx + 1 ) ); ?></span>
+										<strong class="topic-name"><?php echo esc_html( $tf->topic ); ?></strong>
+										<span class="topic-meta"><?php echo esc_html( $tf->question_count ); ?> questions (<?php echo esc_html( $tf->total_marks ); ?> marks)</span>
+									</div>
+									<div class="topic-bar-track">
+										<div class="topic-bar-fill" style="width: <?php echo esc_attr( $pct ); ?>%;"></div>
+									</div>
+									<div class="topic-action">
+										<a href="<?php echo esc_url( add_query_arg( array( 'level' => $selected_level, 'topic' => $tf->topic ), home_url( '/board-questions/' ) ) ); ?>" class="btn-practice-topic">
+											🎯 <?php esc_html_e( 'Practise Past Questions', 'nctb-learning-hub' ); ?> →
+										</a>
+									</div>
+								</div>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</div>
+				</div>
+
+				<!-- Question Type & Board Breakdown -->
+				<div class="analytics-side-col">
+					<!-- Question Type Distribution -->
+					<div class="analytics-card">
+						<div class="card-head">
+							<h3>📋 <?php esc_html_e( 'Question Type Distribution', 'nctb-learning-hub' ); ?></h3>
+						</div>
+						<div class="qtype-pills-wrap">
+							<?php if ( ! empty( $report['question_types'] ) ) : ?>
+								<?php foreach ( $report['question_types'] as $qt ) : ?>
+									<div class="qtype-pill-box">
+										<span class="qtype-name"><?php echo esc_html( ucfirst( str_replace( '_', ' ', $qt->question_type ) ) ); ?></span>
+										<span class="qtype-count"><strong><?php echo esc_html( $qt->count ); ?></strong> items (<?php echo esc_html( $qt->total_marks ); ?>m)</span>
+									</div>
+								<?php endforeach; ?>
+							<?php endif; ?>
+						</div>
+					</div>
+
+					<!-- Board Breakdown -->
+					<div class="analytics-card" style="margin-top: 1.5rem;">
+						<div class="card-head">
+							<h3>🏛️ <?php esc_html_e( 'Board Distribution', 'nctb-learning-hub' ); ?></h3>
+						</div>
+						<div class="board-mini-list">
+							<?php if ( ! empty( $report['boards'] ) ) : ?>
+								<?php foreach ( $report['boards'] as $b ) : ?>
+									<div class="board-mini-item">
+										<span><?php echo esc_html( NCTB_Board_Service::BOARDS[ $b->board_name ] ?? ucfirst( $b->board_name ) ); ?></span>
+										<span class="badge"><?php echo esc_html( $b->question_count ); ?> qs</span>
+									</div>
+								<?php endforeach; ?>
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php

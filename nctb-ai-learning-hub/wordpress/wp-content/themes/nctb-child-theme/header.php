@@ -53,6 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php // Student app menu (logged in, on learning pages). ?>
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="nav-link" data-en="Learn" data-bn="পাঠ্যবই">Learn</a>
 				<a href="<?php echo esc_url( home_url( '/board-questions' ) ); ?>" class="nav-link" data-en="Board" data-bn="বোর্ড প্রশ্ন">Board</a>
+				<a href="<?php echo esc_url( home_url( '/board-analytics' ) ); ?>" class="nav-link" data-en="Analytics" data-bn="অ্যানালিটিক্স">Analytics</a>
 				<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="nav-link" data-en="Mistakes" data-bn="ভুলখাতা">Mistakes</a>
 				<a href="<?php echo esc_url( home_url( '/revision' ) ); ?>" class="nav-link" data-en="Revision" data-bn="রিভিশন">Revision</a>
 				<a href="<?php echo esc_url( home_url( '/progress' ) ); ?>" class="nav-link" data-en="Progress" data-bn="অগ্রগতি">Progress</a>

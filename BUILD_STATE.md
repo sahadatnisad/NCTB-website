@@ -13,11 +13,11 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 12 — Board pattern analytics**
+**PHASE 13 — English MVP content library**
 
-> Read the "PHASE 12" section in [README.md](./README.md#phase-12--board-pattern-analytics) for full requirements before building.
-> Turn the board-question DB into historical exam intelligence: frequency by topic/concept, frequency by year, frequency by board; common question types; practice high-frequency historical patterns.
-> Important: Always describe this as **historical analysis, not prediction**.
+> Read the "PHASE 13" section in [README.md](./README.md#phase-13--english-mvp-content-library) for full requirements before building.
+> Scale the proven system: 20–30 high-quality SSC English lessons; 20–30 high-quality HSC English lessons; question banks; vocabulary; verified board-question links; selected audio/writing/speaking activities; human review workflow.
+> Content workflow: **Official NCTB material → Curriculum mapping → Learning outcomes → Lesson decomposition → Micro-concepts → Draft → Activities → Questions → Board questions → AI assistance → Human review → Publish.**
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -39,8 +39,8 @@
 | 9 | Contextual AI tutor | ✅ Done |
 | 10 | Writing, listening & speaking | ✅ Done |
 | 11 | Board-question database | ✅ Done |
-| 12 | Board pattern analytics | 🔜 **NEXT** |
-| 13 | English MVP content library | ⬜ Not started |
+| 12 | Board pattern analytics | ✅ Done |
+| 13 | English MVP content library | 🔜 **NEXT** |
 | 14 | Private beta: security, performance & QA | ⬜ Not started |
 | 15 | Public English launch | ⬜ Not started |
 | 16 | Complete English | ⬜ Not started |
@@ -110,5 +110,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 11 — Board-question database
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Authentic Board Question Service (`NCTB_Board_Service`) with 10 Education Boards metadata (Level, Board, Year, Subject, Question No, Marks, Type, Topic, Verified Answer, Marking Scheme, Official Source Reference); custom tables `wp_nctb_board_exams` and `wp_nctb_board_questions` via migration `0.11.0`; Admin Board Questions manager (`NCTB_Board_Admin`) under Lessons; Student Board Questions archive hub (`[nctb_board_questions]` / `page-board-questions.php` / `/board-questions/`) with live level/board/year filter bar and verified answer accordions; lesson-level board exam practice widget embedded in `single-nctb_lesson.php`; strict separation of authentic exam items from AI practice; REST endpoints under `nctb/v1/board/*`.
-- **Verified (runtime, Docker):** 13 automated tests passing (0 failures); all 74 PHP files linted clean; all 10 platform routes returning HTTP 200.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_11.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_11.md)
+
+### ✅ Phase 12 — Board pattern analytics
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Board Pattern Analytics Service (`NCTB_Board_Analytics_Service`) aggregating historical topic frequency, question type distributions, board coverage, and yearly volume trends; Student Board Pattern Analytics Hub (`[nctb_board_analytics]` / `page-board-analytics.php` / `/board-analytics/`) with level switcher (HSC/SSC), 4 metric KPIs, topic frequency progress bars with 1-click deep links to board practice; strictly framed and labeled as **Historical Statistical Analysis Only, never prediction**; REST endpoint `GET /nctb/v1/board/analytics`.
+- **Verified (runtime, Docker):** 9 automated tests passing (0 failures); all 75 PHP files linted clean; all 11 platform routes returning HTTP 200.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_12.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_12.md)

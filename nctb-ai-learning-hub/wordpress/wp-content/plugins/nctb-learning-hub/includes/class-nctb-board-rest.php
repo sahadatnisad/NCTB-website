@@ -64,6 +64,22 @@ class NCTB_Board_REST extends WP_REST_Controller {
 				),
 			)
 		);
+
+		// GET /nctb/v1/board/analytics
+		register_rest_route(
+			$this->namespace,
+			'/board/analytics',
+			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_analytics' ),
+					'permission_callback' => '__return_true',
+					'args'                => array(
+						'level' => array( 'required' => false, 'default' => 'hsc', 'sanitize_callback' => 'sanitize_key' ),
+					),
+				),
+			)
+		);
 	}
 
 	/**
@@ -101,5 +117,15 @@ class NCTB_Board_REST extends WP_REST_Controller {
 				'questions' => $questions,
 			)
 		);
+	}
+
+	/**
+	 * Get aggregated board pattern analytics.
+	 */
+	public function get_analytics( $request ) {
+		$level = sanitize_key( $request['level'] ?? 'hsc' );
+		$report = NCTB_Board_Analytics_Service::get_full_analytics_report( $level );
+
+		return rest_ensure_response( $report );
 	}
 }
