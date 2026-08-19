@@ -97,3 +97,44 @@ function nctb_theme_head_meta() {
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\n";
 }
 add_action( 'wp_head', 'nctb_theme_head_meta', 0 );
+
+/**
+ * Provision the public marketing pages so the site is reproducible from the
+ * repository (the page-{slug}.php templates render them). Idempotent: it only
+ * creates a page when one with that slug does not already exist.
+ *
+ * @return void
+ */
+function nctb_theme_provision_marketing_pages() {
+	if ( get_option( 'nctb_theme_mkt_pages_done' ) ) {
+		return;
+	}
+
+	$pages = array(
+		'how-it-works' => __( 'How It Works', 'nctb-theme' ),
+		'subjects'     => __( 'Subjects', 'nctb-theme' ),
+		'ssc-english'  => __( 'SSC English', 'nctb-theme' ),
+		'hsc-english'  => __( 'HSC English', 'nctb-theme' ),
+		'pricing'      => __( 'Pricing', 'nctb-theme' ),
+		'faq'          => __( 'FAQ', 'nctb-theme' ),
+		'contact'      => __( 'Contact', 'nctb-theme' ),
+	);
+
+	foreach ( $pages as $slug => $title ) {
+		if ( ! get_page_by_path( $slug ) ) {
+			wp_insert_post(
+				array(
+					'post_type'    => 'page',
+					'post_status'  => 'publish',
+					'post_name'    => $slug,
+					'post_title'   => $title,
+					'post_content' => '',
+				)
+			);
+		}
+	}
+
+	update_option( 'nctb_theme_mkt_pages_done', 1 );
+}
+add_action( 'after_switch_theme', 'nctb_theme_provision_marketing_pages' );
+add_action( 'admin_init', 'nctb_theme_provision_marketing_pages' );
