@@ -113,6 +113,21 @@ class NCTB_Pages {
 				'content'   => '',
 				'template'  => 'page-privacy-policy.php',
 			),
+			'terms'           => array(
+				'title'     => __( 'Terms of Service', 'nctb-learning-hub' ),
+				'content'   => '',
+				'template'  => 'page-terms.php',
+			),
+			'teacher-onboarding' => array(
+				'title'     => __( 'Teacher Onboarding', 'nctb-learning-hub' ),
+				'content'   => '[nctb_teacher_onboarding]',
+				'template'  => 'page-teacher-onboarding.php',
+			),
+			'teacher-dashboard'  => array(
+				'title'     => __( 'Teacher Dashboard', 'nctb-learning-hub' ),
+				'content'   => '[nctb_teacher_dashboard]',
+				'template'  => 'page-teacher-dashboard.php',
+			),
 		);
 	}
 

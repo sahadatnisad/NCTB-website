@@ -39,12 +39,35 @@ class NCTB_Roles {
 			);
 		}
 
-		// Ensure administrators also have student capabilities for testing.
+		// Add teacher role if not already present (Phase 16).
+		if ( ! get_role( 'nctb_teacher' ) ) {
+			add_role(
+				'nctb_teacher',
+				__( 'Teacher / Educator', 'nctb-learning-hub' ),
+				array(
+					'read'                           => true,
+					'view_nctb_content'              => true,
+					'nctb_access_teacher_portal'     => true,
+					'nctb_manage_teacher_profile'    => true,
+					'nctb_download_teacher_resources'=> true,
+					'nctb_use_teacher_ai'            => true,
+					'upload_files'                   => false,
+					'edit_posts'                     => false,
+					'delete_posts'                   => false,
+				)
+			);
+		}
+
+		// Ensure administrators also have student and teacher capabilities.
 		$admin = get_role( 'administrator' );
 		if ( $admin ) {
 			$admin->add_cap( 'view_nctb_content' );
 			$admin->add_cap( 'edit_nctb_profile' );
 			$admin->add_cap( 'submit_nctb_practice' );
+			$admin->add_cap( 'nctb_access_teacher_portal' );
+			$admin->add_cap( 'nctb_manage_teacher_profile' );
+			$admin->add_cap( 'nctb_download_teacher_resources' );
+			$admin->add_cap( 'nctb_use_teacher_ai' );
 		}
 	}
 }

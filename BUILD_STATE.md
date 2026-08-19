@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 16 — Teacher role & unified portal ("Shikkhok Hub")**
+**PHASE 17 — Modules & video-course system**
 
-> Read the "PHASE 16" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Implement `nctb_teacher` role and capabilities, `wp_nctb_teacher_profiles` custom table (migration 0.16.0), teacher onboarding wizard, and dedicated teacher dashboard shell on the unified portal.
+> Read the "PHASE 17" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Implement `nctb_module` CPT for teacher courses & student masterclasses, module progress tracking, and video duration aggregations.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -43,8 +43,8 @@
 | 13 | English MVP content library | ✅ Done |
 | 14 | Private beta: security, performance & QA | ✅ Done |
 | 15 | Production launch readiness | ✅ Done |
-| 16 | Teacher role & unified portal | 🔜 **NEXT** |
-| 17 | Modules & video-course system | ⬜ Not started |
+| 16 | Teacher role & unified portal | ✅ Done |
+| 17 | Modules & video-course system | 🔜 **NEXT** |
 | 18 | Notes & explanations content type | ⬜ Not started |
 | 19 | AI as a paid product (students + teachers) | ⬜ Not started |
 | 20 | Add ICT (content-only proof) | ⬜ Not started |
@@ -138,5 +138,11 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Enhanced WooCommerce commerce listener (`NCTB_Commerce`) with Bangladeshi mobile financial services transaction parsing (bKash, Nagad, Rocket, SSLCommerz); Educational SEO & Schema.org Structured Data service (`NCTB_SEO`) outputting `Course`, `LearningResource`, and `BreadcrumbList` JSON-LD microdata; Bilingual Transactional Notification & Email service (`NCTB_Notifications`); Terms of Service (`page-terms.php`) and Privacy Policy compliance updates; Automated cross-platform MySQL backup and restore operations (`scripts/backup_db.*`, `scripts/restore_db.*`); Production secrets configuration template (`config/secrets.example.php`).
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_15.md`](./docs/build-history/BUILD_REPORT_PHASE_15.md)
+
+### ✅ Phase 16 — Teacher role & unified portal ("Shikkhok Hub")
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Implemented `nctb_teacher` role and capabilities (`NCTB_Roles`); added custom table `wp_nctb_teacher_profiles` via migration `0.16.0` (`NCTB_Migrations`); built Teacher Profile Service (`NCTB_Teacher_Profile`) with institutional metadata; created Teacher REST API controller (`NCTB_Teacher_REST`); built 3-step educator onboarding wizard (`[nctb_teacher_onboarding]` / `page-teacher-onboarding.php`) and dedicated Teacher Dashboard (`[nctb_teacher_dashboard]` / `page-teacher-dashboard.php`) with pedagogical quick tools; configured role-aware navigation in `header.php` and complete CSS styling.
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_16.md`](./docs/build-history/BUILD_REPORT_PHASE_16.md)
+
 
 

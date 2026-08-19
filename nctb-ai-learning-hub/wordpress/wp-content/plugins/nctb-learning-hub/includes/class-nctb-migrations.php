@@ -44,6 +44,7 @@ class NCTB_Migrations {
 			'0.9.0'  => array( __CLASS__, 'upgrade_to_0_9_0' ),
 			'0.10.0' => array( __CLASS__, 'upgrade_to_0_10_0' ),
 			'0.11.0' => array( __CLASS__, 'upgrade_to_0_11_0' ),
+			'0.16.0' => array( __CLASS__, 'upgrade_to_0_16_0' ),
 		);
 	}
 
@@ -539,6 +540,45 @@ class NCTB_Migrations {
 
 		dbDelta( $sql_exams );
 		dbDelta( $sql_questions );
+	}
+
+	/**
+	 * Phase 16 schema: Teacher profiles table.
+	 *
+	 * Supports educator profiles, school affiliation, subjects and classes taught,
+	 * teaching goals, and verification status. Idempotent via dbDelta().
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_16_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate  = $wpdb->get_charset_collate();
+		$teacher_profiles = self::table( 'teacher_profiles' );
+
+		$sql_teachers = "CREATE TABLE {$teacher_profiles} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			display_name VARCHAR(191) NOT NULL DEFAULT '',
+			school_name VARCHAR(191) NOT NULL DEFAULT '',
+			district VARCHAR(100) NOT NULL DEFAULT '',
+			division VARCHAR(100) NOT NULL DEFAULT '',
+			subjects_taught LONGTEXT NULL,
+			classes_taught LONGTEXT NULL,
+			teaching_goals LONGTEXT NULL,
+			bio TEXT NULL,
+			verification_status VARCHAR(32) NOT NULL DEFAULT 'unverified',
+			onboarding_completed TINYINT(1) NOT NULL DEFAULT 0,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_id (user_id),
+			KEY district (district),
+			KEY verification_status (verification_status)
+		) {$charset_collate};";
+
+		dbDelta( $sql_teachers );
 	}
 
 	/**

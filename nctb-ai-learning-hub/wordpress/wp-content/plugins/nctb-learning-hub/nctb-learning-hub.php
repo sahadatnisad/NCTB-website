@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Current plugin version.
  */
-define( 'NCTB_LH_VERSION', '0.13.0' );
+define( 'NCTB_LH_VERSION', '0.16.0' );
 
 /**
  * Absolute filesystem path to the plugin directory, with trailing slash.
@@ -56,7 +56,9 @@ require_once NCTB_LH_PATH . 'includes/class-nctb-migrations.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-roles.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-pages.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-student-profile.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-teacher-profile.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-onboarding-rest.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-teacher-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-lesson-activity-types.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-curriculum-data.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-curriculum-cpt.php';
@@ -78,6 +80,7 @@ require_once NCTB_LH_PATH . 'includes/class-nctb-mistakes-service.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-spaced-revision-service.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-progress-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-student-views.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-teacher-views.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-dashboard-service.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-dashboard-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-entitlements.php';

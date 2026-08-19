@@ -49,6 +49,7 @@ final class NCTB_Plugin {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( 'NCTB_Roles', 'register_roles' ) );
 		add_action( 'init', array( 'NCTB_Student_Views', 'init' ) );
+		add_action( 'init', array( 'NCTB_Teacher_Views', 'init' ) );
 		add_action( 'init', array( 'NCTB_Commerce', 'init' ) );
 		add_action( 'init', array( 'NCTB_SEO', 'init' ) );
 
@@ -118,6 +119,9 @@ final class NCTB_Plugin {
 
 		$board_rest = new NCTB_Board_REST();
 		$board_rest->register_routes();
+
+		$teacher_rest = new NCTB_Teacher_REST();
+		$teacher_rest->register_routes();
 	}
 
 	/**

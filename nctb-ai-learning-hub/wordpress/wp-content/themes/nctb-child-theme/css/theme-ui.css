@@ -184,3 +184,260 @@ html[data-theme="dark"] .topic-frequency-sample .topic-row { background: #0f172a
 	border-radius: 12px;
 }
 
+/* ==========================================================================
+   Teacher Portal & Onboarding Styles (Phase 16 — Shikkhok Hub)
+   ========================================================================== */
+.nctb-teacher-onboarding-wrap {
+	max-width: 720px;
+	margin: 32px auto;
+	padding: 0 16px;
+}
+.onboarding-steps-bar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 28px 0;
+}
+.step-indicator {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #64748b;
+	font-weight: 600;
+	font-size: 14px;
+}
+.step-indicator.active {
+	color: #1E6F5C;
+}
+.step-indicator.completed {
+	color: #059669;
+}
+.step-num {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #e2e8f0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+}
+.step-indicator.active .step-num {
+	background: #1E6F5C;
+	color: #ffffff;
+}
+.step-indicator.completed .step-num {
+	background: #059669;
+	color: #ffffff;
+}
+.step-line {
+	flex: 1;
+	max-width: 40px;
+	height: 2px;
+	background: #cbd5e1;
+	margin: 0 12px;
+}
+.onboarding-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	padding: 32px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+.nctb-form-group {
+	margin-bottom: 20px;
+}
+.nctb-form-group label, .group-title {
+	display: block;
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 8px;
+	color: #1e293b;
+}
+.nctb-input {
+	width: 100%;
+	padding: 10px 14px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	font-size: 15px;
+	background: #ffffff;
+}
+.nctb-form-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+.checkbox-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 10px;
+}
+.checkbox-grid.vertical {
+	grid-template-columns: 1fr;
+}
+.nctb-choice-chip {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 14px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: all 0.15s ease;
+}
+.nctb-choice-chip:hover {
+	background: #f1f5f9;
+	border-color: #cbd5e1;
+}
+.nctb-choice-chip input:checked + span {
+	font-weight: 600;
+	color: #1E6F5C;
+}
+.wizard-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 12px;
+	margin-top: 28px;
+	padding-top: 20px;
+	border-top: 1px solid #e2e8f0;
+}
+
+/* Teacher Dashboard */
+.nctb-teacher-dashboard-screen {
+	max-width: 1100px;
+	margin: 32px auto;
+	padding: 0 16px;
+}
+.teacher-hero-card {
+	background: linear-gradient(135deg, #1E6F5C 0%, #155747 100%);
+	color: #ffffff;
+	border-radius: 20px;
+	padding: 32px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 32px;
+}
+.teacher-badge-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+.role-badge {
+	background: rgba(255,255,255,0.2);
+	padding: 4px 12px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+}
+.status-badge {
+	background: #fef08a;
+	color: #854d0e;
+	padding: 4px 12px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+}
+.status-badge.status-verified {
+	background: #bbf7d0;
+	color: #166534;
+}
+.teacher-hero-content h1 {
+	margin: 0 0 8px;
+	color: #ffffff;
+	font-size: 26px;
+}
+.school-lead {
+	margin: 0;
+	color: #e4f1ec;
+	font-size: 15px;
+}
+.teacher-section-title {
+	margin: 32px 0 20px;
+}
+.teacher-section-title h2 {
+	margin: 0;
+	font-size: 20px;
+	color: #0f172a;
+}
+.teacher-section-title p {
+	margin: 4px 0 0;
+	color: #64748b;
+}
+.teacher-tools-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 20px;
+	margin-bottom: 32px;
+}
+.tool-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	padding: 24px;
+	transition: transform 0.2s, box-shadow 0.2s;
+	display: flex;
+	flex-direction: column;
+}
+.tool-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+.tool-icon {
+	font-size: 28px;
+	margin-bottom: 12px;
+}
+.tool-card h3 {
+	margin: 0 0 8px;
+	font-size: 17px;
+	color: #0f172a;
+}
+.tool-card p {
+	margin: 0 0 16px;
+	font-size: 14px;
+	color: #64748b;
+	line-height: 1.6;
+	flex: 1;
+}
+.tool-link {
+	color: #1E6F5C;
+	font-weight: 600;
+	font-size: 14px;
+	text-decoration: none;
+}
+.tool-link:hover {
+	text-decoration: underline;
+}
+.teacher-classes-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 16px;
+	padding: 24px;
+}
+.teacher-classes-card h3 {
+	margin: 0 0 16px;
+	font-size: 17px;
+}
+.chips-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+.class-chip {
+	padding: 6px 14px;
+	border-radius: 20px;
+	font-size: 13px;
+	font-weight: 500;
+}
+.class-chip.subject {
+	background: #e0f2fe;
+	color: #0369a1;
+}
+.class-chip.grade {
+	background: #f3e8ff;
+	color: #7e22ce;
+}
+
+
