@@ -329,3 +329,285 @@ document.addEventListener('DOMContentLoaded', function() {
 	// Initialize step position
 	restoreInitialStep();
 });
+
+	/* ------------------------------------------------------------------ */
+	/* Phase 5 — Interactive Practice & Question Engine Handlers          */
+	/* ------------------------------------------------------------------ */
+
+	var practiceEngine = document.getElementById('nctb-practice-engine');
+	if (practiceEngine) {
+		var totalQuizQuestions = parseInt(practiceEngine.getAttribute('data-total-q'), 10) || 0;
+		var currentQuizQ = 1;
+		var quizScores = {};
+		var quizHintsUsed = {};
+		var quizCurrentHintLevel = {};
+
+		var currentQNumEl = document.getElementById('quiz-current-q-num');
+		var summaryCard = document.getElementById('practice-quiz-summary');
+		var finalScoreEl = document.getElementById('quiz-final-score');
+		var finalMsgEl = document.getElementById('quiz-final-message');
+
+		// MCQ option selection highlight
+		practiceEngine.addEventListener('change', function(e) {
+			if (e.target.classList.contains('pq-radio-input')) {
+				var container = e.target.closest('.pq-mcq-options-list');
+				if (container) {
+					container.querySelectorAll('.pq-mcq-option-label').forEach(function(lbl) {
+						lbl.classList.remove('selected');
+					});
+					var activeLabel = e.target.closest('.pq-mcq-option-label');
+					if (activeLabel) {
+						activeLabel.classList.add('selected');
+					}
+				}
+			}
+		});
+
+		// Submit Answer Handler
+		practiceEngine.addEventListener('click', function(e) {
+			var submitBtn = e.target.closest('.pq-btn-submit');
+			if (!submitBtn) return;
+
+			var card = submitBtn.closest('.practice-question-card');
+			if (!card) return;
+
+			var qId = parseInt(card.getAttribute('data-q-id'), 10);
+			var qType = card.getAttribute('data-q-type');
+			var givenAnswer = '';
+
+			if (qType === 'mcq') {
+				var selectedRadio = card.querySelector('input[type="radio"]:checked');
+				if (!selectedRadio) {
+					alert('Please select an option before submitting.');
+					return;
+				}
+				givenAnswer = selectedRadio.value;
+			} else {
+				var textInput = card.querySelector('.pq-text-field');
+				if (!textInput || !textInput.value.trim()) {
+					alert('Please enter an answer before submitting.');
+					return;
+				}
+				givenAnswer = textInput.value.trim();
+			}
+
+			var hintsUsed = quizHintsUsed[qId] || 0;
+
+			submitBtn.disabled = true;
+			submitBtn.textContent = '⏳ Checking...';
+
+			// Call REST API
+			fetch('/wp-json/nctb/v1/practice/submit', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					question_id: qId,
+					given_answer: givenAnswer,
+					hints_used: hintsUsed,
+				})
+			})
+			.then(function(res) { return res.json(); })
+			.then(function(data) {
+				submitBtn.disabled = false;
+				submitBtn.textContent = '✅ Submit Answer';
+
+				var feedbackBanner = card.querySelector('.pq-feedback-banner');
+				var nextBtn = card.querySelector('.pq-btn-next');
+				var retryBtn = card.querySelector('.pq-btn-retry');
+				var hintBtn = card.querySelector('.pq-btn-hint');
+
+				if (feedbackBanner) {
+					feedbackBanner.style.display = 'block';
+					if (data.is_correct) {
+						feedbackBanner.className = 'pq-feedback-banner pq-correct';
+						var scoreTxt = (data.score === 1.0) ? '1.0 pt' : (data.score + ' pts');
+						feedbackBanner.innerHTML = '<strong>🎉 ' + (data.feedback || 'Correct!') + '</strong> (+' + scoreTxt + ')' +
+							(data.explanation ? '<div class="pq-expl-box"><strong>Explanation:</strong> ' + data.explanation + '</div>' : '');
+
+						submitBtn.style.display = 'none';
+						if (retryBtn) retryBtn.style.display = 'none';
+						if (hintBtn) hintBtn.style.display = 'none';
+						if (nextBtn) nextBtn.style.display = 'inline-flex';
+
+						quizScores[qId] = data.score || 1.0;
+					} else {
+						feedbackBanner.className = 'pq-feedback-banner pq-incorrect';
+						feedbackBanner.innerHTML = '<strong>❌ ' + (data.feedback || 'Incorrect.') + '</strong>' +
+							'<div class="pq-retry-note">Try again or request a hint for guidance!</div>';
+
+						submitBtn.style.display = 'none';
+						if (retryBtn) retryBtn.style.display = 'inline-flex';
+					}
+				}
+			})
+			.catch(function(err) {
+				submitBtn.disabled = false;
+				submitBtn.textContent = '✅ Submit Answer';
+				alert('Could not submit answer. Please try again.');
+			});
+		});
+
+		// Progressive Hint Request Handler
+		practiceEngine.addEventListener('click', function(e) {
+			var hintBtn = e.target.closest('.pq-btn-hint');
+			if (!hintBtn) return;
+
+			var card = hintBtn.closest('.practice-question-card');
+			if (!card) return;
+
+			var qId = parseInt(card.getAttribute('data-q-id'), 10);
+			var currentLevel = quizCurrentHintLevel[qId] || 1;
+
+			hintBtn.disabled = true;
+			hintBtn.textContent = '💡 Loading hint...';
+
+			fetch('/wp-json/nctb/v1/practice/hint', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ question_id: qId, hint_level: currentLevel })
+			})
+			.then(function(res) { return res.json(); })
+			.then(function(hintData) {
+				hintBtn.disabled = false;
+
+				quizHintsUsed[qId] = (quizHintsUsed[qId] || 0) + 1;
+
+				var hintContainer = card.querySelector('.pq-hint-container');
+				var hintBox = card.querySelector('.pq-hint-box');
+
+				if (hintContainer && hintBox) {
+					hintContainer.style.display = 'block';
+					hintBox.innerHTML = '<strong>💡 Hint ' + hintData.hint_level + ':</strong> ' + hintData.hint_text;
+				}
+
+				if (hintData.next_hint_available) {
+					quizCurrentHintLevel[qId] = hintData.next_hint_level;
+					hintBtn.textContent = '💡 Next Hint (' + hintData.next_hint_level + ')';
+				} else {
+					hintBtn.textContent = '💡 Hint Provided';
+					hintBtn.disabled = true;
+				}
+			})
+			.catch(function() {
+				hintBtn.disabled = false;
+				hintBtn.textContent = '💡 Get Hint';
+			});
+		});
+
+		// Retry Button Handler
+		practiceEngine.addEventListener('click', function(e) {
+			var retryBtn = e.target.closest('.pq-btn-retry');
+			if (!retryBtn) return;
+
+			var card = retryBtn.closest('.practice-question-card');
+			if (!card) return;
+
+			var feedbackBanner = card.querySelector('.pq-feedback-banner');
+			var submitBtn = card.querySelector('.pq-btn-submit');
+
+			if (feedbackBanner) feedbackBanner.style.display = 'none';
+			if (submitBtn) submitBtn.style.display = 'inline-flex';
+			retryBtn.style.display = 'none';
+		});
+
+		// Next Question Handler
+		practiceEngine.addEventListener('click', function(e) {
+			var nextBtn = e.target.closest('.pq-btn-next');
+			if (!nextBtn) return;
+
+			var nextIdx = parseInt(nextBtn.getAttribute('data-next'), 10);
+			var currentCard = practiceEngine.querySelector('.practice-question-card.active');
+
+			if (currentCard) {
+				currentCard.classList.remove('active');
+				currentCard.style.display = 'none';
+			}
+
+			if (nextIdx <= totalQuizQuestions) {
+				currentQuizQ = nextIdx;
+				var nextCard = document.getElementById('practice-q-card-' + nextIdx);
+				if (nextCard) {
+					nextCard.classList.add('active');
+					nextCard.style.display = 'block';
+				}
+				if (currentQNumEl) currentQNumEl.textContent = currentQuizQ;
+			} else {
+				// Show summary
+				if (summaryCard) {
+					summaryCard.style.display = 'block';
+					var totalEarned = 0;
+					for (var k in quizScores) {
+						totalEarned += quizScores[k];
+					}
+					totalEarned = Math.round(totalEarned * 100) / 100;
+					if (finalScoreEl) {
+						finalScoreEl.textContent = totalEarned + ' / ' + totalQuizQuestions;
+					}
+					var pct = Math.round((totalEarned / totalQuizQuestions) * 100);
+					if (finalMsgEl) {
+						if (pct >= 80) {
+							finalMsgEl.textContent = '🌟 Outstanding mastery! You answered with high accuracy and comprehension.';
+						} else if (pct >= 50) {
+							finalMsgEl.textContent = '👍 Good effort! Review the vocabulary and reading passage, then retake to achieve full mastery.';
+						} else {
+							finalMsgEl.textContent = '💪 Keep practicing! Take another look at the key historical milestones and try again.';
+						}
+					}
+				}
+			}
+		});
+
+		// Retake Quiz Handler
+		var retakeBtn = document.getElementById('btn-retake-quiz');
+		if (retakeBtn) {
+			retakeBtn.addEventListener('click', function() {
+				quizScores = {};
+				quizHintsUsed = {};
+				quizCurrentHintLevel = {};
+				currentQuizQ = 1;
+
+				if (summaryCard) summaryCard.style.display = 'none';
+
+				var cards = practiceEngine.querySelectorAll('.practice-question-card');
+				cards.forEach(function(c, i) {
+					c.querySelectorAll('input[type="radio"]').forEach(function(r) { r.checked = false; });
+					c.querySelectorAll('.pq-mcq-option-label').forEach(function(l) { l.classList.remove('selected'); });
+					c.querySelectorAll('.pq-text-field').forEach(function(t) { t.value = ''; });
+
+					var fb = c.querySelector('.pq-feedback-banner');
+					if (fb) fb.style.display = 'none';
+
+					var hb = c.querySelector('.pq-hint-container');
+					if (hb) hb.style.display = 'none';
+
+					var sub = c.querySelector('.pq-btn-submit');
+					if (sub) sub.style.display = 'inline-flex';
+
+					var nxt = c.querySelector('.pq-btn-next');
+					if (nxt) nxt.style.display = 'none';
+
+					var ret = c.querySelector('.pq-btn-retry');
+					if (ret) ret.style.display = 'none';
+
+					var hBtn = c.querySelector('.pq-btn-hint');
+					if (hBtn) {
+						hBtn.disabled = false;
+						hBtn.style.display = 'inline-flex';
+						hBtn.textContent = '💡 Get Hint';
+					}
+
+					if (i === 0) {
+						c.classList.add('active');
+						c.style.display = 'block';
+					} else {
+						c.classList.remove('active');
+						c.style.display = 'none';
+					}
+				});
+
+				if (currentQNumEl) currentQNumEl.textContent = '1';
+			});
+		}
+	}

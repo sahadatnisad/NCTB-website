@@ -186,6 +186,114 @@ while ( have_posts() ) :
 									<div class="word-counter-display"><?php esc_html_e( 'Word Count:', 'nctb-theme' ); ?> <span class="counter-num">0</span> <?php esc_html_e( 'words', 'nctb-theme' ); ?></div>
 								</div>
 							<?php endif; ?>
+
+							<?php
+							if ( 'quiz_placeholder' === $act->activity_type && class_exists( 'NCTB_Practice_Data' ) ) :
+								$nctb_questions = NCTB_Practice_Data::get_lesson_questions( $nctb_lesson_id, true, false );
+								if ( ! empty( $nctb_questions ) ) :
+									$total_q = count( $nctb_questions );
+									?>
+									<div class="nctb-practice-engine-container" id="nctb-practice-engine" data-lesson-id="<?php echo esc_attr( $nctb_lesson_id ); ?>" data-total-q="<?php echo esc_attr( $total_q ); ?>">
+										<div class="practice-quiz-top-bar">
+											<div class="quiz-status-pill">⚡ <?php esc_html_e( 'Interactive Practice Quiz', 'nctb-theme' ); ?></div>
+											<div class="quiz-q-counter">
+												<?php esc_html_e( 'Question', 'nctb-theme' ); ?> <strong id="quiz-current-q-num">1</strong> / <?php echo esc_html( (string) $total_q ); ?>
+											</div>
+										</div>
+
+										<div class="practice-questions-list">
+											<?php
+											$q_num = 1;
+											foreach ( $nctb_questions as $pq ) :
+												$pq_types = class_exists( 'NCTB_Question_Types' ) ? NCTB_Question_Types::get_all() : array();
+												$pq_info  = $pq_types[ $pq->question_type ] ?? null;
+												$pq_icon  = $pq_info ? $pq_info['icon'] : '❓';
+												$pq_label = $pq_info ? $pq_info['label_en'] : $pq->question_type;
+												?>
+												<div class="practice-question-card <?php echo 1 === $q_num ? 'active' : ''; ?>" id="practice-q-card-<?php echo esc_attr( $q_num ); ?>" data-q-index="<?php echo esc_attr( $q_num ); ?>" data-q-id="<?php echo esc_attr( $pq->id ); ?>" data-q-type="<?php echo esc_attr( $pq->question_type ); ?>" style="<?php echo 1 === $q_num ? '' : 'display:none;'; ?>">
+													<div class="pq-meta-row">
+														<span class="pq-type-badge"><?php echo esc_html( $pq_icon . ' ' . $pq_label ); ?></span>
+														<span class="pq-diff-badge diff-<?php echo esc_attr( $pq->difficulty ); ?>"><?php echo esc_html( ucfirst( $pq->difficulty ) ); ?></span>
+													</div>
+
+													<h3 class="pq-prompt"><?php echo esc_html( $pq->prompt ); ?></h3>
+
+													<?php if ( ! empty( $pq->content ) ) : ?>
+														<div class="pq-context-box"><em><?php echo esc_html( $pq->content ); ?></em></div>
+													<?php endif; ?>
+
+													<!-- Interactive Input Area -->
+													<div class="pq-input-zone">
+														<?php if ( 'mcq' === $pq->question_type && ! empty( $pq->options ) ) : ?>
+															<div class="pq-mcq-options-list">
+																<?php foreach ( $pq->options as $opt ) : ?>
+																	<label class="pq-mcq-option-label" data-opt-key="<?php echo esc_attr( $opt->option_key ); ?>">
+																		<input type="radio" name="practice_q_<?php echo esc_attr( $pq->id ); ?>" value="<?php echo esc_attr( $opt->option_key ); ?>" class="pq-radio-input">
+																		<span class="opt-key-badge"><?php echo esc_html( $opt->option_key ); ?></span>
+																		<span class="opt-text"><?php echo esc_html( $opt->option_text ); ?></span>
+																	</label>
+																<?php endforeach; ?>
+															</div>
+														<?php elseif ( 'fill_in_blank' === $pq->question_type || 'short_answer' === $pq->question_type ) : ?>
+															<div class="pq-text-input-zone">
+																<input type="text" class="pq-text-field" placeholder="<?php esc_attr_e( 'Type your answer here...', 'nctb-theme' ); ?>">
+															</div>
+														<?php elseif ( 'error_correction' === $pq->question_type ) : ?>
+															<div class="pq-text-input-zone">
+																<label class="pq-input-label"><strong><?php esc_html_e( 'Provide the corrected word or phrase:', 'nctb-theme' ); ?></strong></label>
+																<input type="text" class="pq-text-field" placeholder="<?php esc_attr_e( 'Type the corrected text...', 'nctb-theme' ); ?>">
+															</div>
+														<?php endif; ?>
+													</div>
+
+													<!-- Progressive Hint Zone -->
+													<div class="pq-hint-container" style="display:none;">
+														<div class="pq-hint-box"></div>
+													</div>
+
+													<!-- Feedback Banner -->
+													<div class="pq-feedback-banner" style="display:none;"></div>
+
+													<!-- Actions Row -->
+													<div class="pq-actions-row">
+														<button type="button" class="nctb-btn nctb-btn-secondary pq-btn-hint" data-q-id="<?php echo esc_attr( $pq->id ); ?>" data-hint-level="1">
+															💡 <?php esc_html_e( 'Get Hint', 'nctb-theme' ); ?>
+														</button>
+														<button type="button" class="nctb-btn nctb-btn-primary pq-btn-submit" data-q-id="<?php echo esc_attr( $pq->id ); ?>">
+															✅ <?php esc_html_e( 'Submit Answer', 'nctb-theme' ); ?>
+														</button>
+														<button type="button" class="nctb-btn nctb-btn-secondary pq-btn-retry" style="display:none;">
+															🔄 <?php esc_html_e( 'Try Again', 'nctb-theme' ); ?>
+														</button>
+														<button type="button" class="nctb-btn nctb-btn-primary pq-btn-next" data-next="<?php echo esc_attr( $q_num + 1 ); ?>" style="display:none;">
+															<?php echo $q_num === $total_q ? esc_html__( 'Finish Quiz 🎉', 'nctb-theme' ) : esc_html__( 'Next Question →', 'nctb-theme' ); ?>
+														</button>
+													</div>
+												</div>
+												<?php
+												$q_num++;
+											endforeach;
+											?>
+
+											<!-- Quiz Completed Summary -->
+											<div class="practice-quiz-summary-card" id="practice-quiz-summary" style="display:none;">
+												<div class="summary-icon">🏆</div>
+												<h3><?php esc_html_e( 'Practice Quiz Completed!', 'nctb-theme' ); ?></h3>
+												<div class="summary-score-display">
+													<span class="score-label"><?php esc_html_e( 'Your Total Score:', 'nctb-theme' ); ?></span>
+													<strong class="score-val" id="quiz-final-score">0 / <?php echo esc_html( (string) $total_q ); ?></strong>
+												</div>
+												<p class="summary-message" id="quiz-final-message"></p>
+												<button type="button" class="nctb-btn nctb-btn-primary" id="btn-retake-quiz">
+													🔄 <?php esc_html_e( 'Retake Practice Quiz', 'nctb-theme' ); ?>
+												</button>
+											</div>
+										</div>
+									</div>
+									<?php
+								endif;
+							endif;
+							?>
 						</div>
 
 						<!-- Activity Card Footer Actions -->

@@ -42,6 +42,9 @@ class NCTB_Activator {
 		// Seed a single sample book/unit/lesson tree for the browse demo (once).
 		NCTB_Curriculum_Seeder::maybe_seed();
 
+		// Ensure the onboarding/dashboard pages exist (reproducible from repo).
+		NCTB_Pages::ensure_pages();
+
 		// Rewrite rules — required now that CPTs exist.
 		flush_rewrite_rules();
 

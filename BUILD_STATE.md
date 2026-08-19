@@ -13,10 +13,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 5 — Practice and question engine**
+**PHASE 6 — Progress, mastery, mistakes, spaced revision**
 
-> Read the "PHASE 5" section in [README.md](./README.md#phase-5--practice-and-question-engine) for full requirements before building.
-> Turn lessons into active practice — **without AI**. Build question types (MCQ, single fill-in-the-blank, short text answer, error correction), records supporting difficulty, explanations, progressive hint levels, source type, attempts table, central marking service, nonces & permission callbacks.
+> Read the "PHASE 6" section in [README.md](./README.md#phase-6--progress-mastery-mistakes-spaced-revision) for full requirements before building.
+> Make the platform remember learning. Build lesson completion tracking, concept-level mastery scores, smart mistake-bank recording with decay/review scheduling, and central mastery calculations.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -31,8 +31,8 @@
 | 2 | Student accounts and onboarding | ✅ Done |
 | 3 | Curriculum + Book + Unit + Lesson CMS | ✅ Done |
 | 4 | One gold-standard interactive lesson | ✅ Done |
-| 5 | Practice and question engine | 🔜 **NEXT** |
-| 6 | Progress, mastery, mistakes, spaced revision | ⬜ Not started |
+| 5 | Practice and question engine | ✅ Done |
+| 6 | Progress, mastery, mistakes, spaced revision | 🔜 **NEXT** |
 | 7 | Functional student dashboard | ⬜ Not started |
 | 8 | Payments and entitlements | ⬜ Not started |
 | 9 | Contextual AI tutor | ⬜ Not started |
@@ -73,6 +73,11 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 
 ### ✅ Phase 4 — One gold-standard interactive lesson
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
-- **What was built:** 14 standard reusable activity blocks (objective, warm-up, reading passage, vocabulary, grammar focus, examples, guided practice with interactive hints/reveals, independent practice with self-check checklist, writing task with live word counter and model response, listening with audio player & transcript, speaking with 2-minute timer, lesson summary, quiz placeholder for Phase 5, contextual AI tutor callout for Phase 9); admin lesson activity editor meta box with reordering and type selector; custom table `wp_nctb_lesson_activities` via migration `0.4.0`; REST endpoints (`/curriculum/lesson/{id}/activities`, reorder route, enriched lesson details); complete authentic NCTB sample lesson seeded; mobile-first stepper and progress bar with state resumption from URL hash and localStorage in generic `single-nctb_lesson.php` (no lesson-specific PHP templates).
-- **Verified (runtime, Docker):** 23 automated unit/integration tests passing (0 failures); all PHP files linted clean; HTTP 200 on lesson, books, units, dashboard, onboarding, and homepage; activity ordering, sanitization, and REST routes verified.
+- **What was built:** 14 standard reusable activity blocks (objective, warm-up, reading passage, vocabulary, grammar focus, examples, guided practice with interactive hints/reveals, independent practice with self-check checklist, writing task with live word counter and model response, listening with audio player & transcript, speaking with 2-minute timer, lesson summary, quiz placeholder, contextual AI tutor callout); admin lesson activity editor meta box; custom table `wp_nctb_lesson_activities` via migration `0.4.0`; REST endpoints; complete authentic NCTB sample lesson seeded; mobile-first stepper and progress bar with state resumption from URL hash and localStorage in generic `single-nctb_lesson.php`.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_4.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_4.md)
+
+### ✅ Phase 5 — Practice and question engine
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** 4 question types (`mcq`, `fill_in_blank`, `short_answer`, `error_correction`); Central Marking Service (`NCTB_Marking_Service`) evaluating submissions deterministically without AI; Progressive Hint Service (`NCTB_Hint_Service`) with 3-level scaffolded hints; custom tables `wp_nctb_questions`, `wp_nctb_question_options`, `wp_nctb_question_concepts`, and `wp_nctb_attempts` via migration `0.5.0`; Admin Practice Questions manager (`edit.php?post_type=nctb_lesson&page=nctb-questions`); REST API endpoints (`GET /practice/lesson/{id}/questions`, `POST /practice/submit`, `POST /practice/hint`, `GET /practice/attempts`); 5 sample practice questions seeded; interactive live practice quiz component with instant marking feedback, retry flow, progressive hints, and mastery completion summary.
+- **Verified (runtime, Docker):** 32 automated unit/integration tests passing (0 failures); all PHP files linted clean; front-end quiz interactive rendering verified; REST answer security verified; cross-page HTTP 200 checks verified.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_5.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_5.md)

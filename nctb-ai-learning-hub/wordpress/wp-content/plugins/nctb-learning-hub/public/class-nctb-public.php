@@ -315,11 +315,11 @@ class NCTB_Public {
 							$sub = NCTB_Student_Profile::ALLOWED_SUBJECTS[ $sub_slug ] ?? null;
 							if ( ! $sub ) continue;
 						?>
-							<div class="subject-item-card">
+							<a class="subject-item-card" href="<?php echo esc_url( get_post_type_archive_link( NCTB_Curriculum_CPT::CPT_BOOK ) ); ?>">
 								<div class="sub-title"><?php echo esc_html( $sub['title_bn'] ); ?></div>
 								<div class="sub-en"><?php echo esc_html( $sub['title_en'] ); ?></div>
-								<div class="sub-status">লেসন শীঘ্রই উন্মুক্ত হচ্ছে (Phase 3)</div>
-							</div>
+								<div class="sub-status">📚 পাঠ্যবই দেখুন (Browse lessons) →</div>
+							</a>
 						<?php endforeach; ?>
 					<?php else : ?>
 						<p>কোনো বিষয় এখনো যোগ করা হয়নি। <a href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>">অনবোর্ডিং সম্পন্ন করুন</a></p>

@@ -58,6 +58,9 @@ final class NCTB_Plugin {
 		// Schema upgrades.
 		add_action( 'admin_init', array( 'NCTB_Migrations', 'run' ) );
 
+		// Ensure required pages exist after an in-place file upgrade (once).
+		add_action( 'admin_init', array( 'NCTB_Pages', 'maybe_provision' ) );
+
 		$this->load_admin();
 		$this->load_public();
 
@@ -91,13 +94,16 @@ final class NCTB_Plugin {
 
 		$curriculum_rest = new NCTB_Curriculum_REST();
 		$curriculum_rest->register_routes();
+
+		$practice_rest = new NCTB_Practice_REST();
+		$practice_rest->register_routes();
 	}
 
 	/**
 	 * Instantiate the curriculum modules.
 	 *
-	 * CPTs/taxonomies register on all requests; meta boxes and the concepts
-	 * admin screen only load in wp-admin.
+	 * CPTs/taxonomies register on all requests; meta boxes, concepts, and
+	 * questions admin screens load in wp-admin.
 	 *
 	 * @return void
 	 */
@@ -111,6 +117,9 @@ final class NCTB_Plugin {
 
 			$admin = new NCTB_Curriculum_Admin();
 			$admin->init();
+
+			$q_admin = new NCTB_Question_Admin();
+			$q_admin->init();
 		}
 	}
 

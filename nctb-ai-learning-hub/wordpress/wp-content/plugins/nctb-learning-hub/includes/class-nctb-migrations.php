@@ -38,6 +38,7 @@ class NCTB_Migrations {
 		return array(
 			'0.3.0' => array( __CLASS__, 'upgrade_to_0_3_0' ),
 			'0.4.0' => array( __CLASS__, 'upgrade_to_0_4_0' ),
+			'0.5.0' => array( __CLASS__, 'upgrade_to_0_5_0' ),
 		);
 	}
 
@@ -125,6 +126,99 @@ class NCTB_Migrations {
 		) {$charset_collate};";
 
 		dbDelta( $sql_activities );
+	}
+
+	/**
+	 * Phase 5 schema: practice and question engine tables.
+	 *
+	 * Creates:
+	 *   - nctb_questions: question records (mcq, fill_in_blank, short_answer, error_correction, difficulty, hints)
+	 *   - nctb_question_options: options for MCQ questions
+	 *   - nctb_question_concepts: many-to-many links between questions and concepts
+	 *   - nctb_attempts: student practice submissions and scores
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_5_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate   = $wpdb->get_charset_collate();
+		$questions         = self::table( 'questions' );
+		$question_options  = self::table( 'question_options' );
+		$question_concepts = self::table( 'question_concepts' );
+		$attempts          = self::table( 'attempts' );
+
+		$sql_questions = "CREATE TABLE {$questions} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			lesson_id BIGINT UNSIGNED NOT NULL,
+			question_type VARCHAR(32) NOT NULL DEFAULT 'mcq',
+			prompt TEXT NOT NULL,
+			content LONGTEXT NULL,
+			difficulty VARCHAR(20) NOT NULL DEFAULT 'medium',
+			correct_answer TEXT NOT NULL,
+			explanation LONGTEXT NULL,
+			hint_1 TEXT NULL,
+			hint_2 TEXT NULL,
+			hint_3 TEXT NULL,
+			source_type VARCHAR(64) NOT NULL DEFAULT 'nctb_textbook',
+			verification_status VARCHAR(32) NOT NULL DEFAULT 'verified',
+			meta_data LONGTEXT NULL,
+			sort_order INT NOT NULL DEFAULT 0,
+			is_active TINYINT(1) NOT NULL DEFAULT 1,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY lesson_id (lesson_id),
+			KEY question_type (question_type),
+			KEY difficulty (difficulty),
+			KEY sort_order (sort_order)
+		) {$charset_collate};";
+
+		$sql_options = "CREATE TABLE {$question_options} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			question_id BIGINT UNSIGNED NOT NULL,
+			option_key VARCHAR(16) NOT NULL DEFAULT '',
+			option_text TEXT NOT NULL,
+			is_correct TINYINT(1) NOT NULL DEFAULT 0,
+			feedback TEXT NULL,
+			sort_order INT NOT NULL DEFAULT 0,
+			PRIMARY KEY  (id),
+			KEY question_id (question_id)
+		) {$charset_collate};";
+
+		$sql_question_concepts = "CREATE TABLE {$question_concepts} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			question_id BIGINT UNSIGNED NOT NULL,
+			concept_id BIGINT UNSIGNED NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY question_concept (question_id, concept_id),
+			KEY concept_id (concept_id)
+		) {$charset_collate};";
+
+		$sql_attempts = "CREATE TABLE {$attempts} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			question_id BIGINT UNSIGNED NOT NULL,
+			lesson_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			given_answer LONGTEXT NOT NULL,
+			is_correct TINYINT(1) NOT NULL DEFAULT 0,
+			score FLOAT NOT NULL DEFAULT 0,
+			hints_used INT NOT NULL DEFAULT 0,
+			attempt_number INT NOT NULL DEFAULT 1,
+			feedback_given TEXT NULL,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY user_id (user_id),
+			KEY question_id (question_id),
+			KEY lesson_id (lesson_id),
+			KEY user_question (user_id, question_id)
+		) {$charset_collate};";
+
+		dbDelta( $sql_questions );
+		dbDelta( $sql_options );
+		dbDelta( $sql_question_concepts );
+		dbDelta( $sql_attempts );
 	}
 
 	/**

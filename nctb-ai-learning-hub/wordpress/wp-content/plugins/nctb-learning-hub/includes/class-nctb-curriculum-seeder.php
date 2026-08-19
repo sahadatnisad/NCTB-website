@@ -24,9 +24,10 @@ class NCTB_Curriculum_Seeder {
 
 	const SEEDED_OPTION            = 'nctb_lh_sample_seeded';
 	const ACTIVITIES_SEEDED_OPTION = 'nctb_lh_sample_activities_seeded';
+	const QUESTIONS_SEEDED_OPTION  = 'nctb_lh_sample_questions_seeded';
 
 	/**
-	 * Seed the sample tree and activities once.
+	 * Seed the sample tree, activities, and practice questions once.
 	 *
 	 * @return void
 	 */
@@ -131,6 +132,9 @@ class NCTB_Curriculum_Seeder {
 
 		// Phase 4: Seed sample activities for the prototype lesson if not yet seeded.
 		self::maybe_seed_activities( $lesson_id );
+
+		// Phase 5: Seed sample practice questions for the prototype lesson if not yet seeded.
+		self::maybe_seed_questions( $lesson_id );
 	}
 
 	/**
@@ -574,6 +578,165 @@ class NCTB_Curriculum_Seeder {
 						'Give me 3 more practice sentences using the word \'emancipation\'.',
 					),
 				),
+			),
+		);
+	}
+
+	/**
+	 * Seed practice questions for the prototype lesson (Phase 5).
+	 *
+	 * @param int $target_lesson_id Target lesson ID.
+	 * @return void
+	 */
+	public static function maybe_seed_questions( $target_lesson_id = 0 ) {
+		if ( get_option( self::QUESTIONS_SEEDED_OPTION ) ) {
+			return;
+		}
+
+		if ( ! $target_lesson_id ) {
+			$lessons = get_posts(
+				array(
+					'post_type'   => NCTB_Curriculum_CPT::CPT_LESSON,
+					'post_status' => 'publish',
+					'numberposts' => 1,
+					'orderby'     => 'menu_order',
+					'order'       => 'ASC',
+				)
+			);
+			if ( ! empty( $lessons ) ) {
+				$target_lesson_id = $lessons[0]->ID;
+			}
+		}
+
+		if ( ! $target_lesson_id ) {
+			return;
+		}
+
+		// Check if questions already exist for this lesson.
+		$existing_q = NCTB_Practice_Data::get_lesson_questions( $target_lesson_id, false, true );
+		if ( ! empty( $existing_q ) ) {
+			update_option( self::QUESTIONS_SEEDED_OPTION, 1, false );
+			return;
+		}
+
+		$questions = self::get_gold_standard_sample_questions( $target_lesson_id );
+		$count     = 0;
+
+		foreach ( $questions as $q_item ) {
+			$options     = $q_item['options'] ?? array();
+			$concept_ids = $q_item['concept_ids'] ?? array();
+			unset( $q_item['options'], $q_item['concept_ids'] );
+
+			$new_id = NCTB_Practice_Data::create_question( $q_item, $options, $concept_ids );
+			if ( is_int( $new_id ) ) {
+				$count++;
+			}
+		}
+
+		update_option( self::QUESTIONS_SEEDED_OPTION, 1, false );
+		NCTB_Logger::info( 'Seeded practice questions', array( 'lesson_id' => $target_lesson_id, 'count' => $count ) );
+	}
+
+	/**
+	 * Define the 5 sample practice questions for Lesson 1.
+	 *
+	 * @param int $lesson_id Target lesson ID.
+	 * @return array<int,array<string,mixed>>
+	 */
+	public static function get_gold_standard_sample_questions( $lesson_id ) {
+		return array(
+			// 1. MCQ Fact
+			array(
+				'lesson_id'           => $lesson_id,
+				'question_type'       => NCTB_Question_Types::TYPE_MCQ,
+				'prompt'              => 'In what year was Nelson Mandela awarded the Nobel Peace Prize?',
+				'content'             => 'Refer to paragraph 3 of the reading passage on Nelson Mandela.',
+				'difficulty'          => NCTB_Question_Types::DIFFICULTY_EASY,
+				'correct_answer'      => 'B',
+				'explanation'         => 'Nelson Mandela and F.W. de Klerk were jointly awarded the Nobel Peace Prize in 1993 for their peaceful work to dismantle apartheid.',
+				'hint_1'              => 'Check paragraph 3 of the reading passage for the specific year.',
+				'hint_2'              => 'The prize was awarded one year before he was elected president in 1994.',
+				'hint_3'              => 'The year was 1993.',
+				'source_type'         => NCTB_Question_Types::SOURCE_NCTB_TEXTBOOK,
+				'verification_status' => NCTB_Question_Types::STATUS_VERIFIED,
+				'sort_order'          => 1,
+				'options'             => array(
+					array( 'option_key' => 'A', 'option_text' => '1990', 'is_correct' => 0, 'feedback' => 'Incorrect. 1990 was the year Mandela was released from prison.' ),
+					array( 'option_key' => 'B', 'option_text' => '1993', 'is_correct' => 1, 'feedback' => 'Correct! Nelson Mandela shared the Nobel Peace Prize with F.W. de Klerk in 1993.' ),
+					array( 'option_key' => 'C', 'option_text' => '1994', 'is_correct' => 0, 'feedback' => 'Incorrect. In 1994, Mandela became South Africa\'s first black president.' ),
+					array( 'option_key' => 'D', 'option_text' => '2004', 'is_correct' => 0, 'feedback' => 'Incorrect. In 2004, Mandela formally retired from public life.' ),
+				),
+			),
+
+			// 2. MCQ Vocabulary Context
+			array(
+				'lesson_id'           => $lesson_id,
+				'question_type'       => NCTB_Question_Types::TYPE_MCQ,
+				'prompt'              => 'According to the passage, what does the term "apartheid" refer to?',
+				'content'             => '"...Nelson Mandela guided South Africa from the shackles of apartheid to a multi-racial democracy..."',
+				'difficulty'          => NCTB_Question_Types::DIFFICULTY_MEDIUM,
+				'correct_answer'      => 'A',
+				'explanation'         => 'Apartheid refers to the institutionalized system of racial segregation and white minority oppression in South Africa.',
+				'hint_1'              => 'Think about the root meaning of racial division and legal oppression in South Africa.',
+				'hint_2'              => 'It refers to the discriminatory system Mandela spent his life fighting against.',
+				'hint_3'              => 'It is the system of racial segregation.',
+				'source_type'         => NCTB_Question_Types::SOURCE_NCTB_TEXTBOOK,
+				'verification_status' => NCTB_Question_Types::STATUS_VERIFIED,
+				'sort_order'          => 2,
+				'options'             => array(
+					array( 'option_key' => 'A', 'option_text' => 'A state policy of racial segregation and white minority rule', 'is_correct' => 1, 'feedback' => 'Correct! Apartheid was South Africa\'s official system of racial segregation.' ),
+					array( 'option_key' => 'B', 'option_text' => 'A peaceful multi-racial democratic government treaty', 'is_correct' => 0, 'feedback' => 'Incorrect. That describes democracy, which replaced apartheid.' ),
+					array( 'option_key' => 'C', 'option_text' => 'An international trade and economic agreement', 'is_correct' => 0, 'feedback' => 'Incorrect. Apartheid was a domestic system of political oppression.' ),
+					array( 'option_key' => 'D', 'option_text' => 'An annual award celebrating human rights activism', 'is_correct' => 0, 'feedback' => 'Incorrect. That relates to the Nobel Peace Prize.' ),
+				),
+			),
+
+			// 3. Fill in the Blank
+			array(
+				'lesson_id'           => $lesson_id,
+				'question_type'       => NCTB_Question_Types::TYPE_FILL_IN_BLANK,
+				'prompt'              => 'Complete the sentence: Nelson Mandela was imprisoned for nearly ______ years for his fight against minority rule.',
+				'content'             => 'Nelson Mandela spent nearly three decades in captivity on Robben Island.',
+				'difficulty'          => NCTB_Question_Types::DIFFICULTY_MEDIUM,
+				'correct_answer'      => '27 | 30 | three decades | twenty seven | twenty-seven | 27 years',
+				'explanation'         => 'Nelson Mandela was imprisoned for 27 years (nearly three decades, from 1962 until 1990) before his release.',
+				'hint_1'              => 'Recall the number of years Mandela spent on Robben Island (or "nearly three decades").',
+				'hint_2'              => 'The exact number is twenty-seven (27).',
+				'source_type'         => NCTB_Question_Types::SOURCE_NCTB_TEXTBOOK,
+				'verification_status' => NCTB_Question_Types::STATUS_VERIFIED,
+				'sort_order'          => 3,
+			),
+
+			// 4. Short Text Answer
+			array(
+				'lesson_id'           => $lesson_id,
+				'question_type'       => NCTB_Question_Types::TYPE_SHORT_ANSWER,
+				'prompt'              => 'Name the white South African president with whom Nelson Mandela shared the 1993 Nobel Peace Prize.',
+				'content'             => 'Identify the leader who released Mandela from prison and negotiated the end of apartheid.',
+				'difficulty'          => NCTB_Question_Types::DIFFICULTY_MEDIUM,
+				'correct_answer'      => 'F.W. de Klerk | FW de Klerk | de Klerk | Frederik Willem de Klerk | Frederik de Klerk',
+				'explanation'         => 'Mandela shared the 1993 Nobel Peace Prize with F.W. de Klerk, who negotiated the end of apartheid.',
+				'hint_1'              => 'Review paragraph 3 for the name of the president.',
+				'hint_2'              => 'His initials are F.W. and his last name begins with "de".',
+				'source_type'         => NCTB_Question_Types::SOURCE_NCTB_TEXTBOOK,
+				'verification_status' => NCTB_Question_Types::STATUS_VERIFIED,
+				'sort_order'          => 4,
+			),
+
+			// 5. Error Correction
+			array(
+				'lesson_id'           => $lesson_id,
+				'question_type'       => NCTB_Question_Types::TYPE_ERROR_CORRECTION,
+				'prompt'              => 'Identify and correct the verb error: <br><em>"Nelson Mandela, who <u>have spent</u> 27 years in prison, negotiated the peace accords."</em>',
+				'content'             => 'Nelson Mandela, who have spent 27 years in prison, negotiated the peace accords.',
+				'difficulty'          => NCTB_Question_Types::DIFFICULTY_HARD,
+				'correct_answer'      => 'had spent | spent',
+				'explanation'         => 'Because the imprisonment occurred prior to the past negotiations, the correct grammatical form is the Past Perfect ("had spent") or Simple Past ("spent"), not the present perfect ("have spent").',
+				'hint_1'              => 'Notice the verb "have spent". For an action completed prior to another past event, use Past Perfect.',
+				'hint_2'              => 'Replace "have spent" with "had spent".',
+				'source_type'         => NCTB_Question_Types::SOURCE_NCTB_TEXTBOOK,
+				'verification_status' => NCTB_Question_Types::STATUS_VERIFIED,
+				'sort_order'          => 5,
 			),
 		);
 	}
