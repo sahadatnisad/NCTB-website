@@ -97,6 +97,8 @@ require_once NCTB_LH_PATH . 'includes/class-nctb-board-service.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-board-admin.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-board-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-board-analytics-service.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-seo.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-notifications.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-activator.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-deactivator.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-plugin.php';

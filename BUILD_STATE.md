@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 15 — Production launch readiness (English only, students only)**
+**PHASE 16 — Teacher role & unified portal ("Shikkhok Hub")**
 
-> Read the "PHASE 15" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Connect live payment gateways (bKash, Nagad, SSLCommerz) to WooCommerce → entitlements, setup transactional email, SEO meta/sitemaps, privacy pages, and production DB backup schedule.
+> Read the "PHASE 16" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Implement `nctb_teacher` role and capabilities, `wp_nctb_teacher_profiles` custom table (migration 0.16.0), teacher onboarding wizard, and dedicated teacher dashboard shell on the unified portal.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -42,8 +42,8 @@
 | 12 | Board pattern analytics | ✅ Done |
 | 13 | English MVP content library | ✅ Done |
 | 14 | Private beta: security, performance & QA | ✅ Done |
-| 15 | Production launch readiness | 🔜 **NEXT** |
-| 16 | Teacher role & unified portal | ⬜ Not started |
+| 15 | Production launch readiness | ✅ Done |
+| 16 | Teacher role & unified portal | 🔜 **NEXT** |
 | 17 | Modules & video-course system | ⬜ Not started |
 | 18 | Notes & explanations content type | ⬜ Not started |
 | 19 | AI as a paid product (students + teachers) | ⬜ Not started |
@@ -133,4 +133,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Integrated the 6 Master Blueprints from Claude (`00_INDEX.md` through `05_PUBLISHING_REQUIREMENTS_RISKS_COSTS.md`) into `docs/plans/`; hardened all 6 REST controllers (`class-nctb-ai-rest.php`, `class-nctb-progress-rest.php`, `class-nctb-practice-rest.php`, `class-nctb-dashboard-rest.php`, `class-nctb-entitlements-rest.php`, `class-nctb-skills-rest.php`) to eliminate insecure developer fallbacks and isolate student data; added native Google Gemini provider support to `NCTB_AI_Adapter`; implemented low-bandwidth YouTube Facade component in `theme-ui.js` and `theme-ui.css` for 3G network savings; audited 56 `$wpdb` SQL database queries.
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_14.md`](./docs/build-history/BUILD_REPORT_PHASE_14.md)
+
+### ✅ Phase 15 — Production launch readiness
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Enhanced WooCommerce commerce listener (`NCTB_Commerce`) with Bangladeshi mobile financial services transaction parsing (bKash, Nagad, Rocket, SSLCommerz); Educational SEO & Schema.org Structured Data service (`NCTB_SEO`) outputting `Course`, `LearningResource`, and `BreadcrumbList` JSON-LD microdata; Bilingual Transactional Notification & Email service (`NCTB_Notifications`); Terms of Service (`page-terms.php`) and Privacy Policy compliance updates; Automated cross-platform MySQL backup and restore operations (`scripts/backup_db.*`, `scripts/restore_db.*`); Production secrets configuration template (`config/secrets.example.php`).
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_15.md`](./docs/build-history/BUILD_REPORT_PHASE_15.md)
+
 

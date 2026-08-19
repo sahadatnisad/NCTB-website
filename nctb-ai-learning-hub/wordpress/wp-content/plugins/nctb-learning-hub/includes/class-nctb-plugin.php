@@ -50,6 +50,7 @@ final class NCTB_Plugin {
 		add_action( 'init', array( 'NCTB_Roles', 'register_roles' ) );
 		add_action( 'init', array( 'NCTB_Student_Views', 'init' ) );
 		add_action( 'init', array( 'NCTB_Commerce', 'init' ) );
+		add_action( 'init', array( 'NCTB_SEO', 'init' ) );
 
 		// Curriculum backbone (CPTs, taxonomies, editor meta boxes, admin).
 		$this->load_curriculum();

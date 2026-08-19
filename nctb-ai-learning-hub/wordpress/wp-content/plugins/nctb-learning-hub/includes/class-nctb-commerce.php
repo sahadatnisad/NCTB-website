@@ -61,6 +61,19 @@ class NCTB_Commerce {
 			return;
 		}
 
+		$payment_method = $order->get_payment_method();
+		$transaction_id = $order->get_transaction_id();
+
+		// Extract Bangladeshi MFS transaction IDs from order meta if present
+		$mfs_trx = $order->get_meta( '_bkash_trx_id' )
+			?: $order->get_meta( '_nagad_trx_id' )
+			?: $order->get_meta( '_rocket_trx_id' )
+			?: $order->get_meta( '_sslcommerz_val_id' )
+			?: $order->get_meta( 'transaction_id' )
+			?: $transaction_id;
+
+		$granted_items = array();
+
 		foreach ( $order->get_items() as $item ) {
 			$product_id = $item->get_product_id();
 			$ent_type   = get_post_meta( $product_id, self::META_ENTITLEMENT_TYPE, true );
@@ -77,9 +90,15 @@ class NCTB_Commerce {
 				$expires_at = gmdate( 'Y-m-d H:i:s', strtotime( "+{$duration} days", current_time( 'timestamp', true ) ) );
 			}
 
-			$notes = sprintf( 'Purchased via WooCommerce Order #%d', $order_id );
+			$gateway_label = ! empty( $payment_method ) ? strtoupper( $payment_method ) : 'WC-GATEWAY';
+			$notes         = sprintf(
+				'Purchased via %s (Order #%d, TrxID: %s)',
+				$gateway_label,
+				$order_id,
+				$mfs_trx ? $mfs_trx : 'N/A'
+			);
 
-			NCTB_Entitlements::grant_entitlement(
+			$ent_id = NCTB_Entitlements::grant_entitlement(
 				$user_id,
 				$ent_type,
 				$item_type,
@@ -91,15 +110,30 @@ class NCTB_Commerce {
 				$notes
 			);
 
+			$granted_items[] = array(
+				'product_name' => $item->get_name(),
+				'ent_type'     => $ent_type,
+				'item_type'    => $item_type,
+				'duration'     => $duration,
+				'expires_at'   => $expires_at,
+			);
+
 			NCTB_Logger::info(
 				'Granted entitlement from WooCommerce order',
 				array(
-					'user_id'    => $user_id,
-					'order_id'   => $order_id,
-					'product_id' => $product_id,
-					'ent_type'   => $ent_type,
+					'user_id'        => $user_id,
+					'order_id'       => $order_id,
+					'product_id'     => $product_id,
+					'ent_type'       => $ent_type,
+					'payment_method' => $payment_method,
+					'trx_id'         => $mfs_trx,
 				)
 			);
+		}
+
+		// Dispatch bilingual purchase receipt notification
+		if ( ! empty( $granted_items ) && class_exists( 'NCTB_Notifications' ) ) {
+			NCTB_Notifications::send_purchase_receipt( $user_id, $order_id, $granted_items, $order->get_total() );
 		}
 	}
 
