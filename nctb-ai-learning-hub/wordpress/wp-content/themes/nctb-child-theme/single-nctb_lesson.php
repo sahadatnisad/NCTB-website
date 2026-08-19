@@ -63,14 +63,19 @@ while ( have_posts() ) :
 			<?php endif; ?>
 		</header>
 
-		<?php if ( empty( $nctb_activities ) ) : ?>
-			<!-- Fallback if no activity blocks created yet -->
+		<?php
+		$nctb_access = class_exists( 'NCTB_Entitlements' ) ? NCTB_Entitlements::can_access_lesson( get_current_user_id(), $nctb_lesson_id ) : array( 'granted' => true );
+		if ( ! $nctb_access['granted'] ) :
+			echo class_exists( 'NCTB_Commerce' ) ? NCTB_Commerce::render_paywall_card( $nctb_lesson_id ) : '<div class="nctb-card"><h2>🔒 ' . esc_html__( 'Lesson Locked', 'nctb-theme' ) . '</h2></div>';
+		elseif ( empty( $nctb_activities ) ) :
+		?>
+			<!-- Fallback Static View if no activities exist -->
 			<?php if ( ! empty( $nctb_outcomes ) ) : ?>
-				<section class="nctb-outcomes">
+				<section class="nctb-outcomes-box">
 					<h2>🎯 <?php esc_html_e( 'Learning Outcomes', 'nctb-theme' ); ?></h2>
-					<ul>
-						<?php foreach ( $nctb_outcomes as $nctb_outcome ) : ?>
-							<li><?php echo esc_html( $nctb_outcome->outcome_text ); ?></li>
+					<ul class="nctb-outcomes-list">
+						<?php foreach ( $nctb_outcomes as $outcome ) : ?>
+							<li><?php echo esc_html( $outcome->outcome_text ); ?></li>
 						<?php endforeach; ?>
 					</ul>
 				</section>

@@ -1845,3 +1845,157 @@
 	background: #0b6e4f;
 	border-radius: 999px;
 }
+
+/* ------------------------------------------------------------------ */
+/* Phase 8 — Paywall, Entitlements & Purchases Styles                 */
+/* ------------------------------------------------------------------ */
+
+/* Paywall Card */
+.nctb-paywall-card {
+	background: #ffffff;
+	border: 2px solid #e2e8f0;
+	border-radius: 18px;
+	padding: 2.25rem 1.5rem;
+	text-align: center;
+	box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+	margin: 1.5rem 0 2.5rem;
+}
+
+.paywall-badge {
+	display: inline-block;
+	background: #fef2f2;
+	color: #991b1b;
+	font-size: 0.8rem;
+	font-weight: 700;
+	padding: 0.25rem 0.75rem;
+	border-radius: 999px;
+	margin-bottom: 0.75rem;
+}
+
+.nctb-paywall-card h2 {
+	font-size: 1.5rem;
+	color: #0f172a;
+	margin: 0 0 0.5rem;
+}
+
+.paywall-desc {
+	color: #475569;
+	max-width: 540px;
+	margin: 0 auto 2rem;
+	font-size: 0.95rem;
+}
+
+.paywall-options-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1.25rem;
+	max-width: 680px;
+	margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+	.paywall-options-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.paywall-opt-box {
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	text-align: center;
+}
+
+.paywall-opt-box.featured {
+	background: #f0fdf4;
+	border: 2px solid #0b6e4f;
+	box-shadow: 0 4px 12px rgba(11, 110, 79, 0.1);
+}
+
+.opt-tag {
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #334155;
+	margin-bottom: 0.5rem;
+}
+
+.opt-tag.highlight {
+	color: #064e3b;
+}
+
+.opt-price {
+	font-size: 1.75rem;
+	font-weight: 800;
+	color: #0f172a;
+	margin-bottom: 0.5rem;
+}
+
+.opt-term {
+	font-size: 0.85rem;
+	font-weight: normal;
+	color: #64748b;
+}
+
+.opt-sub {
+	font-size: 0.8rem;
+	color: #64748b;
+	margin: 0 0 1.25rem;
+	min-height: 38px;
+}
+
+/* Purchases List */
+.nctb-purchases-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.nctb-purchase-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 14px;
+	padding: 1.25rem;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.purchase-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.5rem;
+}
+
+.purchase-type-badge {
+	background: #e0f2fe;
+	color: #0369a1;
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 0.2rem 0.5rem;
+	border-radius: 6px;
+}
+
+.purchase-status-badge.active {
+	background: #dcfce7;
+	color: #166534;
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 0.2rem 0.5rem;
+	border-radius: 6px;
+}
+
+.purchase-title {
+	font-size: 1.15rem;
+	color: #0f172a;
+	margin: 0 0 0.75rem;
+}
+
+.purchase-meta-grid {
+	display: flex;
+	gap: 1.5rem;
+	font-size: 0.85rem;
+	color: #475569;
+}

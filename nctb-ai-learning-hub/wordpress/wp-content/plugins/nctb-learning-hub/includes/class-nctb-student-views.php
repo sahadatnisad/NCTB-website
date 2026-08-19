@@ -28,6 +28,7 @@ class NCTB_Student_Views {
 		add_shortcode( 'nctb_mistakes', array( __CLASS__, 'render_mistakes' ) );
 		add_shortcode( 'nctb_revision_due', array( __CLASS__, 'render_revision_due' ) );
 		add_shortcode( 'nctb_progress', array( __CLASS__, 'render_progress' ) );
+		add_shortcode( 'nctb_my_purchases', array( __CLASS__, 'render_purchases' ) );
 	}
 
 	/**
@@ -248,6 +249,56 @@ class NCTB_Student_Views {
 					</div>
 				<?php endif; ?>
 			</section>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render My Purchases & Passes shortcode.
+	 *
+	 * @return string HTML output.
+	 */
+	public static function render_purchases() {
+		$user_id      = get_current_user_id() ?: 1;
+		$entitlements = class_exists( 'NCTB_Entitlements' ) ? NCTB_Entitlements::get_user_entitlements( $user_id ) : array();
+
+		ob_start();
+		?>
+		<div class="nctb-student-screen nctb-purchases-screen">
+			<header class="nctb-screen-header">
+				<h1>💳 <?php esc_html_e( 'My Purchases & Passes', 'nctb-learning-hub' ); ?></h1>
+				<p class="lead"><?php esc_html_e( 'আপনার সক্রিয় কোর্স পাস, লেসন অ্যাক্সেস এবং সাবস্ক্রিপশন বিশদ।', 'nctb-learning-hub' ); ?></p>
+			</header>
+
+			<?php if ( empty( $entitlements ) ) : ?>
+				<div class="nctb-empty-state">
+					<div class="empty-icon">🎟️</div>
+					<h3><?php esc_html_e( 'কোনো পেইড পাস সক্রিয় নেই', 'nctb-learning-hub' ); ?></h3>
+					<p><?php esc_html_e( 'ফ্রি লেসনগুলো যেকোনো সময় সরাসরি অধ্যয়ন করতে পারবেন। সম্পূর্ণ সিলেবাস আনলক করতে অল-অ্যাক্সেস পাস বেছে নিন।', 'nctb-learning-hub' ); ?></p>
+					<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="nctb-btn nctb-btn-primary">
+						📚 <?php esc_html_e( 'পাঠ্যবই ব্রাউজ করুন', 'nctb-learning-hub' ); ?>
+					</a>
+				</div>
+			<?php else : ?>
+				<div class="nctb-purchases-list">
+					<?php foreach ( $entitlements as $e ) : ?>
+						<article class="nctb-purchase-card">
+							<div class="purchase-head">
+								<span class="purchase-type-badge">🎟️ <?php echo esc_html( ucfirst( str_replace( '_', ' ', $e->entitlement_type ) ) ); ?></span>
+								<span class="purchase-status-badge active">✅ <?php echo esc_html( ucfirst( $e->status ) ); ?></span>
+							</div>
+
+							<h3 class="purchase-title"><?php echo esc_html( $e->item_title ); ?></h3>
+
+							<div class="purchase-meta-grid">
+								<div><strong>পাস শুরু:</strong> <?php echo esc_html( gmdate( 'd M Y', strtotime( $e->granted_at ) ) ); ?></div>
+								<div><strong>মেয়াদ:</strong> <?php echo esc_html( $e->expires_at ? gmdate( 'd M Y', strtotime( $e->expires_at ) ) : __( 'আজীবন অ্যাক্সেস (Lifetime)', 'nctb-learning-hub' ) ); ?></div>
+							</div>
+						</article>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
 		</div>
 		<?php
 		return ob_get_clean();

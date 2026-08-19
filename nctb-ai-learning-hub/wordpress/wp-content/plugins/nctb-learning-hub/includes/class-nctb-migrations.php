@@ -40,6 +40,7 @@ class NCTB_Migrations {
 			'0.4.0' => array( __CLASS__, 'upgrade_to_0_4_0' ),
 			'0.5.0' => array( __CLASS__, 'upgrade_to_0_5_0' ),
 			'0.6.0' => array( __CLASS__, 'upgrade_to_0_6_0' ),
+			'0.8.0' => array( __CLASS__, 'upgrade_to_0_8_0' ),
 		);
 	}
 
@@ -316,6 +317,59 @@ class NCTB_Migrations {
 		dbDelta( $sql_mastery );
 		dbDelta( $sql_mistakes );
 		dbDelta( $sql_schedule );
+	}
+
+	/**
+	 * Phase 8 schema: Entitlements and audit trail tables.
+	 *
+	 * Creates:
+	 *   - nctb_entitlements: per-lesson, pack, full-course, and subscription passes
+	 *   - nctb_entitlement_audit: audit log for all grants, revokes, and updates
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_8_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate   = $wpdb->get_charset_collate();
+		$entitlements      = self::table( 'entitlements' );
+		$entitlement_audit = self::table( 'entitlement_audit' );
+
+		$sql_entitlements = "CREATE TABLE {$entitlements} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL,
+			entitlement_type VARCHAR(32) NOT NULL DEFAULT 'direct_lesson',
+			item_type VARCHAR(32) NOT NULL DEFAULT 'lesson',
+			item_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			source_type VARCHAR(32) NOT NULL DEFAULT 'manual',
+			source_id VARCHAR(64) NOT NULL DEFAULT '',
+			status VARCHAR(20) NOT NULL DEFAULT 'active',
+			granted_by BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			granted_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			expires_at DATETIME NULL,
+			meta_data TEXT NULL,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY user_item (user_id, item_type, item_id),
+			KEY user_status (user_id, status)
+		) {$charset_collate};";
+
+		$sql_audit = "CREATE TABLE {$entitlement_audit} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			entitlement_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			user_id BIGINT UNSIGNED NOT NULL,
+			action VARCHAR(32) NOT NULL,
+			performed_by BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			notes TEXT NOT NULL,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY user_action (user_id, action)
+		) {$charset_collate};";
+
+		dbDelta( $sql_entitlements );
+		dbDelta( $sql_audit );
 	}
 
 	/**

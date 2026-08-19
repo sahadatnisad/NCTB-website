@@ -49,6 +49,7 @@ final class NCTB_Plugin {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( 'NCTB_Roles', 'register_roles' ) );
 		add_action( 'init', array( 'NCTB_Student_Views', 'init' ) );
+		add_action( 'init', array( 'NCTB_Commerce', 'init' ) );
 
 		// Curriculum backbone (CPTs, taxonomies, editor meta boxes, admin).
 		$this->load_curriculum();
@@ -104,6 +105,9 @@ final class NCTB_Plugin {
 
 		$dashboard_rest = new NCTB_Dashboard_REST();
 		$dashboard_rest->register_routes();
+
+		$entitlements_rest = new NCTB_Entitlements_REST();
+		$entitlements_rest->register_routes();
 	}
 
 	/**
@@ -127,6 +131,9 @@ final class NCTB_Plugin {
 
 			$q_admin = new NCTB_Question_Admin();
 			$q_admin->init();
+
+			$ent_admin = new NCTB_Entitlements_Admin();
+			$ent_admin->init();
 		}
 	}
 

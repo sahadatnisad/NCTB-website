@@ -13,10 +13,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 8 — Payments and entitlements**
+**PHASE 9 — Contextual AI tutor**
 
-> Read the "PHASE 8" section in [README.md](./README.md#phase-8--payments-and-entitlements) for full requirements before building.
-> Allow free, per-lesson and subscription access safely. Build WooCommerce integration, lesson↔product mapping, centralized entitlement service (`NCTB_Entitlements`), access-denied/paywall UX, My Purchases page, and admin grant/revoke auditability.
+> Read the "PHASE 9" section in [README.md](./README.md#phase-9--contextual-ai-tutor) for full requirements before building.
+> Build the lesson-anchored contextual AI tutor. System prompts strictly grounded in current lesson text, outcomes, and vocabulary; server-side AI adapter; token budget tracker; chat drawer interface in theme. Never reveal quiz answers directly; always scaffold thinking.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -34,8 +34,8 @@
 | 5 | Practice and question engine | ✅ Done |
 | 6 | Progress, mastery, mistakes, spaced revision | ✅ Done |
 | 7 | Functional student dashboard | ✅ Done |
-| 8 | Payments and entitlements | 🔜 **NEXT** |
-| 9 | Contextual AI tutor | ⬜ Not started |
+| 8 | Payments and entitlements | ✅ Done |
+| 9 | Contextual AI tutor | 🔜 **NEXT** |
 | 10 | Writing, listening & speaking | ⬜ Not started |
 | 11 | Board-question database | ⬜ Not started |
 | 12 | Board pattern analytics | ⬜ Not started |
@@ -89,5 +89,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 7 — Functional student dashboard
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Centralized Dashboard Aggregation Service (`NCTB_Dashboard_Service`); rules-based home study guide layout with Continue Learning hero card (deep-linking to active activity step), Spaced Revision Due action widget, Needs Attention mistake alert widget, quick learning KPIs bar, and Enrolled Books curriculum progress bars with completion percentages; REST endpoint `GET /nctb/v1/student/dashboard`.
-- **Verified (runtime, Docker):** 18 automated tests passing (0 failures); all 54 PHP files linted clean; authenticated dashboard shortcode verified; all 8 main routes returning HTTP 200.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_7.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_7.md)
+
+### ✅ Phase 8 — Payments and entitlements
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Centralized Entitlement Service (`NCTB_Entitlements`) evaluating free status, direct purchases, unit/book packs, subscriptions, and admin grants; custom tables `wp_nctb_entitlements` and `wp_nctb_entitlement_audit` via migration `0.8.0`; WooCommerce integration listener (`NCTB_Commerce`); Access-denied paywall banner component; Admin Entitlements manager screen under Lessons (`edit.php?post_type=nctb_lesson&page=nctb-entitlements`); My Purchases page (`/purchases/`); REST API endpoints under `nctb/v1/entitlements/*`.
+- **Verified (runtime, Docker):** 17 automated tests passing (0 failures); all 58 PHP files linted clean; all 9 platform routes returning HTTP 200.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_8.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_8.md)

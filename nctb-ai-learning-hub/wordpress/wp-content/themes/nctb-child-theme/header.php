@@ -29,6 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="nav-link">ভুলখাতা (Mistakes)</a>
 			<a href="<?php echo esc_url( home_url( '/revision' ) ); ?>" class="nav-link">রিভিশন (Revision)</a>
 			<a href="<?php echo esc_url( home_url( '/progress' ) ); ?>" class="nav-link">অগ্রগতি (Progress)</a>
+			<a href="<?php echo esc_url( home_url( '/purchases' ) ); ?>" class="nav-link">পাস (Passes)</a>
 			<?php if ( is_user_logged_in() ) :
 				$current_user_id = get_current_user_id();
 				$is_complete = class_exists( 'NCTB_Student_Profile' ) && NCTB_Student_Profile::is_onboarding_complete( $current_user_id );
