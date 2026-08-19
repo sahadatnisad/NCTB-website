@@ -1,4 +1,4 @@
-﻿# MASTER ROADMAP & BUILD CHECKLIST — NCTB AI LEARNING HUB
+# MASTER ROADMAP & BUILD CHECKLIST — NCTB AI LEARNING HUB
 
 > **Repository:** `https://github.com/sahadatnisad/NCTB-website`  
 > **Branch:** `main`  
@@ -56,8 +56,8 @@ Log in to WordPress admin once (`http://localhost:8080/wp-admin`). The `NCTB_Mig
 | **16** | Teacher role (`nctb_teacher`), `wp_nctb_teacher_profiles` (`0.16.0`), teacher onboarding & dashboard | Teachers | ✅ Completed | [`BUILD_REPORT_PHASE_16.md`](../build-history/BUILD_REPORT_PHASE_16.md) |
 | **17** | Modules & Video Courses (`nctb_module`), progress checklist table (`0.17.0`), course player & archive | Courses / Video | ✅ Completed | [`BUILD_REPORT_PHASE_17.md`](../build-history/BUILD_REPORT_PHASE_17.md) |
 | **18** | Revision Notes & Formula Sheets (`nctb_note`), KaTeX LaTeX math support, printable PDF handouts | Notes / Formulas | ✅ Completed | [`BUILD_REPORT_PHASE_18.md`](../build-history/BUILD_REPORT_PHASE_18.md) |
-| **19** | AI as a paid product: Teacher AI Lesson Planner & Quiz Maker tools, tiered quota packages | AI Commercialization | 🔜 **NEXT** | `Pending` |
-| **20** | Add ICT: Content-only proof of engine (HTML, C programming, logic gates, practicals) | Subject Expansion | ⬜ Not started | `Pending` |
+| **19** | AI as a paid product: Teacher AI Lesson Planner & Quiz Maker tools, tiered quota packages | AI Commercialization | ✅ Completed | [`BUILD_REPORT_PHASE_19.md`](../build-history/BUILD_REPORT_PHASE_19.md) |
+| **20** | Add ICT: Content-only proof of engine (HTML, C programming, logic gates, practicals) | Subject Expansion | 🔜 **NEXT** | `Pending` |
 | **21** | Maths Engine: KaTeX math input, deterministic formula matching, step-by-step guidance | Subject Expansion | ⬜ Not started | `Pending` |
 | **22** | Science Subjects: Physics, Chemistry, Biology notes, video masterclasses, and question banks | Subject Expansion | ⬜ Not started | `Pending` |
 | **23** | Extend to Class 6–8 (JSC / JDC) with parent-friendly onboarding and curriculum | Class Expansion | ⬜ Not started | `Pending` |

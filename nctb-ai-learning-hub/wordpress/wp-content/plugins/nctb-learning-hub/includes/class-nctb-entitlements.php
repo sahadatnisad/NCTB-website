@@ -23,6 +23,7 @@ class NCTB_Entitlements {
 	const TYPE_PACK_BOOK     = 'pack_book';
 	const TYPE_FULL_SUBJECT  = 'full_subject';
 	const TYPE_SUBSCRIPTION  = 'subscription';
+	const TYPE_AI_ACCESS     = 'ai_access';
 	const TYPE_ADMIN_GRANT   = 'admin_grant';
 
 	const STATUS_ACTIVE  = 'active';
@@ -182,6 +183,98 @@ class NCTB_Entitlements {
 		return array(
 			'granted'    => false,
 			'reason'     => 'locked',
+			'expires_at' => null,
+		);
+	}
+
+	/**
+	 * Check if a student or teacher is entitled to access AI features.
+	 *
+	 * Evaluates admin roles, active all-access subscriptions, dedicated AI access passes,
+	 * or initial free trial quota (3 questions).
+	 *
+	 * @param int $user_id User ID.
+	 * @return array<string,mixed> ['granted' => bool, 'reason' => string, 'expires_at' => string|null]
+	 */
+	public static function can_access_ai( $user_id ) {
+		$user_id = absint( $user_id );
+		if ( ! $user_id ) {
+			return array(
+				'granted'    => false,
+				'reason'     => 'auth_required',
+				'expires_at' => null,
+			);
+		}
+
+		// 1. Admin & Editor override
+		if ( user_can( $user_id, 'manage_options' ) || user_can( $user_id, 'edit_posts' ) ) {
+			return array(
+				'granted'    => true,
+				'reason'     => 'admin_role',
+				'expires_at' => null,
+			);
+		}
+
+		global $wpdb;
+		$ent_table = NCTB_Migrations::table( 'entitlements' );
+		$now       = current_time( 'mysql', true );
+
+		// 2. All-access subscription
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sub = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$ent_table} 
+				WHERE user_id = %d AND (item_type = 'all_access' OR entitlement_type = 'subscription') 
+				AND status = %s AND (expires_at IS NULL OR expires_at > %s) 
+				LIMIT 1",
+				$user_id,
+				self::STATUS_ACTIVE,
+				$now
+			)
+		);
+		if ( $sub ) {
+			return array(
+				'granted'    => true,
+				'reason'     => 'subscription',
+				'expires_at' => $sub->expires_at,
+			);
+		}
+
+		// 3. Dedicated AI Access Pass
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$ai_pass = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$ent_table} 
+				WHERE user_id = %d AND (item_type = 'ai_access' OR entitlement_type = 'ai_access') 
+				AND status = %s AND (expires_at IS NULL OR expires_at > %s) 
+				LIMIT 1",
+				$user_id,
+				self::STATUS_ACTIVE,
+				$now
+			)
+		);
+		if ( $ai_pass ) {
+			return array(
+				'granted'    => true,
+				'reason'     => 'ai_pass',
+				'expires_at' => $ai_pass->expires_at,
+			);
+		}
+
+		// 4. Free trial quota (allow up to 3 AI requests for new users)
+		$lifetime_ai_count = (int) get_user_meta( $user_id, '_nctb_ai_trial_count', true );
+		if ( $lifetime_ai_count < 3 ) {
+			return array(
+				'granted'    => true,
+				'reason'     => 'free_trial',
+				'expires_at' => null,
+				'trial_left' => 3 - $lifetime_ai_count,
+			);
+		}
+
+		return array(
+			'granted'    => false,
+			'reason'     => 'ai_paywall_required',
 			'expires_at' => null,
 		);
 	}

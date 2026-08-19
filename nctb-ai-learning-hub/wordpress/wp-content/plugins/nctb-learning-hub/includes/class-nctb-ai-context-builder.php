@@ -123,4 +123,103 @@ class NCTB_AI_Context_Builder {
 
 		return $prompt;
 	}
+
+	/**
+	 * Build prompt for Teacher 45-Minute Lesson Planner.
+	 *
+	 * @param string $class    Class Level (e.g. Class 9, HSC 1st).
+	 * @param string $subject  Subject Name.
+	 * @param string $topic    Topic or Chapter.
+	 * @param int    $duration Duration in minutes (default 45).
+	 * @return string Grounded prompt.
+	 */
+	public static function build_lesson_plan_prompt( $class, $subject, $topic, $duration = 45 ) {
+		return "You are an expert Bangladeshi Master Teacher & Pedagogical Consultant specializing in the NCTB National Curriculum.
+Generate a structured, highly practical {$duration}-minute classroom lesson plan for:
+- Target Class: {$class}
+- Subject: {$subject}
+- Topic: {$topic}
+
+Format the response in clean, professional Markdown with these exact sections:
+# 📋 পাঠ পরিকল্পনা (Lesson Plan): {$topic} ({$class} - {$subject})
+- **সময়:** {$duration} মিনিট
+- **সাধারণ ও শিখনফল (Learning Outcomes):** (3 measurable bullet points)
+- **প্রয়োজনীয় উপকরণ (Teaching Materials):** (Whiteboard, Markers, Flashcards, Handouts)
+
+---
+### ১. প্রারম্ভিক ও পূর্বজ্ঞান যাচাই (Warm-up & Hook - 8 মিনিট)
+- শিক্ষকের প্রাথমিক প্রশ্ন ও মনোযোগ আকর্ষণের কৌশল।
+
+### ২. মূল ধারণা উপস্থাপন ও পাঠদান (Direct Instruction & Modeling - 15 মিনিট)
+- সহজ বাংলায় ব্যাখ্যা, বোর্ডে লেখার জন্য কী-পয়েন্টস, এবং বাস্তবসম্মত উদাহরণ/এনালজি।
+
+### ৩. দলীয় / জোড়ায় অনুশীলন (Group / Pair Activity - 12 মিনিট)
+- শ্রেণিকক্ষের শিক্ষার্থীদের সম্পৃক্ত করার জন্য ১টি নির্দিষ্ট সমস্যা সমাধান বা টাস্ক।
+
+### ৪. মূল্যায়ন ও সমাপ্তি (Formative Assessment & Exit Ticket - 10 মিনিট)
+- ৩টি কুইক প্রশ্ন এবং ১টি সংক্ষিপ্ত বাড়ির কাজ।
+
+**ভাষা নির্দেশিকা:** সম্পূর্ণ পরিকল্পনাটি বাংলাদেশি শিক্ষকদের জন্য স্পষ্ট ও প্রাঞ্জল বাংলায় উপস্থাপন করুন, সাথে প্রয়োজনীয় ইংরেজি টার্ম বন্ধনীতে রাখুন।";
+	}
+
+	/**
+	 * Build prompt for Classroom Quiz & Test Generator.
+	 *
+	 * @param string $class      Class Level.
+	 * @param string $subject    Subject Name.
+	 * @param string $topic      Topic Name.
+	 * @param int    $count      Number of questions.
+	 * @param string $difficulty Difficulty level (foundation, medium, advanced).
+	 * @return string Grounded prompt.
+	 */
+	public static function build_quiz_maker_prompt( $class, $subject, $topic, $count = 5, $difficulty = 'medium' ) {
+		return "You are a senior NCTB Board Examiner and Item Writer.
+Generate a balanced, classroom-ready quiz of {$count} questions for:
+- Target Class: {$class}
+- Subject: {$subject}
+- Topic: {$topic}
+- Difficulty: {$difficulty}
+
+Format the response in clean Markdown with 2 separate sections:
+
+# 📝 শ্রেণিকক্ষ মূল্যায়ন পরীক্ষা (Class Test Paper)
+- **শ্রেণি:** {$class} | **বিষয়:** {$subject} | **টপিক:** {$topic}
+- **পূর্ণমান:** " . ( $count * 2 ) . " | **সময়:** " . ( $count * 3 ) . " মিনিট
+
+(List {$count} authentic, syllabus-accurate questions. Include a mix of Multiple Choice Questions with options A, B, C, D, and Fill in the Blanks / Short Concept questions).
+
+---
+# 🔑 উত্তরপত্র ও মূল্যায়ন নির্দেশিকা (Answer Key & Grading Rubric)
+(Provide step-by-step correct answers and 1-line explanations for each question so the teacher can quickly grade and explain in class).";
+	}
+
+	/**
+	 * Build prompt for Student Misconception Diagnosis Tool.
+	 *
+	 * @param string $class   Class Level.
+	 * @param string $subject Subject Name.
+	 * @param string $topic   Topic Name.
+	 * @return string Grounded prompt.
+	 */
+	public static function build_misconception_prompt( $class, $subject, $topic ) {
+		return "You are a cognitive educational diagnostician specializing in secondary and higher secondary education in Bangladesh.
+Analyze student common misconceptions and board exam pitfalls for:
+- Class: {$class}
+- Subject: {$subject}
+- Topic: {$topic}
+
+Provide a structured remedial guide in Markdown:
+# 🔍 ভুল ধারণা বিশ্লেষণ ও প্রতিকার নির্দেশিকা (Misconception & Remedial Guide)
+
+### ১. শিক্ষার্থীরা যেখানে সবচেয়ে বেশি ভুল করে (Top 3 Common Pitfalls)
+- Identify 3 exact conceptual mistakes students repeatedly make in board exams.
+
+### ২. সঠিক ধারণা বনাম ভুল ধারণার তুলনা (Contrast Table)
+- Create a clear table with: **ভুল ধারণা (Wrong Intuition)** | **সঠিক ধারণা (Correct Concept)** | **বোর্ড পরীক্ষার ট্রিকস**
+
+### ৩. ক্লাসরুমে শিক্ষকের প্রতিকারমূলক পদক্ষেপ (Actionable Remedial Strategy)
+- 2 practical classroom demonstrations or analogies to permanently clarify this confusion.
+- 1 diagnostic practice problem with common trap options.";
+	}
 }
+

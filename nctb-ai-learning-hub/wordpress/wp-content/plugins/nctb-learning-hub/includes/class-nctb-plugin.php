@@ -132,6 +132,9 @@ final class NCTB_Plugin {
 
 		$notes_rest = new NCTB_Notes_REST();
 		$notes_rest->register_routes();
+
+		$teacher_ai_rest = new NCTB_Teacher_AI_REST();
+		$teacher_ai_rest->register_routes();
 	}
 
 	/**

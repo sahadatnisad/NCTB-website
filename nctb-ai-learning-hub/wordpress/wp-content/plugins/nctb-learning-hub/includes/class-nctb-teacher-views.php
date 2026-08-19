@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Teacher Views & Shortcodes ("Shikkhok Hub") (Phase 16).
  *
@@ -315,6 +315,126 @@ class NCTB_Teacher_Views {
 				</div>
 			</div>
 
+			<!-- Teacher AI Pedagogical Workbench (Phase 19) -->
+			<div class="teacher-ai-workbench-card" id="teacher-ai-workbench">
+				<div class="workbench-header">
+					<div class="workbench-title-wrap">
+						<span class="ai-badge">🤖 NCTB Teacher AI</span>
+						<h2>শিক্ষক এআই ওয়ার্কবেঞ্চ (AI Pedagogical Assistant)</h2>
+						<p>শ্রেণিকক্ষের পাঠ পরিকল্পনা, কুইজ পেপার এবং ভুল ধারণা বিশ্লেষণ তৈরি করুন এক ক্লিকে।</p>
+					</div>
+					<div class="workbench-quota-badge" id="ai-quota-display">
+						<span>⏳ দৈনিক এআই কোটা: যাচাই হচ্ছে...</span>
+					</div>
+				</div>
+
+				<!-- Workbench Tabs Navigation -->
+				<div class="workbench-nav-tabs">
+					<button type="button" class="tab-btn active" data-tab="lesson-planner">📝 ৪৫-মিনিট লেসন প্ল্যানার</button>
+					<button type="button" class="tab-btn" data-tab="quiz-maker">⚡ ক্লাসরুম কুইজ ও প্রশ্নপত্র</button>
+					<button type="button" class="tab-btn" data-tab="misconceptions">🔍 ভুল ধারণা ও প্রতিকার গাইড</button>
+				</div>
+
+				<!-- Tab 1: Lesson Planner Form -->
+				<div class="workbench-tab-pane active" id="tab-lesson-planner">
+					<div class="workbench-form-grid">
+						<div class="nctb-form-group">
+							<label>টার্গেট শ্রেণি</label>
+							<select id="lp-class" class="nctb-input">
+								<option value="Class 9-10 (SSC)">Class 9-10 (SSC)</option>
+								<option value="HSC 1st Year">HSC 1st Year (Class 11)</option>
+								<option value="HSC 2nd Year">HSC 2nd Year (Class 12)</option>
+								<option value="Class 8 (JSC)">Class 8 (JSC)</option>
+								<option value="Class 6-7">Class 6-7</option>
+							</select>
+						</div>
+						<div class="nctb-form-group">
+							<label>বিষয়</label>
+							<input type="text" id="lp-subject" class="nctb-input" value="English 2nd Paper" placeholder="উদাঃ English, ICT, Math, Physics">
+						</div>
+						<div class="nctb-form-group">
+							<label>টপিক / অধ্যায়</label>
+							<input type="text" id="lp-topic" class="nctb-input" value="Right Form of Verbs: Conditionals" placeholder="উদাঃ Modifiers, Right Form of Verbs, ইত্যাদি">
+						</div>
+						<div class="nctb-form-group">
+							<label>ক্লাসের সময়কাল</label>
+							<select id="lp-duration" class="nctb-input">
+								<option value="45">৪৫ মিনিট (স্ট্যান্ডার্ড)</option>
+								<option value="40">৪০ মিনিট</option>
+								<option value="50">৫০ মিনিট</option>
+							</select>
+						</div>
+					</div>
+					<button type="button" class="nctb-btn nctb-btn-primary" id="btn-generate-lesson-plan">🚀 পাঠ পরিকল্পনা তৈরি করুন</button>
+				</div>
+
+				<!-- Tab 2: Quiz Maker Form -->
+				<div class="workbench-tab-pane" id="tab-quiz-maker" style="display:none;">
+					<div class="workbench-form-grid">
+						<div class="nctb-form-group">
+							<label>টার্গেট শ্রেণি</label>
+							<select id="qm-class" class="nctb-input">
+								<option value="Class 10 (SSC)">Class 10 (SSC)</option>
+								<option value="HSC 2nd Year">HSC 2nd Year</option>
+								<option value="Class 9">Class 9</option>
+								<option value="Class 8 (JSC)">Class 8 (JSC)</option>
+							</select>
+						</div>
+						<div class="nctb-form-group">
+							<label>বিষয়</label>
+							<input type="text" id="qm-subject" class="nctb-input" value="English 1st Paper" placeholder="উদাঃ English, ICT, Math">
+						</div>
+						<div class="nctb-form-group">
+							<label>টপিক / প্যাসেজ</label>
+							<input type="text" id="qm-topic" class="nctb-input" value="Nelson Mandela Comprehension & Vocabulary" placeholder="উদাঃ Completing Sentences">
+						</div>
+						<div class="nctb-form-group">
+							<label>প্রশ্নের সংখ্যা ও মান</label>
+							<select id="qm-count" class="nctb-input">
+								<option value="5">৫টি প্রশ্ন (কুইক ক্লাস টেস্ট)</option>
+								<option value="10">১০টি প্রশ্ন (মডেল টেস্ট)</option>
+							</select>
+						</div>
+					</div>
+					<button type="button" class="nctb-btn nctb-btn-primary" id="btn-generate-quiz">⚡ প্রশ্নপত্র ও উত্তরমালা তৈরি করুন</button>
+				</div>
+
+				<!-- Tab 3: Misconceptions Form -->
+				<div class="workbench-tab-pane" id="tab-misconceptions" style="display:none;">
+					<div class="workbench-form-grid">
+						<div class="nctb-form-group">
+							<label>টার্গেট শ্রেণি</label>
+							<select id="mc-class" class="nctb-input">
+								<option value="HSC 2nd Year">HSC 2nd Year</option>
+								<option value="SSC (Class 10)">SSC (Class 10)</option>
+								<option value="Class 8 (JSC)">Class 8</option>
+							</select>
+						</div>
+						<div class="nctb-form-group">
+							<label>বিষয়</label>
+							<input type="text" id="mc-subject" class="nctb-input" value="English Grammar" placeholder="বিষয়">
+						</div>
+						<div class="nctb-form-group" style="grid-column: span 2;">
+							<label>টপিক</label>
+							<input type="text" id="mc-topic" class="nctb-input" value="Modifiers vs Connectors" placeholder="টপিক">
+						</div>
+					</div>
+					<button type="button" class="nctb-btn nctb-btn-primary" id="btn-generate-misconceptions">🔍 ভুল ধারণা বিশ্লেষণ করুন</button>
+				</div>
+
+				<!-- AI Output Display Box -->
+				<div class="workbench-output-box" id="workbench-output-box" style="display:none;">
+					<div class="output-header-bar">
+						<span class="output-title">📄 এআই ফলাফল</span>
+						<div class="output-actions">
+							<button type="button" class="nctb-btn nctb-btn-sm nctb-btn-outline" id="btn-copy-ai-output">📋 কপি করুন</button>
+							<button type="button" class="nctb-btn nctb-btn-sm nctb-btn-outline" onclick="window.print();">🖨️ প্রিন্ট / PDF</button>
+						</div>
+					</div>
+					<div class="output-content nctb-prose" id="workbench-output-content"></div>
+				</div>
+			</div>
+
 			<!-- Teaching Classes & Subjects Widget -->
 			<div class="teacher-classes-card">
 				<h3>📖 আপনার পাঠদানের বিষয় ও শ্রেণিসমূহ</h3>
@@ -336,6 +456,134 @@ class NCTB_Teacher_Views {
 				</div>
 			</div>
 		</div>
+
+		<!-- Teacher AI Workbench Script -->
+		<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const nonce = '<?php echo esc_js( wp_create_nonce( 'wp_rest' ) ); ?>';
+			const baseAiUrl = '<?php echo esc_url_raw( rest_url( 'nctb/v1/teacher/ai/' ) ); ?>';
+
+			const quotaDisplay = document.getElementById('ai-quota-display');
+			const outputBox = document.getElementById('workbench-output-box');
+			const outputContent = document.getElementById('workbench-output-content');
+			const copyBtn = document.getElementById('btn-copy-ai-output');
+
+			// Refresh Quota
+			function checkQuota() {
+				fetch(baseAiUrl + 'quota', {
+					headers: { 'X-WP-Nonce': nonce }
+				}).then(r => r.json()).then(res => {
+					if (quotaDisplay && res.usage) {
+						quotaDisplay.innerHTML = `<span>⚡ দৈনিক এআই কোটা: ${res.usage.remaining} / ${res.usage.daily_limit} বাকি</span>`;
+					}
+				}).catch(() => {});
+			}
+			checkQuota();
+
+			// Tab Switching
+			document.querySelectorAll('.workbench-nav-tabs .tab-btn').forEach(btn => {
+				btn.addEventListener('click', function() {
+					document.querySelectorAll('.workbench-nav-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+					document.querySelectorAll('.workbench-tab-pane').forEach(p => p.style.display = 'none');
+
+					this.classList.add('active');
+					const tabId = this.getAttribute('data-tab');
+					const pane = document.getElementById('tab-' + tabId);
+					if (pane) pane.style.display = 'block';
+				});
+			});
+
+			function callAi(endpoint, body, btn) {
+				const originalText = btn.innerHTML;
+				btn.disabled = true;
+				btn.innerHTML = '⏳ এআই তৈরি করছে...';
+				outputBox.style.display = 'none';
+
+				fetch(baseAiUrl + endpoint, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
+					body: JSON.stringify(body)
+				}).then(r => r.json()).then(res => {
+					btn.disabled = false;
+					btn.innerHTML = originalText;
+
+					if (res.code === 'ai_paywall_required') {
+						outputBox.style.display = 'block';
+						outputContent.innerHTML = `<div class="nctb-paywall-notice">
+							<h3>🔒 এআই এক্সেস পাস প্রয়োজন</h3>
+							<p>${res.message}</p>
+							<a href="${res.data.upgrade_url}" class="nctb-btn nctb-btn-primary">⭐ এআই সাবস্ক্রিপশন নিন</a>
+						</div>`;
+						return;
+					}
+
+					if (res.success) {
+						outputBox.style.display = 'block';
+						const text = res.plan || res.quiz || res.guide || '';
+						outputContent.innerHTML = text.replace(/\\n/g, '<br>').replace(/### (.*?)(<br>|$)/g, '<h3>$1</h3>').replace(/## (.*?)(<br>|$)/g, '<h2>$1</h2>').replace(/# (.*?)(<br>|$)/g, '<h1>$1</h1>').replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
+						checkQuota();
+						outputBox.scrollIntoView({ behavior: 'smooth' });
+					} else {
+						alert(res.message || 'Error running AI tool');
+					}
+				}).catch(() => {
+					btn.disabled = false;
+					btn.innerHTML = originalText;
+					alert('Connection error');
+				});
+			}
+
+			// Generate Lesson Plan
+			const btnLp = document.getElementById('btn-generate-lesson-plan');
+			if (btnLp) {
+				btnLp.addEventListener('click', function() {
+					callAi('lesson-plan', {
+						class: document.getElementById('lp-class').value,
+						subject: document.getElementById('lp-subject').value,
+						topic: document.getElementById('lp-topic').value,
+						duration: parseInt(document.getElementById('lp-duration').value)
+					}, this);
+				});
+			}
+
+			// Generate Quiz
+			const btnQm = document.getElementById('btn-generate-quiz');
+			if (btnQm) {
+				btnQm.addEventListener('click', function() {
+					callAi('quiz-maker', {
+						class: document.getElementById('qm-class').value,
+						subject: document.getElementById('qm-subject').value,
+						topic: document.getElementById('qm-topic').value,
+						count: parseInt(document.getElementById('qm-count').value),
+						difficulty: 'medium'
+					}, this);
+				});
+			}
+
+			// Generate Misconceptions
+			const btnMc = document.getElementById('btn-generate-misconceptions');
+			if (btnMc) {
+				btnMc.addEventListener('click', function() {
+					callAi('misconceptions', {
+						class: document.getElementById('mc-class').value,
+						subject: document.getElementById('mc-subject').value,
+						topic: document.getElementById('mc-topic').value
+					}, this);
+				});
+			}
+
+			// Copy Output
+			if (copyBtn) {
+				copyBtn.addEventListener('click', function() {
+					navigator.clipboard.writeText(outputContent.innerText).then(() => {
+						const orig = copyBtn.innerText;
+						copyBtn.innerText = '✓ কপি হয়েছে!';
+						setTimeout(() => copyBtn.innerText = orig, 2000);
+					});
+				});
+			}
+		});
+		</script>
 		<?php
 		return ob_get_clean();
 	}

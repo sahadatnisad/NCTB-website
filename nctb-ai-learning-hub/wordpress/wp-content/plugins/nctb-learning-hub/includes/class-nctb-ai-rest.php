@@ -133,9 +133,9 @@ class NCTB_AI_REST extends WP_REST_Controller {
 		$question_id = absint( $request['question_id'] );
 		$step_num    = absint( $request['step_num'] );
 
-		// Check access to lesson and AI capabilities
+		// 1. Check access to lesson
 		$access = NCTB_Entitlements::can_access_lesson( $user_id, $lesson_id );
-		if ( ! $access['can_access'] ) {
+		if ( ! $access['granted'] ) {
 			return new WP_Error(
 				'nctb_access_denied',
 				$access['reason'] ?? __( 'You do not have access to this lesson.', 'nctb-learning-hub' ),
@@ -143,7 +143,27 @@ class NCTB_AI_REST extends WP_REST_Controller {
 			);
 		}
 
+		// 2. Check AI Access Entitlement (All-Access Pass / AI Pass / Free Trial)
+		$ai_ent = NCTB_Entitlements::can_access_ai( $user_id );
+		if ( ! $ai_ent['granted'] ) {
+			return new WP_Error(
+				'ai_paywall_required',
+				__( 'Active AI Pass or Subscription required to use AI Tutor.', 'nctb-learning-hub' ),
+				array(
+					'status'      => 403,
+					'upgrade_url' => home_url( '/pricing' ),
+					'reason'      => $ai_ent['reason'],
+				)
+			);
+		}
+
 		$response = NCTB_AI_Tutor::ask( $user_id, $lesson_id, $action_type, $prompt, $question_id, $step_num );
+
+		// Increment trial count if user is on free trial
+		if ( 'free_trial' === ( $ai_ent['reason'] ?? '' ) ) {
+			$cur = (int) get_user_meta( $user_id, '_nctb_ai_trial_count', true );
+			update_user_meta( $user_id, '_nctb_ai_trial_count', $cur + 1 );
+		}
 
 		return rest_ensure_response( $response );
 	}
