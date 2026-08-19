@@ -11,18 +11,19 @@
 ---
 
 ## 🧭 Instructions for Claude Code CLI
-1. **Current Active Phase:** **Phase 1 — Visual shell and navigation** (Next: Phase 2)
-2. **Environment & Command Rules:**
+1. **Read the protocol first:** Follow [AGENTS.md](./AGENTS.md) — it is the universal build protocol for any AI.
+2. **Current Active Phase:** Do **not** hardcode it here. The single source of truth is [BUILD_STATE.md](./BUILD_STATE.md) → "CURRENT PHASE TO BUILD". Read it first, build only that phase, update it last, then STOP for human review.
+3. **Environment & Command Rules:**
    - **PHP & MySQL are inside Docker:** Never run `php` on the host machine. Always use:
      ```bash
      docker exec nctb-wordpress php ...
      ```
    - **Always quote paths with spaces:** Always use `"..."` when `cd`-ing into directories with spaces.
    - **Do not download external binaries in loops:** The Docker container has PHP 8.3 and Apache pre-installed.
-3. **File Editing Best Practices:**
+4. **File Editing Best Practices:**
    - Always read the target file with the `Read` tool before attempting an `Edit`.
    - If an `Edit` tool call fails, use the `Write` tool to output the complete updated file directly.
-4. **When completing a Phase:** Update `BUILD_STATE.md` and create `docs/BUILD_REPORT_PHASE_<N>.md`.
+5. **When completing a Phase:** Create `nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_<N>.md`, update `BUILD_STATE.md`, then sync: `bash scripts/sync.sh "Phase <N> complete: <summary>"`. Then STOP.
 
 ---
 
