@@ -149,31 +149,39 @@ class NCTB_Progress_REST extends WP_REST_Controller {
 	/**
 	 * Check authentication and student permissions.
 	 *
-	 * @return bool
+	 * @return bool|WP_Error
 	 */
 	public function check_auth_permission() {
-		// Logged in or demo fallback for dev
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'rest_forbidden',
+				__( 'You must be logged in to view or update student progress data.', 'nctb-learning-hub' ),
+				array( 'status' => 401 )
+			);
+		}
 		return true;
 	}
 
 	/**
-	 * Get the effective student User ID.
+	 * Get the authenticated student User ID.
 	 *
 	 * @return int
 	 */
 	protected function get_student_id() {
-		$uid = get_current_user_id();
-		return $uid ?: 1;
+		return get_current_user_id();
 	}
 
 	/**
 	 * Save lesson step progression.
 	 *
 	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response
+	 * @return WP_REST_Response|WP_Error
 	 */
 	public function save_step_progress( $request ) {
-		$student_id   = $this->get_student_id();
+		$student_id = $this->get_student_id();
+		if ( empty( $student_id ) ) {
+			return new WP_Error( 'rest_forbidden', __( 'Authentication required.', 'nctb-learning-hub' ), array( 'status' => 401 ) );
+		}
 		$lesson_id    = absint( $request['lesson_id'] );
 		$step_num     = absint( $request['step_num'] );
 		$total_steps  = absint( $request['total_steps'] );

@@ -38,7 +38,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'save_writing_draft' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 					'args'                => array(
 						'lesson_id'   => array( 'required' => true, 'sanitize_callback' => 'absint' ),
 						'activity_id' => array( 'required' => true, 'sanitize_callback' => 'absint' ),
@@ -57,7 +57,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'request_writing_feedback' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 					'args'                => array(
 						'lesson_id'   => array( 'required' => true, 'sanitize_callback' => 'absint' ),
 						'activity_id' => array( 'required' => true, 'sanitize_callback' => 'absint' ),
@@ -75,7 +75,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'submit_writing_final' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 					'args'                => array(
 						'lesson_id'   => array( 'required' => true, 'sanitize_callback' => 'absint' ),
 						'activity_id' => array( 'required' => true, 'sanitize_callback' => 'absint' ),
@@ -93,7 +93,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_writing_submission' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 					'args'                => array(
 						'lesson_id'   => array( 'required' => true, 'sanitize_callback' => 'absint' ),
 						'activity_id' => array( 'required' => true, 'sanitize_callback' => 'absint' ),
@@ -110,7 +110,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'submit_speaking' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 					'args'                => array(
 						'lesson_id'        => array( 'required' => true, 'sanitize_callback' => 'absint' ),
 						'activity_id'      => array( 'required' => true, 'sanitize_callback' => 'absint' ),
@@ -124,10 +124,26 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 	}
 
 	/**
+	 * Permission check: ensure user is authenticated.
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function check_authenticated_permission() {
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'rest_forbidden',
+				__( 'You must be logged in to access language skills practice.', 'nctb-learning-hub' ),
+				array( 'status' => 401 )
+			);
+		}
+		return true;
+	}
+
+	/**
 	 * Save writing draft.
 	 */
 	public function save_writing_draft( $request ) {
-		$user_id     = get_current_user_id() ?: 1;
+		$user_id     = get_current_user_id();
 		$lesson_id   = absint( $request['lesson_id'] );
 		$activity_id = absint( $request['activity_id'] );
 		$stage       = sanitize_key( $request['stage'] );
@@ -148,7 +164,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 	 * Request feedback.
 	 */
 	public function request_writing_feedback( $request ) {
-		$user_id     = get_current_user_id() ?: 1;
+		$user_id     = get_current_user_id();
 		$lesson_id   = absint( $request['lesson_id'] );
 		$activity_id = absint( $request['activity_id'] );
 		$draft_text  = (string) $request['draft_text'];
@@ -162,7 +178,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 	 * Submit final writing.
 	 */
 	public function submit_writing_final( $request ) {
-		$user_id     = get_current_user_id() ?: 1;
+		$user_id     = get_current_user_id();
 		$lesson_id   = absint( $request['lesson_id'] );
 		$activity_id = absint( $request['activity_id'] );
 		$final_text  = (string) $request['final_text'];
@@ -176,7 +192,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 	 * Get writing submission.
 	 */
 	public function get_writing_submission( $request ) {
-		$user_id     = get_current_user_id() ?: 1;
+		$user_id     = get_current_user_id();
 		$lesson_id   = absint( $request['lesson_id'] );
 		$activity_id = absint( $request['activity_id'] );
 
@@ -194,7 +210,7 @@ class NCTB_Skills_REST extends WP_REST_Controller {
 	 * Submit speaking recording.
 	 */
 	public function submit_speaking( $request ) {
-		$user_id          = get_current_user_id() ?: 1;
+		$user_id          = get_current_user_id();
 		$lesson_id        = absint( $request['lesson_id'] );
 		$activity_id      = absint( $request['activity_id'] );
 		$audio_url        = (string) $request['audio_url'];

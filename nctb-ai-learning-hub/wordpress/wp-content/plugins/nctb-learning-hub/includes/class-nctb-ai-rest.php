@@ -39,7 +39,7 @@ class NCTB_AI_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'handle_ask' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 					'args'                => array(
 						'lesson_id'   => array(
 							'required'          => true,
@@ -78,7 +78,7 @@ class NCTB_AI_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_history' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 					'args'                => array(
 						'lesson_id' => array(
 							'required'          => true,
@@ -97,25 +97,51 @@ class NCTB_AI_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_quota' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 				),
 			)
 		);
 	}
 
 	/**
+	 * Permission check: ensure user is authenticated.
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function check_authenticated_permission() {
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'rest_forbidden',
+				__( 'You must be logged in to interact with the AI Tutor.', 'nctb-learning-hub' ),
+				array( 'status' => 401 )
+			);
+		}
+		return true;
+	}
+
+	/**
 	 * Handle asking the AI Tutor.
 	 *
 	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response
+	 * @return WP_REST_Response|WP_Error
 	 */
 	public function handle_ask( $request ) {
-		$user_id     = get_current_user_id() ?: 1;
+		$user_id     = get_current_user_id();
 		$lesson_id   = absint( $request['lesson_id'] );
 		$action_type = sanitize_key( $request['action_type'] );
 		$prompt      = (string) $request['prompt'];
 		$question_id = absint( $request['question_id'] );
 		$step_num    = absint( $request['step_num'] );
+
+		// Check access to lesson and AI capabilities
+		$access = NCTB_Entitlements::can_access_lesson( $user_id, $lesson_id );
+		if ( ! $access['can_access'] ) {
+			return new WP_Error(
+				'nctb_access_denied',
+				$access['reason'] ?? __( 'You do not have access to this lesson.', 'nctb-learning-hub' ),
+				array( 'status' => 403 )
+			);
+		}
 
 		$response = NCTB_AI_Tutor::ask( $user_id, $lesson_id, $action_type, $prompt, $question_id, $step_num );
 
@@ -129,7 +155,7 @@ class NCTB_AI_REST extends WP_REST_Controller {
 	 * @return WP_REST_Response
 	 */
 	public function get_history( $request ) {
-		$user_id   = get_current_user_id() ?: 1;
+		$user_id   = get_current_user_id();
 		$lesson_id = absint( $request['lesson_id'] );
 		$history   = NCTB_AI_Usage::get_recent_history( $user_id, $lesson_id );
 
@@ -148,7 +174,7 @@ class NCTB_AI_REST extends WP_REST_Controller {
 	 * @return WP_REST_Response
 	 */
 	public function get_quota( $request ) {
-		$user_id = get_current_user_id() ?: 1;
+		$user_id = get_current_user_id();
 		$quota   = NCTB_AI_Usage::check_daily_quota( $user_id );
 
 		return rest_ensure_response( $quota );

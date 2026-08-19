@@ -69,6 +69,29 @@
 		} );
 	}
 
+	function initYouTubeFacades() {
+		var facades = document.querySelectorAll( '.nctb-youtube-facade:not([data-initialized])' );
+		facades.forEach( function ( facade ) {
+			facade.setAttribute( 'data-initialized', 'true' );
+			var videoId = facade.getAttribute( 'data-video-id' );
+			if ( ! videoId ) {
+				return;
+			}
+			facade.addEventListener( 'click', function () {
+				var iframe = document.createElement( 'iframe' );
+				iframe.setAttribute( 'src', 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent( videoId ) + '?autoplay=1&rel=0' );
+				iframe.setAttribute( 'title', facade.getAttribute( 'data-video-title' ) || 'Video Lesson' );
+				iframe.setAttribute( 'frameborder', '0' );
+				iframe.setAttribute( 'allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' );
+				iframe.setAttribute( 'allowfullscreen', 'true' );
+				iframe.className = 'nctb-facade-iframe';
+				facade.innerHTML = '';
+				facade.appendChild( iframe );
+				facade.classList.add( 'playing' );
+			} );
+		} );
+	}
+
 	function ready( fn ) {
 		if ( 'loading' !== document.readyState ) { fn(); } else { document.addEventListener( 'DOMContentLoaded', fn ); }
 	}
@@ -77,6 +100,7 @@
 		applyLang( getLang() );
 		applyTheme( getTheme() );
 		initShowcaseTabs();
+		initYouTubeFacades();
 
 		var langBtn = document.getElementById( 'nctb-lang-toggle' );
 		if ( langBtn ) {

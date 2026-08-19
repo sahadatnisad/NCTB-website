@@ -69,6 +69,8 @@ class NCTB_AI_Adapter {
 				return self::call_anthropic( $api_key, $system_prompt, $messages, $options );
 			case self::PROVIDER_OPENAI:
 				return self::call_openai( $api_key, $system_prompt, $messages, $options );
+			case self::PROVIDER_GEMINI:
+				return self::call_gemini( $api_key, $system_prompt, $messages, $options );
 			default:
 				return self::mock_grounded_response( $system_prompt, $messages );
 		}
@@ -216,6 +218,67 @@ class NCTB_AI_Adapter {
 			'content'     => $data['choices'][0]['message']['content'],
 			'tokens_used' => $data['usage']['total_tokens'] ?? 100,
 			'provider'    => self::PROVIDER_OPENAI,
+		);
+	}
+
+	/**
+	 * Call Google Gemini API server-side.
+	 *
+	 * @param string           $api_key       API Key.
+	 * @param string           $system_prompt System context.
+	 * @param array<int,array> $messages      Conversation.
+	 * @param array            $options       Options.
+	 * @return array<string,mixed>
+	 */
+	protected static function call_gemini( $api_key, $system_prompt, array $messages, array $options ) {
+		$model = $options['model'] ?? 'gemini-1.5-flash';
+		$url   = 'https://generativelanguage.googleapis.com/v1beta/models/' . urlencode( $model ) . ':generateContent?key=' . urlencode( $api_key );
+
+		$contents = array();
+		foreach ( $messages as $m ) {
+			$contents[] = array(
+				'role'  => ( 'user' === $m['role'] ) ? 'user' : 'model',
+				'parts' => array( array( 'text' => $m['content'] ) ),
+			);
+		}
+
+		$body = array(
+			'systemInstruction' => array(
+				'parts' => array( array( 'text' => $system_prompt ) ),
+			),
+			'contents'          => $contents,
+			'generationConfig'  => array(
+				'temperature'     => 0.3,
+				'maxOutputTokens' => $options['max_tokens'] ?? 600,
+			),
+		);
+
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'body'    => wp_json_encode( $body ),
+				'timeout' => 20,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return self::mock_grounded_response( $system_prompt, $messages );
+		}
+
+		$status = wp_remote_retrieve_response_code( $response );
+		$data   = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( 200 !== $status || empty( $data['candidates'][0]['content']['parts'][0]['text'] ) ) {
+			return self::mock_grounded_response( $system_prompt, $messages );
+		}
+
+		return array(
+			'content'     => $data['candidates'][0]['content']['parts'][0]['text'],
+			'tokens_used' => $data['usageMetadata']['totalTokenCount'] ?? 100,
+			'provider'    => self::PROVIDER_GEMINI,
 		);
 	}
 }

@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 14 — Private beta, security, performance and quality review**
+**PHASE 15 — Production launch readiness (English only, students only)**
 
-> Read the "PHASE 14" section in [README.md](./README.md) and [docs/plans/dashboard-plan-1.md](./docs/plans/dashboard-plan-1.md) for full requirements before building.
-> Test: mobile usability, low-bandwidth behavior, broken links, lesson progress persistence, authorization, capability checks, SQL injection resistance, XSS escaping, student privacy protection, AI prompt abuse resistance, backups/restore, and performance caching.
+> Read the "PHASE 15" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Connect live payment gateways (bKash, Nagad, SSLCommerz) to WooCommerce → entitlements, setup transactional email, SEO meta/sitemaps, privacy pages, and production DB backup schedule.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -41,11 +41,17 @@
 | 11 | Board-question database | ✅ Done |
 | 12 | Board pattern analytics | ✅ Done |
 | 13 | English MVP content library | ✅ Done |
-| 14 | Private beta: security, performance & QA | 🔜 **NEXT** |
-| 15 | Public English launch | ⬜ Not started |
-| 16 | Complete English | ⬜ Not started |
-| 17 | Add ICT | ⬜ Not started |
-| 18 | Add Bangla & other subjects | ⬜ Not started |
+| 14 | Private beta: security, performance & QA | ✅ Done |
+| 15 | Production launch readiness | 🔜 **NEXT** |
+| 16 | Teacher role & unified portal | ⬜ Not started |
+| 17 | Modules & video-course system | ⬜ Not started |
+| 18 | Notes & explanations content type | ⬜ Not started |
+| 19 | AI as a paid product (students + teachers) | ⬜ Not started |
+| 20 | Add ICT (content-only proof) | ⬜ Not started |
+| 21 | Maths engine extension | ⬜ Not started |
+| 22 | Science subjects (Physics, Chemistry, Biology) | ⬜ Not started |
+| 23 | Extend to Class 6–8 (JSC) | ⬜ Not started |
+| 24 | Teacher content depth & resources | ⬜ Not started |
 
 Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ blocked
 
@@ -117,3 +123,14 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Board Pattern Analytics Service (`NCTB_Board_Analytics_Service`) aggregating historical topic frequency, question type distributions, board coverage, and yearly volume trends; Student Board Pattern Analytics Hub (`[nctb_board_analytics]` / `page-board-analytics.php` / `/board-analytics/`) with level switcher (HSC/SSC), 4 metric KPIs, topic frequency progress bars with 1-click deep links to board practice; strictly framed and labeled as **Historical Statistical Analysis Only, never prediction**; REST endpoint `GET /nctb/v1/board/analytics`.
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_12.md`](./docs/build-history/BUILD_REPORT_PHASE_12.md)
+
+### ✅ Phase 13 — English MVP content library
+- **Done:** 2026-08-19.
+- **What was built:** HSC & SSC English curriculum mapping and lesson seeding templates (`NCTB_Content_Library_Service`).
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_13.md`](./docs/build-history/BUILD_REPORT_PHASE_13.md)
+
+### ✅ Phase 14 — Private beta, security, performance & QA review
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Integrated the 6 Master Blueprints from Claude (`00_INDEX.md` through `05_PUBLISHING_REQUIREMENTS_RISKS_COSTS.md`) into `docs/plans/`; hardened all 6 REST controllers (`class-nctb-ai-rest.php`, `class-nctb-progress-rest.php`, `class-nctb-practice-rest.php`, `class-nctb-dashboard-rest.php`, `class-nctb-entitlements-rest.php`, `class-nctb-skills-rest.php`) to eliminate insecure developer fallbacks and isolate student data; added native Google Gemini provider support to `NCTB_AI_Adapter`; implemented low-bandwidth YouTube Facade component in `theme-ui.js` and `theme-ui.css` for 3G network savings; audited 56 `$wpdb` SQL database queries.
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_14.md`](./docs/build-history/BUILD_REPORT_PHASE_14.md)
+

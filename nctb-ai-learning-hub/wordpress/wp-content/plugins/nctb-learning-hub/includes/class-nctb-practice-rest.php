@@ -202,38 +202,40 @@ class NCTB_Practice_REST extends WP_REST_Controller {
 		}
 
 		// Run through central marking service
-		$user_id           = get_current_user_id();
-		$effective_user_id = $user_id ?: 1;
+		$user_id = get_current_user_id();
 
-		// Record attempt
-		$attempt_id = NCTB_Practice_Data::record_attempt(
-			array(
-				'user_id'        => $effective_user_id,
-				'question_id'    => $question_id,
-				'lesson_id'      => (int) $question->lesson_id,
-				'given_answer'   => $given_answer,
-				'is_correct'     => $eval_result['is_correct'] ? 1 : 0,
-				'score'          => $eval_result['score'],
-				'hints_used'     => $hints_used,
-				'feedback_given' => $eval_result['feedback'],
-			)
-		);
-
-		// Update Smart Mistake Notebook (Phase 6)
-		if ( class_exists( 'NCTB_Mistakes_Service' ) && is_int( $attempt_id ) ) {
-			NCTB_Mistakes_Service::handle_attempt_result(
-				$effective_user_id,
-				$question_id,
-				(int) $question->lesson_id,
-				$attempt_id,
-				$eval_result['is_correct'],
-				$given_answer
+		// Record attempt for logged-in students
+		$attempt_id = null;
+		if ( $user_id > 0 ) {
+			$attempt_id = NCTB_Practice_Data::record_attempt(
+				array(
+					'user_id'        => $user_id,
+					'question_id'    => $question_id,
+					'lesson_id'      => (int) $question->lesson_id,
+					'given_answer'   => $given_answer,
+					'is_correct'     => $eval_result['is_correct'] ? 1 : 0,
+					'score'          => $eval_result['score'],
+					'hints_used'     => $hints_used,
+					'feedback_given' => $eval_result['feedback'],
+				)
 			);
-		}
 
-		// Recalculate Concept Mastery (Phase 6)
-		if ( class_exists( 'NCTB_Mastery_Service' ) ) {
-			NCTB_Mastery_Service::recalculate_for_question( $effective_user_id, $question_id );
+			// Update Smart Mistake Notebook (Phase 6)
+			if ( class_exists( 'NCTB_Mistakes_Service' ) && is_int( $attempt_id ) ) {
+				NCTB_Mistakes_Service::handle_attempt_result(
+					$user_id,
+					$question_id,
+					(int) $question->lesson_id,
+					$attempt_id,
+					$eval_result['is_correct'],
+					$given_answer
+				);
+			}
+
+			// Recalculate Concept Mastery (Phase 6)
+			if ( class_exists( 'NCTB_Mastery_Service' ) ) {
+				NCTB_Mastery_Service::recalculate_for_question( $user_id, $question_id );
+			}
 		}
 
 		return rest_ensure_response(

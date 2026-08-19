@@ -45,11 +45,18 @@ class NCTB_Dashboard_REST extends WP_REST_Controller {
 	}
 
 	/**
-	 * Permission check.
+	 * Permission check: ensure user is authenticated.
 	 *
-	 * @return bool
+	 * @return bool|WP_Error
 	 */
 	public function check_auth_permission() {
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'rest_forbidden',
+				__( 'You must be logged in to view your dashboard.', 'nctb-learning-hub' ),
+				array( 'status' => 401 )
+			);
+		}
 		return true;
 	}
 
@@ -57,11 +64,14 @@ class NCTB_Dashboard_REST extends WP_REST_Controller {
 	 * Get aggregated dashboard data.
 	 *
 	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response
+	 * @return WP_REST_Response|WP_Error
 	 */
 	public function get_dashboard_summary( $request ) {
-		$user_id = get_current_user_id() ?: 1;
-		$data    = NCTB_Dashboard_Service::get_dashboard_data( $user_id );
+		$user_id = get_current_user_id();
+		if ( empty( $user_id ) ) {
+			return new WP_Error( 'rest_forbidden', __( 'Authentication required.', 'nctb-learning-hub' ), array( 'status' => 401 ) );
+		}
+		$data = NCTB_Dashboard_Service::get_dashboard_data( $user_id );
 
 		return rest_ensure_response(
 			array(

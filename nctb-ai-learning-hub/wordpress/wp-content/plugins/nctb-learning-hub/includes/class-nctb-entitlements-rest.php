@@ -57,7 +57,7 @@ class NCTB_Entitlements_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_student_purchases' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_authenticated_permission' ),
 				),
 			)
 		);
@@ -70,7 +70,7 @@ class NCTB_Entitlements_REST extends WP_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'demo_purchase_pass' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_demo_permission' ),
 					'args'                => array(
 						'type'    => array(
 							'required'          => true,
@@ -85,6 +85,37 @@ class NCTB_Entitlements_REST extends WP_REST_Controller {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Permission check: ensure user is authenticated.
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function check_authenticated_permission() {
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error(
+				'rest_forbidden',
+				__( 'You must be logged in to view your purchases.', 'nctb-learning-hub' ),
+				array( 'status' => 401 )
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * Permission check for demo sandbox purchase.
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function check_demo_permission() {
+		if ( ! is_user_logged_in() ) {
+			return new WP_Error( 'rest_forbidden', __( 'Authentication required.', 'nctb-learning-hub' ), array( 'status' => 401 ) );
+		}
+		if ( ! current_user_can( 'manage_options' ) && ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) ) {
+			return new WP_Error( 'rest_forbidden', __( 'Sandbox purchase is disabled in production.', 'nctb-learning-hub' ), array( 'status' => 403 ) );
+		}
+		return true;
 	}
 
 	/**
@@ -111,10 +142,13 @@ class NCTB_Entitlements_REST extends WP_REST_Controller {
 	 * Get active purchases for student.
 	 *
 	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response
+	 * @return WP_REST_Response|WP_Error
 	 */
 	public function get_student_purchases( $request ) {
-		$user_id      = get_current_user_id() ?: 1;
+		$user_id = get_current_user_id();
+		if ( empty( $user_id ) ) {
+			return new WP_Error( 'rest_forbidden', __( 'Authentication required.', 'nctb-learning-hub' ), array( 'status' => 401 ) );
+		}
 		$entitlements = NCTB_Entitlements::get_user_entitlements( $user_id );
 
 		return rest_ensure_response(
@@ -129,10 +163,13 @@ class NCTB_Entitlements_REST extends WP_REST_Controller {
 	 * Sandbox / Demo purchase pass trigger.
 	 *
 	 * @param WP_REST_Request $request Request.
-	 * @return WP_REST_Response
+	 * @return WP_REST_Response|WP_Error
 	 */
 	public function demo_purchase_pass( $request ) {
-		$user_id = get_current_user_id() ?: 1;
+		$user_id = get_current_user_id();
+		if ( empty( $user_id ) ) {
+			return new WP_Error( 'rest_forbidden', __( 'Authentication required.', 'nctb-learning-hub' ), array( 'status' => 401 ) );
+		}
 		$type    = sanitize_key( $request['type'] );
 		$item_id = absint( $request['item_id'] );
 
