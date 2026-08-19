@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 22 — Science subjects (Physics, Chemistry, Biology)**
+**PHASE 23 — Extend to Class 6–8 (JSC / JDC)**
 
-> Read the "PHASE 22" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Broaden science subject coverage via content ingestion (Physics, Chemistry, Biology revision notes, video masterclasses, and question banks).
+> Read the "PHASE 23" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Broaden curriculum down to junior secondary grades (Class 6–8 JSC / JDC) with parent-friendly onboarding, foundational English, Math, and General Science.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -49,8 +49,8 @@
 | 19 | AI as a paid product (students + teachers) | ✅ Done |
 | 20 | Add ICT (content-only proof) | ✅ Done |
 | 21 | Maths engine extension | ✅ Done |
-| 22 | Science subjects (Physics, Chemistry, Biology) | 🔜 **NEXT** |
-| 23 | Extend to Class 6–8 (JSC) | ⬜ Not started |
+| 22 | Science subjects (Physics, Chemistry, Biology) | ✅ Done |
+| 23 | Extend to Class 6–8 (JSC) | 🔜 **NEXT** |
 | 24 | Teacher content depth & resources | ⬜ Not started |
 
 Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ blocked
@@ -168,6 +168,12 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Registered `math_numeric` and `math_expression` question types (`class-nctb-question-types.php`); implemented deterministic numeric tolerance and algebraic expression normalization in `NCTB_Marking_Service` (`class-nctb-marking-service.php`); built `NCTB_Math_Seeder` (`class-nctb-math-seeder.php`) seeding SSC General Mathematics book, Algebra and Trigonometry units/lessons, LaTeX equations, practice items, Dhaka Board 2024 questions, math revision note (`nctb_note`), and math video module (`nctb_module`); added KaTeX auto-rendering across dynamic stepper views on `single-nctb_lesson.php`.
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_21.md`](./docs/build-history/BUILD_REPORT_PHASE_21.md)
+
+### ✅ Phase 22 — Science subjects (Physics, Chemistry, Biology)
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Broadened secondary science curriculum portfolio; built `NCTB_Science_Seeder` (`class-nctb-science-seeder.php`) seeding SSC Physics (Motion equations $v=u+at$, $s=ut+\frac{1}{2}at^2$, Dhaka Board 2024 falling body item), SSC Chemistry (Periodic Table groups & trends, alkali metals MCQ), and SSC Biology (Cell organelles, Mitochondria & Plastid concept blocks, summary notes, and video modules).
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_22.md`](./docs/build-history/BUILD_REPORT_PHASE_22.md)
+
 
 
 
