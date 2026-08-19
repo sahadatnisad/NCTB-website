@@ -3,7 +3,7 @@
 > **This is the memory of the project.** Any AI, on any device, reads this file
 > **first** to know where the build stands, and updates it **last** before
 > committing. Keep it accurate and short. The full plan is in [README.md](./README.md)
-> and detailed checklists in [docs/plans/04-master-checklist.md](./docs/plans/04-master-checklist.md).
+> and detailed checklists in [docs/plans/master-checklist.md](./docs/plans/master-checklist.md).
 
 - **Repo:** https://github.com/sahadatnisad/NCTB-website
 - **Branch:** main
@@ -16,7 +16,7 @@
 
 **PHASE 13 — English MVP content library**
 
-> Read the "PHASE 13" section in [README.md](./README.md#phase-13--english-mvp-content-library) and [docs/plans/01-masterplan-1.md](./docs/plans/01-masterplan-1.md) for full requirements before building.
+> Read the "PHASE 13" section in [README.md](./README.md#phase-13--english-mvp-content-library) and [docs/plans/dashboard-plan-1.md](./docs/plans/dashboard-plan-1.md) for full requirements before building.
 > Scale the proven system: 20–30 high-quality SSC English lessons; 20–30 high-quality HSC English lessons; question banks; vocabulary; verified board-question links; selected audio/writing/speaking activities; human review workflow.
 > Content workflow: **Official NCTB material → Curriculum mapping → Learning outcomes → Lesson decomposition → Micro-concepts → Draft → Activities → Questions → Board questions → AI assistance → Human review → Publish.**
 

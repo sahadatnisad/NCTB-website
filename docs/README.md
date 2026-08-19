@@ -9,10 +9,9 @@
 ```text
 docs/
 ├── plans/
-│   ├── 01-masterplan-1.md               # Master Plan (Architectural, Backend, LMS, 18-Phase Plan)
-│   ├── 02-frontend-design-plan-1.md     # Public Marketing & Student Frontend Design Plan
-│   ├── 03-marketing-site-plan.md        # Marketing pages structure and copy guidelines
-│   └── 04-master-checklist.md           # MASTER CHECKLIST FOR BOTH PLANS (What's Done vs Remaining)
+│   ├── dashboard-plan-1.md              # Dashboard & Learning Engine Master Plan (18 Phases)
+│   ├── frontend-design-plan-1.md        # Consolidated Frontend Design Plan (Public & Student UI)
+│   └── master-checklist.md              # 🎯 MASTER CHECKLIST FOR BOTH PLANS (What's Done vs Remaining)
 ├── build-history/
 │   ├── BUILD_REPORT_PHASE_0.md          # Safe WP Environment
 │   ├── BUILD_REPORT_PHASE_1.md          # Visual Shell & Navigation
@@ -40,7 +39,7 @@ docs/
 
 ## 🚀 QUICK LINKS
 
-1. **[Master Checklist & Progress Audit](./plans/04-master-checklist.md)** — Check the full status of what is built, tested, and what remains.
-2. **[Masterplan 1 (Curriculum & Backend)](./plans/01-masterplan-1.md)** — Architectural blueprint and 18-phase master plan.
-3. **[Frontend Design Plan 1 (Public & Student UI)](./plans/02-frontend-design-plan-1.md)** — Complete frontend UI/UX specification.
+1. **[Master Checklist & Progress Audit](./plans/master-checklist.md)** — Comprehensive checklist of completed vs remaining features for both plans.
+2. **[Dashboard Plan 1 (Learning Engine & CMS)](./plans/dashboard-plan-1.md)** — Architectural blueprint for curriculum, practice, tutor, and student dashboard.
+3. **[Frontend Design Plan 1 (UI/UX Specification)](./plans/frontend-design-plan-1.md)** — Complete UI/UX design, wireframes, typography, and page templates.
 4. **[Build State Memory (Root)](../BUILD_STATE.md)** — Active phase memory for AI agents.

@@ -1,6 +1,6 @@
 # NCTB AI LEARNING HUB — MASTER CHECKLIST & PROGRESS AUDIT
 
-> **Comprehensive Status Checklist for Masterplan-1 & Frontend Design Plan-1**
+> **Comprehensive Status Checklist for Dashboard Plan 1 & Frontend Design Plan 1**
 > **Current Version:** `0.12.0` | **Environment:** WordPress 7.0.4 on Local Docker (`http://localhost:8080`)
 > **Git Repository:** https://github.com/sahadatnisad/NCTB-website | **Branch:** `main`
 > **Last Updated:** 2026-08-19
@@ -8,7 +8,7 @@
 ---
 
 ## 📑 TABLE OF CONTENTS
-1. [Plan 1: Master Plan Checklist (18 Phases)](#1-plan-1-master-plan-checklist-18-phases)
+1. [Plan 1: Dashboard Plan Checklist (Learning Engine & CMS - 18 Phases)](#1-plan-1-dashboard-plan-checklist-18-phases)
 2. [Plan 2: Frontend Design Plan Checklist (Public Marketing & Student App)](#2-plan-2-frontend-design-plan-checklist)
 3. [Database & Migrations Audit (13 Tables)](#3-database--migrations-audit)
 4. [REST API Endpoints Inventory (28 Endpoints)](#4-rest-api-endpoints-inventory)
@@ -17,7 +17,7 @@
 
 ---
 
-## 1. PLAN 1: MASTER PLAN CHECKLIST (18 PHASES)
+## 1. PLAN 1: DASHBOARD PLAN CHECKLIST (18 PHASES)
 
 ### ✅ Completed & Fully Verified Phases (Phases 0–12)
 
