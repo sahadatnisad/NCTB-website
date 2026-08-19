@@ -36,8 +36,59 @@ class NCTB_Migrations {
 	 */
 	protected static function get_steps() {
 		return array(
-			// '0.2.0' => array( __CLASS__, 'upgrade_to_0_2_0' ),
+			'0.3.0' => array( __CLASS__, 'upgrade_to_0_3_0' ),
 		);
+	}
+
+	/**
+	 * Phase 3 schema: curriculum concepts, per-lesson learning outcomes, and
+	 * the lesson↔concept link table. Idempotent via dbDelta().
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_3_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate = $wpdb->get_charset_collate();
+		$concepts        = self::table( 'concepts' );
+		$outcomes        = self::table( 'learning_outcomes' );
+		$lesson_concepts = self::table( 'lesson_concepts' );
+
+		$sql_concepts = "CREATE TABLE {$concepts} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			name VARCHAR(191) NOT NULL,
+			slug VARCHAR(191) NOT NULL DEFAULT '',
+			subject VARCHAR(64) NOT NULL DEFAULT '',
+			description TEXT NULL,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY slug (slug),
+			KEY subject (subject)
+		) {$charset_collate};";
+
+		$sql_outcomes = "CREATE TABLE {$outcomes} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			lesson_id BIGINT UNSIGNED NOT NULL,
+			outcome_text TEXT NOT NULL,
+			sort_order INT NOT NULL DEFAULT 0,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY lesson_id (lesson_id)
+		) {$charset_collate};";
+
+		$sql_links = "CREATE TABLE {$lesson_concepts} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			lesson_id BIGINT UNSIGNED NOT NULL,
+			concept_id BIGINT UNSIGNED NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY lesson_concept (lesson_id, concept_id),
+			KEY concept_id (concept_id)
+		) {$charset_collate};";
+
+		dbDelta( $sql_concepts );
+		dbDelta( $sql_outcomes );
+		dbDelta( $sql_links );
 	}
 
 	/**

@@ -7,15 +7,16 @@
 - **Repo:** https://github.com/sahadatnisad/NCTB-website
 - **Branch:** main
 - **Last updated:** 2026-08-19
-- **Updated by:** Antigravity AI Pair Programmer
+- **Updated by:** Claude (Claude Code)
 
 ---
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 3 — Curriculum + Book + Unit + Lesson CMS**
+**PHASE 4 — One gold-standard interactive lesson**
 
-> Read the "PHASE 3" section in [README.md](./README.md#phase-3--curriculum--book--unit--lesson-cms) for full requirements before building.
+> Read the "PHASE 4" section in [README.md](./README.md#phase-4--one-gold-standard-interactive-lesson) for full requirements before building.
+> Builds on Phase 3's `nctb_lesson` CPT: add reusable activity blocks (warm-up, reading, vocabulary, grammar, examples, guided/independent practice, one writing task, listening/speaking if practical, summary), a quiz placeholder and a Tutor button placeholder — authored from wp-admin, rendered responsively, with no lesson-specific PHP template.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -28,8 +29,8 @@
 | 0 | Safe WordPress development environment | ✅ Done |
 | 1 | Visual shell and navigation | ✅ Done |
 | 2 | Student accounts and onboarding | ✅ Done |
-| 3 | Curriculum + Book + Unit + Lesson CMS | 🔜 **NEXT** |
-| 4 | One gold-standard interactive lesson | ⬜ Not started |
+| 3 | Curriculum + Book + Unit + Lesson CMS | ✅ Done |
+| 4 | One gold-standard interactive lesson | 🔜 **NEXT** |
 | 5 | Practice and question engine | ⬜ Not started |
 | 6 | Progress, mastery, mistakes, spaced revision | ⬜ Not started |
 | 7 | Functional student dashboard | ⬜ Not started |
@@ -64,3 +65,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity.
 - **What was built:** `nctb_student` role and capabilities, `NCTB_Student_Profile` metadata manager, `NCTB_Onboarding_REST` API controller (`nctb/v1/student/*`), mobile-first multi-step onboarding wizard (`[nctb_onboarding]` / `page-onboarding.php`), `[nctb_student_dashboard]` shortcode / `page-dashboard.php`, client-side state persistence with resumability, nonces and cross-student isolation. Verified with 9 automated tests passing.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_2.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_2.md)
+
+### ✅ Phase 3 — Curriculum + Book + Unit + Lesson CMS
+- **Done:** 2026-08-19 by Claude (Claude Code).
+- **What was built:** `nctb_book` / `nctb_unit` / `nctb_lesson` CPTs + 6 taxonomies (class, subject, paper, curriculum version, session, topic); editor meta boxes for unit→book / lesson→unit relationships, learning outcomes, and concept links; `menu_order` sequencing with admin columns; **Concepts** admin screen; 3 custom tables via migration `0.3.0` (`nctb_concepts`, `nctb_learning_outcomes`, `nctb_lesson_concepts`) with the `NCTB_Curriculum_Data` service; read-only REST `nctb/v1/curriculum/*`; one-time sample Book→Unit→Lesson seeder; theme browse templates (archive + single book/unit/lesson) + `curriculum.css`; header "Learn" link. Plugin bumped to 0.3.0.
+- **Verified (runtime, Docker):** php -l clean; tables created; CPTs registered; sample tree seeded (2 concepts, 3 outcomes, 2 links); REST returns correct nested data + 404 guards; front-end pages 200 with outcomes/concepts/breadcrumbs; homepage regression 200; unauth Concepts admin → 302.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_3.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_3.md)
+- **Carry-over:** Stale reference to a removed Phase-1 file `themes/nctb-child-theme/student-dashboard.php` — worth a cleanup pass (reassign any page still using that deleted template). On in-place upgrades, visit Settings → Permalinks once to flush CPT rewrite rules.

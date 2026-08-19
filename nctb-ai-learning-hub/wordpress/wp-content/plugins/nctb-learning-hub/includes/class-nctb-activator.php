@@ -30,10 +30,19 @@ class NCTB_Activator {
 			add_option( 'nctb_lh_installed_at', time(), '', false );
 		}
 
-		// Apply versioned schema (no tables in Phase 0).
+		// Apply versioned schema (Phase 3 adds curriculum tables).
 		NCTB_Migrations::run();
 
-		// Rewrite rules — harmless now, required once CPTs/endpoints exist.
+		// Register roles/caps so editors can manage curriculum immediately.
+		NCTB_Roles::register_roles();
+
+		// Register CPTs now so their rewrite rules are included in the flush.
+		NCTB_Curriculum_CPT::register();
+
+		// Seed a single sample book/unit/lesson tree for the browse demo (once).
+		NCTB_Curriculum_Seeder::maybe_seed();
+
+		// Rewrite rules — required now that CPTs exist.
 		flush_rewrite_rules();
 
 		NCTB_Logger::info( 'Plugin activated', array( 'version' => NCTB_LH_VERSION ) );

@@ -49,6 +49,9 @@ final class NCTB_Plugin {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'init', array( 'NCTB_Roles', 'register_roles' ) );
 
+		// Curriculum backbone (CPTs, taxonomies, editor meta boxes, admin).
+		$this->load_curriculum();
+
 		// Register REST API endpoints.
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 
@@ -85,6 +88,30 @@ final class NCTB_Plugin {
 	public function register_rest_routes() {
 		$onboarding_rest = new NCTB_Onboarding_REST();
 		$onboarding_rest->register_routes();
+
+		$curriculum_rest = new NCTB_Curriculum_REST();
+		$curriculum_rest->register_routes();
+	}
+
+	/**
+	 * Instantiate the curriculum modules.
+	 *
+	 * CPTs/taxonomies register on all requests; meta boxes and the concepts
+	 * admin screen only load in wp-admin.
+	 *
+	 * @return void
+	 */
+	private function load_curriculum() {
+		$cpt = new NCTB_Curriculum_CPT();
+		$cpt->init();
+
+		if ( is_admin() ) {
+			$meta = new NCTB_Curriculum_Meta();
+			$meta->init();
+
+			$admin = new NCTB_Curriculum_Admin();
+			$admin->init();
+		}
 	}
 
 	/**

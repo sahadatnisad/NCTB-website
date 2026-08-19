@@ -53,6 +53,16 @@ function nctb_theme_enqueue_assets() {
 		array(),
 		wp_get_theme()->get( 'Version' )
 	);
+
+	// Curriculum browse styles — only on the book/unit/lesson screens.
+	if ( is_singular( array( 'nctb_book', 'nctb_unit', 'nctb_lesson' ) ) || is_post_type_archive( 'nctb_book' ) ) {
+		wp_enqueue_style(
+			'nctb-curriculum',
+			get_stylesheet_directory_uri() . '/css/curriculum.css',
+			array( 'nctb-theme' ),
+			wp_get_theme()->get( 'Version' )
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'nctb_theme_enqueue_assets' );
 
