@@ -54,6 +54,21 @@ function nctb_theme_enqueue_assets() {
 		wp_get_theme()->get( 'Version' )
 	);
 
+	// Site-wide UI controls: language toggle + dark mode (loads everywhere).
+	wp_enqueue_style(
+		'nctb-theme-ui',
+		get_stylesheet_directory_uri() . '/css/theme-ui.css',
+		array( 'nctb-theme' ),
+		wp_get_theme()->get( 'Version' )
+	);
+	wp_enqueue_script(
+		'nctb-theme-ui',
+		get_stylesheet_directory_uri() . '/js/theme-ui.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
+
 	// Public marketing site styles (homepage + marketing pages).
 	if ( is_front_page() || is_page( array( 'how-it-works', 'subjects', 'ssc-english', 'hsc-english', 'pricing', 'faq', 'contact' ) ) ) {
 		wp_enqueue_style(
@@ -65,7 +80,7 @@ function nctb_theme_enqueue_assets() {
 	}
 
 	// Curriculum browse & student study styles.
-	if ( is_singular( array( 'nctb_book', 'nctb_unit', 'nctb_lesson' ) ) || is_post_type_archive( 'nctb_book' ) || is_page( array( 'mistakes', 'revision', 'progress', 'dashboard', 'purchases' ) ) ) {
+	if ( is_singular( array( 'nctb_book', 'nctb_unit', 'nctb_lesson' ) ) || is_post_type_archive( 'nctb_book' ) || is_page( array( 'mistakes', 'revision', 'progress', 'dashboard', 'purchases', 'board-questions' ) ) ) {
 		wp_enqueue_style(
 			'nctb-curriculum',
 			get_stylesheet_directory_uri() . '/css/curriculum.css',
@@ -75,7 +90,7 @@ function nctb_theme_enqueue_assets() {
 	}
 
 	// Interactive lesson & student study script.
-	if ( is_singular( 'nctb_lesson' ) || is_page( array( 'mistakes', 'revision', 'progress', 'dashboard', 'purchases' ) ) ) {
+	if ( is_singular( 'nctb_lesson' ) || is_page( array( 'mistakes', 'revision', 'progress', 'dashboard', 'purchases', 'board-questions' ) ) ) {
 		wp_enqueue_script(
 			'nctb-lesson-interactive',
 			get_stylesheet_directory_uri() . '/js/lesson-interactive.js',

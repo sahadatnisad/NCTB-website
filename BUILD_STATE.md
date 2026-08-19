@@ -13,10 +13,11 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 11 — Board-question database**
+**PHASE 12 — Board pattern analytics**
 
-> Read the "PHASE 11" section in [README.md](./README.md#phase-11--board-question-database) for full requirements before building.
-> Connect learning to authentic exam practice. Build verified board question repository with Year/Board/Topic/Concept metadata, source reference, and verified answers/explanations; filter/search page; attach relevant board questions to lessons. AI-generated items must be strictly separated from authentic board questions.
+> Read the "PHASE 12" section in [README.md](./README.md#phase-12--board-pattern-analytics) for full requirements before building.
+> Turn the board-question DB into historical exam intelligence: frequency by topic/concept, frequency by year, frequency by board; common question types; practice high-frequency historical patterns.
+> Important: Always describe this as **historical analysis, not prediction**.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -37,8 +38,8 @@
 | 8 | Payments and entitlements | ✅ Done |
 | 9 | Contextual AI tutor | ✅ Done |
 | 10 | Writing, listening & speaking | ✅ Done |
-| 11 | Board-question database | 🔜 **NEXT** |
-| 12 | Board pattern analytics | ⬜ Not started |
+| 11 | Board-question database | ✅ Done |
+| 12 | Board pattern analytics | 🔜 **NEXT** |
 | 13 | English MVP content library | ⬜ Not started |
 | 14 | Private beta: security, performance & QA | ⬜ Not started |
 | 15 | Public English launch | ⬜ Not started |
@@ -104,5 +105,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 10 — Writing, listening & speaking enhancements
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** 6-stage iterative writing pipeline service (`NCTB_Writing_Service`) with multi-criteria rubric feedback breakdown (Structure, Grammar, Vocabulary, Revision plan); Listening player service (`NCTB_Listening_Service`) with audio duration and transcript toggle; Speaking practice service (`NCTB_Speaking_Service`) with recording timer, submission logging, and formative pronunciation feedback with non-official disclaimer; custom tables `wp_nctb_writing_submissions` and `wp_nctb_speaking_submissions` via migration `0.10.0`; embedded interactive workbenches in `single-nctb_lesson.php`; Skills REST endpoints under `nctb/v1/skills/*`.
-- **Verified (runtime, Docker):** 17 automated tests passing (0 failures); all 74 PHP files linted clean; all 9 platform routes returning HTTP 200.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_10.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_10.md)
+
+### ✅ Phase 11 — Board-question database
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Authentic Board Question Service (`NCTB_Board_Service`) with 10 Education Boards metadata (Level, Board, Year, Subject, Question No, Marks, Type, Topic, Verified Answer, Marking Scheme, Official Source Reference); custom tables `wp_nctb_board_exams` and `wp_nctb_board_questions` via migration `0.11.0`; Admin Board Questions manager (`NCTB_Board_Admin`) under Lessons; Student Board Questions archive hub (`[nctb_board_questions]` / `page-board-questions.php` / `/board-questions/`) with live level/board/year filter bar and verified answer accordions; lesson-level board exam practice widget embedded in `single-nctb_lesson.php`; strict separation of authentic exam items from AI practice; REST endpoints under `nctb/v1/board/*`.
+- **Verified (runtime, Docker):** 13 automated tests passing (0 failures); all 74 PHP files linted clean; all 10 platform routes returning HTTP 200.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_11.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_11.md)

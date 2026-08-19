@@ -1,0 +1,83 @@
+/* NCTB — UI controls (language + dark mode) and dark theme. */
+
+/* Toggle buttons in the header */
+.nctb-ui-controls { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; }
+.nctb-ui-btn {
+	display: inline-flex; align-items: center; gap: 5px;
+	background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0;
+	border-radius: 8px; padding: 6px 10px; font-size: 13px; font-weight: 600;
+	cursor: pointer; line-height: 1; transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.nctb-ui-btn:hover { background: #e2e8f0; border-color: #cbd5e1; }
+.nctb-ui-btn .ico { font-size: 15px; }
+
+/* ------------------------------------------------------------------ */
+/* Dark mode                                                           */
+/* Applied when <html data-theme="dark">                              */
+/* ------------------------------------------------------------------ */
+
+html[data-theme="dark"] {
+	--nctb-color-text: #e2e8f0;
+	--nctb-color-bg: #0f172a;
+	color-scheme: dark;
+}
+html[data-theme="dark"] body { background: #0f172a; color: #e2e8f0; }
+
+/* Header */
+html[data-theme="dark"] .nctb-site-header { background: #111827; border-bottom-color: #1f2937; }
+html[data-theme="dark"] .nctb-logo,
+html[data-theme="dark"] .logo-title { color: #f8fafc; }
+html[data-theme="dark"] .nctb-nav .nav-link { color: #cbd5e1; }
+html[data-theme="dark"] .nctb-nav .nav-link:hover { color: #fff; }
+html[data-theme="dark"] .nctb-ui-btn { background: #1f2937; color: #cbd5e1; border-color: #374151; }
+html[data-theme="dark"] .nctb-ui-btn:hover { background: #374151; }
+
+/* Generic surfaces / cards used across the theme */
+html[data-theme="dark"] .nctb-card,
+html[data-theme="dark"] .nctb-main,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .subject-item-card { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+
+/* Marketing pages: override the local design tokens + hard-coded whites */
+html[data-theme="dark"] .nctb-mkt {
+	--mkt-ink: #e2e8f0;
+	--mkt-muted: #94a3b8;
+	--mkt-line: #334155;
+	--mkt-bg-soft: #0b1220;
+	color: #e2e8f0;
+}
+html[data-theme="dark"] .nctb-mkt .mkt-hero {
+	background: radial-gradient(1200px 500px at 80% -10%, #064e3b 0%, transparent 60%),
+		linear-gradient(180deg, #0f172a 0%, #0b1220 100%);
+	border-bottom-color: #1f2937;
+}
+html[data-theme="dark"] .nctb-mkt .mkt-hero h1 { color: #f8fafc; }
+html[data-theme="dark"] .nctb-mkt .mkt-card,
+html[data-theme="dark"] .nctb-mkt .mkt-step,
+html[data-theme="dark"] .nctb-mkt .mkt-price,
+html[data-theme="dark"] .nctb-mkt .mkt-subject,
+html[data-theme="dark"] .nctb-mkt .mkt-pill,
+html[data-theme="dark"] .nctb-mkt .mkt-faq details { background: #1e293b; border-color: #334155; }
+html[data-theme="dark"] .nctb-mkt .mkt-price .amt { color: #f1f5f9; }
+html[data-theme="dark"] .nctb-mkt .mkt-eyebrow { background: #052e22; border-color: #065f46; color: #6ee7b7; }
+html[data-theme="dark"] .nctb-mkt .mkt-btn-ghost { background: #1e293b; color: #6ee7b7; border-color: #334155; }
+html[data-theme="dark"] .nctb-mkt .mkt-section-alt { background: #0b1220; }
+html[data-theme="dark"] .nctb-mkt .nctb-prose { color: #cbd5e1; }
+
+/* Curriculum browse / lesson surfaces */
+html[data-theme="dark"] .nctb-browse-card,
+html[data-theme="dark"] .nctb-unit-block,
+html[data-theme="dark"] .nctb-lesson-card,
+html[data-theme="dark"] .nctb-activity-view-card,
+html[data-theme="dark"] .nctb-stepper-panel { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+html[data-theme="dark"] .nctb-unit-head { background: #0b1220; }
+
+/* Inputs */
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select { background: #0b1220; color: #e2e8f0; border-color: #334155; }
+
+/* Respect OS preference on first visit (before any manual choice) */
+@media (prefers-color-scheme: dark) {
+	html:not([data-theme="light"]):not([data-theme="dark"]) body { background: #0f172a; color: #e2e8f0; }
+}

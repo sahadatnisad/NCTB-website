@@ -29,6 +29,7 @@ class NCTB_Student_Views {
 		add_shortcode( 'nctb_revision_due', array( __CLASS__, 'render_revision_due' ) );
 		add_shortcode( 'nctb_progress', array( __CLASS__, 'render_progress' ) );
 		add_shortcode( 'nctb_my_purchases', array( __CLASS__, 'render_purchases' ) );
+		add_shortcode( 'nctb_board_questions', array( __CLASS__, 'render_board_questions' ) );
 	}
 
 	/**
@@ -299,6 +300,139 @@ class NCTB_Student_Views {
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render Board Questions Bank shortcode.
+	 *
+	 * @return string HTML output.
+	 */
+	public static function render_board_questions() {
+		$selected_level = sanitize_key( $_GET['level'] ?? '' );
+		$selected_board = sanitize_key( $_GET['board'] ?? '' );
+		$selected_year  = absint( $_GET['year'] ?? 0 );
+
+		$filters = array();
+		if ( $selected_level ) {
+			$filters['exam_level'] = $selected_level;
+		}
+		if ( $selected_board ) {
+			$filters['board_name'] = $selected_board;
+		}
+		if ( $selected_year ) {
+			$filters['exam_year'] = $selected_year;
+		}
+
+		$questions = class_exists( 'NCTB_Board_Service' ) ? NCTB_Board_Service::get_board_questions( $filters ) : array();
+
+		ob_start();
+		?>
+		<div class="nctb-student-screen nctb-board-questions-screen">
+			<header class="nctb-screen-header">
+				<div class="screen-badge">🏛️ <?php esc_html_e( 'Official Exam Archive', 'nctb-learning-hub' ); ?></div>
+				<h1><?php esc_html_e( 'Authentic NCTB Board Questions', 'nctb-learning-hub' ); ?></h1>
+				<p class="lead"><?php esc_html_e( 'বিগত বছরের এসএসসি ও এইচএসসি বোর্ড পরীক্ষার যাচাইকৃত প্রশ্নোত্তর ও ব্যাখ্যা। (AI জেনারেটেড নয়, শতভাগ প্রামাণ্য প্রশ্ন)', 'nctb-learning-hub' ); ?></p>
+			</header>
+
+			<!-- Filter Bar -->
+			<form method="get" class="nctb-board-filter-bar">
+				<div class="filter-group">
+					<label><?php esc_html_e( 'Exam Level:', 'nctb-learning-hub' ); ?></label>
+					<select name="level" onchange="this.form.submit()">
+						<option value=""><?php esc_html_e( 'All Levels (SSC & HSC)', 'nctb-learning-hub' ); ?></option>
+						<option value="ssc" <?php selected( $selected_level, 'ssc' ); ?>>SSC</option>
+						<option value="hsc" <?php selected( $selected_level, 'hsc' ); ?>>HSC</option>
+					</select>
+				</div>
+
+				<div class="filter-group">
+					<label><?php esc_html_e( 'Education Board:', 'nctb-learning-hub' ); ?></label>
+					<select name="board" onchange="this.form.submit()">
+						<option value=""><?php esc_html_e( 'All Boards', 'nctb-learning-hub' ); ?></option>
+						<?php foreach ( NCTB_Board_Service::BOARDS as $code => $lbl ) : ?>
+							<option value="<?php echo esc_attr( $code ); ?>" <?php selected( $selected_board, $code ); ?>><?php echo esc_html( $lbl ); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+
+				<div class="filter-group">
+					<label><?php esc_html_e( 'Exam Year:', 'nctb-learning-hub' ); ?></label>
+					<select name="year" onchange="this.form.submit()">
+						<option value=""><?php esc_html_e( 'All Years', 'nctb-learning-hub' ); ?></option>
+						<?php for ( $y = 2024; $y >= 2018; $y-- ) : ?>
+							<option value="<?php echo esc_attr( $y ); ?>" <?php selected( $selected_year, $y ); ?>><?php echo esc_html( (string) $y ); ?></option>
+						<?php endfor; ?>
+					</select>
+				</div>
+
+				<div class="filter-group" style="align-self: flex-end;">
+					<a href="<?php echo esc_url( remove_query_arg( array( 'level', 'board', 'year' ) ) ); ?>" class="nctb-btn nctb-btn-secondary">
+						🔄 <?php esc_html_e( 'Reset Filters', 'nctb-learning-hub' ); ?>
+					</a>
+				</div>
+			</form>
+
+			<!-- Board Question List -->
+			<div class="nctb-board-questions-list">
+				<?php if ( empty( $questions ) ) : ?>
+					<div class="nctb-empty-state">
+						<div class="empty-icon">📂</div>
+						<h3><?php esc_html_e( 'কোনো বোর্ড প্রশ্ন পাওয়া যায়নি', 'nctb-learning-hub' ); ?></h3>
+						<p><?php esc_html_e( 'অন্য কোনো বোর্ড বা সাল নির্বাচন করে আবার চেষ্টা করুন।', 'nctb-learning-hub' ); ?></p>
+					</div>
+				<?php else : ?>
+					<?php foreach ( $questions as $bq ) :
+						$options = ! empty( $bq->options_json ) ? json_decode( $bq->options_json, true ) : array();
+					?>
+						<article class="nctb-board-card">
+							<div class="board-card-head">
+								<div class="board-badge-primary">
+									🏛️ <?php echo esc_html( strtoupper( $bq->exam_level ) . ' • ' . ( NCTB_Board_Service::BOARDS[ $bq->board_name ] ?? ucfirst( $bq->board_name ) ) . ' ' . $bq->exam_year ); ?>
+								</div>
+								<div class="board-badge-sub">
+									Q<?php echo esc_html( $bq->question_no ); ?> (<?php echo esc_html( $bq->marks ); ?> Marks) • <?php echo esc_html( ucfirst( str_replace( '_', ' ', $bq->question_type ) ) ); ?>
+								</div>
+							</div>
+
+							<?php if ( ! empty( $bq->topic ) ) : ?>
+								<div class="board-topic-tag">🏷️ <?php echo esc_html( $bq->topic ); ?></div>
+							<?php endif; ?>
+
+							<div class="board-q-prompt">
+								<?php echo nl2br( esc_html( $bq->question_text ) ); ?>
+							</div>
+
+							<?php if ( ! empty( $options ) ) : ?>
+								<div class="board-options-grid">
+									<?php foreach ( $options as $opt ) : ?>
+										<div class="board-opt-item">
+											<strong>(<?php echo esc_html( $opt['key'] ); ?>)</strong> <?php echo esc_html( $opt['text'] ); ?>
+										</div>
+									<?php endforeach; ?>
+								</div>
+							<?php endif; ?>
+
+							<!-- Expandable Verified Answer Accordion -->
+							<details class="board-answer-details">
+								<summary class="btn-reveal-answer">
+									<span>👁️ <?php esc_html_e( 'বোর্ড নির্দেশিত সঠিক উত্তর ও ব্যাখ্যা দেখুন (Verified Answer)', 'nctb-learning-hub' ); ?></span>
+								</summary>
+								<div class="board-answer-body">
+									<div class="verified-status-tag">✅ <?php esc_html_e( 'Official Verified Answer Scheme', 'nctb-learning-hub' ); ?></div>
+									<div class="ans-text"><strong>সঠিক উত্তর:</strong> <?php echo nl2br( esc_html( $bq->verified_answer ) ); ?></div>
+									<?php if ( ! empty( $bq->explanation ) ) : ?>
+										<div class="ans-expl"><strong>ব্যাখ্যা ও মার্কিং নির্দেশিকা:</strong> <?php echo nl2br( esc_html( $bq->explanation ) ); ?></div>
+									<?php endif; ?>
+									<div class="ans-source"><small>📌 সূত্র: <?php echo esc_html( $bq->source_reference ); ?></small></div>
+								</div>
+							</details>
+						</article>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</div>
 		</div>
 		<?php
 		return ob_get_clean();

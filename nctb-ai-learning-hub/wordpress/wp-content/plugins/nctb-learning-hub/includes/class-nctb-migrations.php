@@ -43,6 +43,7 @@ class NCTB_Migrations {
 			'0.8.0'  => array( __CLASS__, 'upgrade_to_0_8_0' ),
 			'0.9.0'  => array( __CLASS__, 'upgrade_to_0_9_0' ),
 			'0.10.0' => array( __CLASS__, 'upgrade_to_0_10_0' ),
+			'0.11.0' => array( __CLASS__, 'upgrade_to_0_11_0' ),
 		);
 	}
 
@@ -475,6 +476,69 @@ class NCTB_Migrations {
 
 		dbDelta( $sql_writing );
 		dbDelta( $sql_speaking );
+	}
+
+	/**
+	 * Phase 11 schema: Authentic Board Exams & Board Questions tables.
+	 *
+	 * Creates:
+	 *   - nctb_board_exams: board examination papers (SSC/HSC, Board, Year, Subject)
+	 *   - nctb_board_questions: verified authentic board questions with answers & source references
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_11_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate   = $wpdb->get_charset_collate();
+		$board_exams       = self::table( 'board_exams' );
+		$board_questions   = self::table( 'board_questions' );
+
+		$sql_exams = "CREATE TABLE {$board_exams} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			exam_level VARCHAR(20) NOT NULL DEFAULT 'ssc',
+			board_name VARCHAR(50) NOT NULL,
+			exam_year INT NOT NULL,
+			subject VARCHAR(50) NOT NULL DEFAULT 'english_1st',
+			paper VARCHAR(20) NOT NULL DEFAULT '1st',
+			title VARCHAR(255) NOT NULL,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY level_year (exam_level, exam_year),
+			KEY board_name (board_name)
+		) {$charset_collate};";
+
+		$sql_questions = "CREATE TABLE {$board_questions} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			exam_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			lesson_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			concept_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			exam_level VARCHAR(20) NOT NULL DEFAULT 'ssc',
+			board_name VARCHAR(50) NOT NULL,
+			exam_year INT NOT NULL,
+			subject VARCHAR(50) NOT NULL DEFAULT 'english_1st',
+			paper VARCHAR(20) NOT NULL DEFAULT '1st',
+			question_no VARCHAR(20) NOT NULL DEFAULT '1',
+			marks FLOAT NOT NULL DEFAULT 1.0,
+			question_type VARCHAR(32) NOT NULL DEFAULT 'mcq',
+			topic VARCHAR(100) NOT NULL DEFAULT '',
+			question_text LONGTEXT NOT NULL,
+			options_json TEXT NULL,
+			verified_answer LONGTEXT NOT NULL,
+			explanation TEXT NULL,
+			source_reference VARCHAR(255) NOT NULL DEFAULT '',
+			is_verified TINYINT(1) NOT NULL DEFAULT 1,
+			is_authentic_board TINYINT(1) NOT NULL DEFAULT 1,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY level_year_board (exam_level, exam_year, board_name),
+			KEY lesson_id (lesson_id),
+			KEY topic (topic)
+		) {$charset_collate};";
+
+		dbDelta( $sql_exams );
+		dbDelta( $sql_questions );
 	}
 
 	/**

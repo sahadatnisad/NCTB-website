@@ -114,6 +114,9 @@ final class NCTB_Plugin {
 
 		$skills_rest = new NCTB_Skills_REST();
 		$skills_rest->register_routes();
+
+		$board_rest = new NCTB_Board_REST();
+		$board_rest->register_routes();
 	}
 
 	/**
@@ -140,6 +143,9 @@ final class NCTB_Plugin {
 
 			$ent_admin = new NCTB_Entitlements_Admin();
 			$ent_admin->init();
+
+			$board_admin = new NCTB_Board_Admin();
+			$board_admin->init();
 		}
 	}
 

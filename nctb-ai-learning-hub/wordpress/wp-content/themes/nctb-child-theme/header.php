@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
+	<script>( function () { try { if ( localStorage.getItem( 'nctbTheme' ) === 'dark' ) { document.documentElement.setAttribute( 'data-theme', 'dark' ); } } catch ( e ) {} }() );</script>
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -33,35 +34,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$nctb_is_complete     = $nctb_logged_in && class_exists( 'NCTB_Student_Profile' ) && NCTB_Student_Profile::is_onboarding_complete( get_current_user_id() );
 		?>
 		<nav class="nctb-nav">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav-link">হোম (Home)</a>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav-link" data-en="Home" data-bn="হোম">Home</a>
 
 			<?php if ( $nctb_is_marketing || ! $nctb_logged_in ) : ?>
 				<?php // Marketing menu (visitors, and everyone on public pages). ?>
-				<a href="<?php echo esc_url( home_url( '/how-it-works/' ) ); ?>" class="nav-link"><?php esc_html_e( 'How it works', 'nctb-theme' ); ?></a>
-				<a href="<?php echo esc_url( home_url( '/subjects/' ) ); ?>" class="nav-link"><?php esc_html_e( 'Subjects', 'nctb-theme' ); ?></a>
-				<a href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>" class="nav-link"><?php esc_html_e( 'Pricing', 'nctb-theme' ); ?></a>
-				<a href="<?php echo esc_url( home_url( '/faq/' ) ); ?>" class="nav-link"><?php esc_html_e( 'FAQ', 'nctb-theme' ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/how-it-works/' ) ); ?>" class="nav-link" data-en="How it works" data-bn="কীভাবে চলে">How it works</a>
+				<a href="<?php echo esc_url( home_url( '/subjects/' ) ); ?>" class="nav-link" data-en="Subjects" data-bn="বিষয়সমূহ">Subjects</a>
+				<a href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>" class="nav-link" data-en="Pricing" data-bn="মূল্য">Pricing</a>
+				<a href="<?php echo esc_url( home_url( '/faq/' ) ); ?>" class="nav-link" data-en="FAQ" data-bn="প্রশ্নোত্তর">FAQ</a>
 				<?php if ( $nctb_logged_in ) : ?>
-					<a href="<?php echo esc_url( home_url( $nctb_is_complete ? '/dashboard' : '/onboarding' ) ); ?>" class="nctb-btn-sm btn-login"><?php echo esc_html( $nctb_is_complete ? __( 'Dashboard', 'nctb-theme' ) : __( 'Setup', 'nctb-theme' ) ); ?></a>
-					<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" class="nav-link"><?php esc_html_e( 'Logout', 'nctb-theme' ); ?></a>
+					<a href="<?php echo esc_url( home_url( $nctb_is_complete ? '/dashboard' : '/onboarding' ) ); ?>" class="nctb-btn-sm btn-login" data-en="<?php echo esc_attr( $nctb_is_complete ? 'Dashboard' : 'Setup' ); ?>" data-bn="<?php echo esc_attr( $nctb_is_complete ? 'ড্যাশবোর্ড' : 'সেটআপ' ); ?>"><?php echo esc_html( $nctb_is_complete ? 'Dashboard' : 'Setup' ); ?></a>
+					<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" class="nav-link" data-en="Logout" data-bn="লগআউট">Logout</a>
 				<?php else : ?>
-					<a href="<?php echo esc_url( wp_login_url( home_url( '/onboarding' ) ) ); ?>" class="nctb-btn-sm btn-login">লগইন (Login)</a>
+					<a href="<?php echo esc_url( wp_login_url( home_url( '/onboarding' ) ) ); ?>" class="nctb-btn-sm btn-login" data-en="Login" data-bn="লগইন">Login</a>
 				<?php endif; ?>
 
 			<?php else : ?>
 				<?php // Student app menu (logged in, on learning pages). ?>
-				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="nav-link">পাঠ্যবই (Learn)</a>
-				<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="nav-link">ভুলখাতা (Mistakes)</a>
-				<a href="<?php echo esc_url( home_url( '/revision' ) ); ?>" class="nav-link">রিভিশন (Revision)</a>
-				<a href="<?php echo esc_url( home_url( '/progress' ) ); ?>" class="nav-link">অগ্রগতি (Progress)</a>
-				<a href="<?php echo esc_url( home_url( '/purchases' ) ); ?>" class="nav-link">পাস (Passes)</a>
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="nav-link" data-en="Learn" data-bn="পাঠ্যবই">Learn</a>
+				<a href="<?php echo esc_url( home_url( '/board-questions' ) ); ?>" class="nav-link" data-en="Board" data-bn="বোর্ড প্রশ্ন">Board</a>
+				<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="nav-link" data-en="Mistakes" data-bn="ভুলখাতা">Mistakes</a>
+				<a href="<?php echo esc_url( home_url( '/revision' ) ); ?>" class="nav-link" data-en="Revision" data-bn="রিভিশন">Revision</a>
+				<a href="<?php echo esc_url( home_url( '/progress' ) ); ?>" class="nav-link" data-en="Progress" data-bn="অগ্রগতি">Progress</a>
+				<a href="<?php echo esc_url( home_url( '/purchases' ) ); ?>" class="nav-link" data-en="Passes" data-bn="পাস">Passes</a>
 				<?php if ( ! $nctb_is_complete ) : ?>
-					<a href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>" class="nav-link highlight">অনবোর্ডিং (Setup)</a>
+					<a href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>" class="nav-link highlight" data-en="Setup" data-bn="সেটআপ">Setup</a>
 				<?php else : ?>
-					<a href="<?php echo esc_url( home_url( '/dashboard' ) ); ?>" class="nav-link">ড্যাশবোর্ড (Dashboard)</a>
+					<a href="<?php echo esc_url( home_url( '/dashboard' ) ); ?>" class="nav-link" data-en="Dashboard" data-bn="ড্যাশবোর্ড">Dashboard</a>
 				<?php endif; ?>
-				<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" class="nctb-btn-sm btn-logout">লগআউট (Logout)</a>
+				<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" class="nctb-btn-sm btn-logout" data-en="Logout" data-bn="লগআউট">Logout</a>
 			<?php endif; ?>
+
+			<span class="nctb-ui-controls">
+				<button type="button" class="nctb-ui-btn" id="nctb-lang-toggle" aria-label="Switch language" title="English / বাংলা"><span class="ico">🌐</span><span id="nctb-lang-label">বাংলা</span></button>
+				<button type="button" class="nctb-ui-btn" id="nctb-theme-toggle" aria-label="Toggle dark mode" title="Light / Dark mode"><span class="ico">🌙</span></button>
+			</span>
 		</nav>
 	</div>
 </header>

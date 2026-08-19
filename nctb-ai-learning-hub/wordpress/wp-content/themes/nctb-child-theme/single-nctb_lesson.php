@@ -471,6 +471,66 @@ while ( have_posts() ) :
 			</aside>
 		<?php endif; ?>
 
+		<?php
+		$nctb_lesson_board_qs = class_exists( 'NCTB_Board_Service' ) ? NCTB_Board_Service::get_lesson_board_questions( $nctb_lesson_id ) : array();
+		if ( ! empty( $nctb_lesson_board_qs ) ) :
+		?>
+			<section class="nctb-lesson-board-questions-section">
+				<div class="board-section-head">
+					<div class="board-badge-icon">🏛️</div>
+					<div>
+						<h2><?php esc_html_e( 'Authentic Board Exam Questions on this Topic', 'nctb-theme' ); ?></h2>
+						<p><?php esc_html_e( 'এই পাঠের বিষয়বস্তু থেকে বিগত বছরগুলোতে বিভিন্ন শিক্ষা বোর্ডে আসা প্রামাণ্য প্রশ্নসমূহ। (AI জেনারেটেড নয়, শতভাগ প্রামাণ্য)', 'nctb-theme' ); ?></p>
+					</div>
+				</div>
+
+				<div class="nctb-board-questions-list">
+					<?php foreach ( $nctb_lesson_board_qs as $bq ) :
+						$options = ! empty( $bq->options_json ) ? json_decode( $bq->options_json, true ) : array();
+					?>
+						<article class="nctb-board-card">
+							<div class="board-card-head">
+								<div class="board-badge-primary">
+									🏛️ <?php echo esc_html( strtoupper( $bq->exam_level ) . ' • ' . ( NCTB_Board_Service::BOARDS[ $bq->board_name ] ?? ucfirst( $bq->board_name ) ) . ' ' . $bq->exam_year ); ?>
+								</div>
+								<div class="board-badge-sub">
+									Q<?php echo esc_html( $bq->question_no ); ?> (<?php echo esc_html( $bq->marks ); ?> Marks) • <?php echo esc_html( ucfirst( str_replace( '_', ' ', $bq->question_type ) ) ); ?>
+								</div>
+							</div>
+
+							<div class="board-q-prompt">
+								<?php echo nl2br( esc_html( $bq->question_text ) ); ?>
+							</div>
+
+							<?php if ( ! empty( $options ) ) : ?>
+								<div class="board-options-grid">
+									<?php foreach ( $options as $opt ) : ?>
+										<div class="board-opt-item">
+											<strong>(<?php echo esc_html( $opt['key'] ); ?>)</strong> <?php echo esc_html( $opt['text'] ); ?>
+										</div>
+									<?php endforeach; ?>
+								</div>
+							<?php endif; ?>
+
+							<details class="board-answer-details">
+								<summary class="btn-reveal-answer">
+									<span>👁️ <?php esc_html_e( 'বোর্ড নির্দেশিত উত্তর ও ব্যাখ্যা (Verified Answer)', 'nctb-theme' ); ?></span>
+								</summary>
+								<div class="board-answer-body">
+									<div class="verified-status-tag">✅ <?php esc_html_e( 'Official Board Answer Scheme', 'nctb-theme' ); ?></div>
+									<div class="ans-text"><strong>সঠিক উত্তর:</strong> <?php echo nl2br( esc_html( $bq->verified_answer ) ); ?></div>
+									<?php if ( ! empty( $bq->explanation ) ) : ?>
+										<div class="ans-expl"><strong>ব্যাখ্যা:</strong> <?php echo nl2br( esc_html( $bq->explanation ) ); ?></div>
+									<?php endif; ?>
+									<div class="ans-source"><small>📌 সূত্র: <?php echo esc_html( $bq->source_reference ); ?></small></div>
+								</div>
+							</details>
+						</article>
+					<?php endforeach; ?>
+				</div>
+			</section>
+		<?php endif; ?>
+
 		<div class="nctb-lesson-foot">
 			<a href="<?php echo $nctb_unit_id ? esc_url( get_permalink( $nctb_unit_id ) ) : esc_url( get_post_type_archive_link( 'nctb_book' ) ); ?>" class="back-link">
 				← <?php esc_html_e( 'Back to Unit Overview', 'nctb-theme' ); ?>

@@ -58,10 +58,15 @@ class NCTB_Pages {
 				'content'   => '[nctb_progress]',
 				'template'  => 'page-progress.php',
 			),
-			'purchases'  => array(
+			'purchases'       => array(
 				'title'     => __( 'My Purchases & Passes', 'nctb-learning-hub' ),
 				'content'   => '[nctb_my_purchases]',
 				'template'  => 'page-purchases.php',
+			),
+			'board-questions' => array(
+				'title'     => __( 'Board Questions Bank', 'nctb-learning-hub' ),
+				'content'   => '[nctb_board_questions]',
+				'template'  => 'page-board-questions.php',
 			),
 		);
 	}
