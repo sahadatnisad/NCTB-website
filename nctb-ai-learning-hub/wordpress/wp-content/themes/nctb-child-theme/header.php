@@ -40,13 +40,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php // Marketing menu (visitors, and everyone on public pages). ?>
 				<a href="<?php echo esc_url( home_url( '/how-it-works/' ) ); ?>" class="nav-link" data-en="How it works" data-bn="কীভাবে চলে">How it works</a>
 				<a href="<?php echo esc_url( home_url( '/subjects/' ) ); ?>" class="nav-link" data-en="Subjects" data-bn="বিষয়সমূহ">Subjects</a>
+				<a href="<?php echo esc_url( home_url( '/ssc-english/' ) ); ?>" class="nav-link" data-en="SSC English" data-bn="এসএসসি ইংরেজি">SSC English</a>
+				<a href="<?php echo esc_url( home_url( '/hsc-english/' ) ); ?>" class="nav-link" data-en="HSC English" data-bn="এইচএসসি ইংরেজি">HSC English</a>
+				<a href="<?php echo esc_url( home_url( '/board-questions/' ) ); ?>" class="nav-link" data-en="Board Archive" data-bn="বোর্ড প্রশ্ন">Board Archive</a>
 				<a href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>" class="nav-link" data-en="Pricing" data-bn="মূল্য">Pricing</a>
 				<a href="<?php echo esc_url( home_url( '/faq/' ) ); ?>" class="nav-link" data-en="FAQ" data-bn="প্রশ্নোত্তর">FAQ</a>
 				<?php if ( $nctb_logged_in ) : ?>
 					<a href="<?php echo esc_url( home_url( $nctb_is_complete ? '/dashboard' : '/onboarding' ) ); ?>" class="nctb-btn-sm btn-login" data-en="<?php echo esc_attr( $nctb_is_complete ? 'Dashboard' : 'Setup' ); ?>" data-bn="<?php echo esc_attr( $nctb_is_complete ? 'ড্যাশবোর্ড' : 'সেটআপ' ); ?>"><?php echo esc_html( $nctb_is_complete ? 'Dashboard' : 'Setup' ); ?></a>
 					<a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" class="nav-link" data-en="Logout" data-bn="লগআউট">Logout</a>
 				<?php else : ?>
-					<a href="<?php echo esc_url( wp_login_url( home_url( '/onboarding' ) ) ); ?>" class="nctb-btn-sm btn-login" data-en="Login" data-bn="লগইন">Login</a>
+					<a href="<?php echo esc_url( wp_login_url( home_url( '/onboarding' ) ) ); ?>" class="nav-link" data-en="Login" data-bn="লগইন">Login</a>
+					<a href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>" class="nctb-btn-sm btn-login" data-en="Start Free" data-bn="শুরু করুন">Start Free</a>
 				<?php endif; ?>
 
 			<?php else : ?>

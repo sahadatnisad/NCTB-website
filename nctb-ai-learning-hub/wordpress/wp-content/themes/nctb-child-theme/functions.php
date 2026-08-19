@@ -70,7 +70,7 @@ function nctb_theme_enqueue_assets() {
 	);
 
 	// Public marketing site styles (homepage + marketing pages).
-	if ( is_front_page() || is_page( array( 'how-it-works', 'subjects', 'ssc-english', 'hsc-english', 'pricing', 'faq', 'contact' ) ) ) {
+	if ( is_front_page() || is_page( array( 'how-it-works', 'subjects', 'ssc-english', 'hsc-english', 'pricing', 'faq', 'contact', 'privacy-policy' ) ) ) {
 		wp_enqueue_style(
 			'nctb-marketing',
 			get_stylesheet_directory_uri() . '/css/marketing.css',
