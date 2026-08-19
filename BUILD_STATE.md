@@ -13,10 +13,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 7 — Functional student dashboard**
+**PHASE 8 — Payments and entitlements**
 
-> Read the "PHASE 7" section in [README.md](./README.md#phase-7--functional-student-dashboard) for full requirements before building.
-> Make the site behave like a home study guide. Assemble Phase 6 learning metrics into rules-based study guidance: Continue Learning, Today's Practice, Revision Due, Needs Attention (active mistakes), recent progress, and My Book progress.
+> Read the "PHASE 8" section in [README.md](./README.md#phase-8--payments-and-entitlements) for full requirements before building.
+> Allow free, per-lesson and subscription access safely. Build WooCommerce integration, lesson↔product mapping, centralized entitlement service (`NCTB_Entitlements`), access-denied/paywall UX, My Purchases page, and admin grant/revoke auditability.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -33,8 +33,8 @@
 | 4 | One gold-standard interactive lesson | ✅ Done |
 | 5 | Practice and question engine | ✅ Done |
 | 6 | Progress, mastery, mistakes, spaced revision | ✅ Done |
-| 7 | Functional student dashboard | 🔜 **NEXT** |
-| 8 | Payments and entitlements | ⬜ Not started |
+| 7 | Functional student dashboard | ✅ Done |
+| 8 | Payments and entitlements | 🔜 **NEXT** |
 | 9 | Contextual AI tutor | ⬜ Not started |
 | 10 | Writing, listening & speaking | ⬜ Not started |
 | 11 | Board-question database | ⬜ Not started |
@@ -84,5 +84,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 6 — Progress, mastery, mistakes, spaced revision
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Custom tables `wp_nctb_progress`, `wp_nctb_mastery`, `wp_nctb_mistakes`, and `wp_nctb_review_schedule` via migration `0.6.0`; lesson progress tracking with step positions and completion timestamps; concept mastery calculation service (`NCTB_Mastery_Service`) with strict completion vs. mastery separation; Smart Mistake Notebook service (`NCTB_Mistakes_Service`) with error tracking and auto-graduation; Spaced Repetition service (`NCTB_Spaced_Revision_Service`) with SM-2 interval ladder; student screens (`/mistakes/`, `/revision/`, `/progress/`) with responsive cards and KPIs; REST API endpoints under `nctb/v1/*`.
-- **Verified (runtime, Docker):** 21 automated unit/integration tests passing (0 failures); all 52 PHP files linted clean; all 8 main routes returning HTTP 200.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_6.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_6.md)
+
+### ✅ Phase 7 — Functional student dashboard
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Centralized Dashboard Aggregation Service (`NCTB_Dashboard_Service`); rules-based home study guide layout with Continue Learning hero card (deep-linking to active activity step), Spaced Revision Due action widget, Needs Attention mistake alert widget, quick learning KPIs bar, and Enrolled Books curriculum progress bars with completion percentages; REST endpoint `GET /nctb/v1/student/dashboard`.
+- **Verified (runtime, Docker):** 18 automated tests passing (0 failures); all 54 PHP files linted clean; authenticated dashboard shortcode verified; all 8 main routes returning HTTP 200.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_7.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_7.md)

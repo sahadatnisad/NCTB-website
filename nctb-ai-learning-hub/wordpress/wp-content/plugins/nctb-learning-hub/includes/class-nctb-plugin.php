@@ -101,6 +101,9 @@ final class NCTB_Plugin {
 
 		$progress_rest = new NCTB_Progress_REST();
 		$progress_rest->register_routes();
+
+		$dashboard_rest = new NCTB_Dashboard_REST();
+		$dashboard_rest->register_routes();
 	}
 
 	/**

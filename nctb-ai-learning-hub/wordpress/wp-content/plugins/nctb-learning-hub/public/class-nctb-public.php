@@ -261,68 +261,189 @@ class NCTB_Public {
 			return $this->render_auth_required_card( __( 'Student Dashboard', 'nctb-learning-hub' ) );
 		}
 
-		$user_id = get_current_user_id();
-		$profile = NCTB_Student_Profile::get_profile( $user_id );
+		$user_id   = get_current_user_id();
+		$dash_data = class_exists( 'NCTB_Dashboard_Service' ) ? NCTB_Dashboard_Service::get_dashboard_data( $user_id ) : array();
+		$profile   = $dash_data['profile'] ?? NCTB_Student_Profile::get_profile( $user_id );
+		$kpis      = $dash_data['kpis'] ?? array();
+		$continue  = $dash_data['continue_learning'] ?? null;
+		$revisions = $dash_data['due_revisions'] ?? array();
+		$mistakes  = $dash_data['needs_attention'] ?? array();
+		$mastery   = $dash_data['concept_mastery'] ?? array();
+		$books     = $dash_data['enrolled_books'] ?? array();
 
 		ob_start();
 		?>
-		<div class="nctb-dashboard-container">
+		<div class="nctb-dashboard-container nctb-home-study-guide">
+			<!-- Header & Profile Meta -->
 			<div class="nctb-dash-header">
 				<div class="nctb-welcome-text">
 					<h1>স্বাগতম, <?php echo esc_html( $profile['display_name'] ); ?>! 👋</h1>
-					<p class="lead">এনসিটিবি ডিজিটাল লার্নিং হাবে আপনার পাঠ্যক্রম প্রস্তুত।</p>
+					<p class="lead"><?php esc_html_e( 'আপনার ব্যক্তিগত ডিজিটাল গাইড — আজকের অধ্যয়ন ও রিভিশন তালিকা প্রস্তুত।', 'nctb-learning-hub' ); ?></p>
 				</div>
 				<div class="nctb-dash-meta-badge">
 					<span class="badge-tag"><?php echo esc_html( NCTB_Student_Profile::ALLOWED_LEVELS[ $profile['education_level'] ] ?? $profile['education_level'] ); ?></span>
 					<span class="badge-tag badge-lang"><?php echo esc_html( NCTB_Student_Profile::ALLOWED_LANGUAGES[ $profile['explanation_language'] ] ?? $profile['explanation_language'] ); ?></span>
+					<a href="<?php echo esc_url( home_url( '/onboarding?edit=1' ) ); ?>" class="badge-tag badge-edit">⚙️ প্রোফাইল</a>
 				</div>
 			</div>
 
-			<!-- Quick Status Grid -->
-			<div class="nctb-grid-stats">
-				<div class="stat-card">
-					<div class="stat-icon">📚</div>
-					<div class="stat-info">
-						<div class="stat-num"><?php echo count( $profile['chosen_subjects'] ); ?> টি</div>
-						<div class="stat-lbl">নিবন্ধিত বিষয়</div>
-					</div>
+			<!-- Quick KPI Stats Bar -->
+			<div class="nctb-kpi-grid">
+				<div class="nctb-kpi-card">
+					<div class="kpi-icon">🎓</div>
+					<div class="kpi-val"><?php echo esc_html( (string) ( $kpis['completed_lessons'] ?? 0 ) ); ?></div>
+					<div class="kpi-label"><?php esc_html_e( 'সম্পন্ন পাঠ (Lessons)', 'nctb-learning-hub' ); ?></div>
 				</div>
-				<div class="stat-card">
-					<div class="stat-icon">🎯</div>
-					<div class="stat-info">
-						<div class="stat-num"><?php echo esc_html( $profile['target_exam_session'] ?: 'নিয়মিত পাঠ' ); ?></div>
-						<div class="stat-lbl">টার্গেট লক্ষ্য</div>
-					</div>
+				<div class="nctb-kpi-card">
+					<div class="kpi-icon">📝</div>
+					<div class="kpi-val"><?php echo esc_html( (string) ( $kpis['total_attempts'] ?? 0 ) ); ?></div>
+					<div class="kpi-label"><?php esc_html_e( 'অনুশীলন (Attempts)', 'nctb-learning-hub' ); ?></div>
 				</div>
-				<div class="stat-card">
-					<div class="stat-icon">🤖</div>
-					<div class="stat-info">
-						<div class="stat-num">সক্রিয়</div>
-						<div class="stat-lbl">এআই টিউটর মোড</div>
-					</div>
+				<div class="nctb-kpi-card">
+					<div class="kpi-icon">⏰</div>
+					<div class="kpi-val"><?php echo esc_html( (string) ( $kpis['due_reviews'] ?? 0 ) ); ?></div>
+					<div class="kpi-label"><?php esc_html_e( 'আজকের রিভিশন (Due)', 'nctb-learning-hub' ); ?></div>
+				</div>
+				<div class="nctb-kpi-card">
+					<div class="kpi-icon">📕</div>
+					<div class="kpi-val"><?php echo esc_html( (string) ( $kpis['active_mistakes'] ?? 0 ) ); ?></div>
+					<div class="kpi-label"><?php esc_html_e( 'ভুলখাতা (Mistakes)', 'nctb-learning-hub' ); ?></div>
 				</div>
 			</div>
 
-			<!-- Enrolled Subjects Section -->
+			<!-- Study Guide Action Section (Continue Learning + Daily Actions) -->
+			<div class="nctb-study-actions-grid">
+				<!-- Hero: Continue Learning -->
+				<div class="nctb-hero-card continue-learning-card">
+					<div class="hero-card-header">
+						<span class="hero-badge">🚀 <?php esc_html_e( 'পাঠ চালিয়ে যান (Continue Learning)', 'nctb-learning-hub' ); ?></span>
+						<?php if ( $continue && ! empty( $continue['unit_title'] ) ) : ?>
+							<span class="hero-unit-tag">📖 <?php echo esc_html( $continue['unit_title'] ); ?></span>
+						<?php endif; ?>
+					</div>
+
+					<?php if ( $continue ) : ?>
+						<h2 class="continue-lesson-title"><?php echo esc_html( $continue['lesson_title'] ); ?></h2>
+						<?php if ( ! empty( $continue['book_title'] ) ) : ?>
+							<div class="continue-book-meta">📚 <?php echo esc_html( $continue['book_title'] ); ?></div>
+						<?php endif; ?>
+
+						<div class="continue-progress-info">
+							<div class="step-label">
+								<span><?php echo esc_html( sprintf( __( 'অ্যাক্টিভিটি ধাপ %d / %d', 'nctb-learning-hub' ), $continue['step_num'], $continue['total_steps'] ) ); ?></span>
+								<span class="pct-num"><?php echo esc_html( $continue['pct'] . '%' ); ?></span>
+							</div>
+							<div class="hero-progress-bar">
+								<div class="hero-progress-fill" style="width: <?php echo esc_attr( $continue['pct'] ); ?>%;"></div>
+							</div>
+						</div>
+
+						<div class="continue-action-row">
+							<a href="<?php echo esc_url( $continue['lesson_url'] ); ?>" class="nctb-btn nctb-btn-primary nctb-btn-lg">
+								▶️ <?php esc_html_e( 'পাঠ শুরু / চালিয়ে যান', 'nctb-learning-hub' ); ?>
+							</a>
+							<a href="<?php echo esc_url( get_permalink( $continue['lesson_id'] ) ); ?>#activity-13" class="nctb-btn nctb-btn-secondary">
+								📝 <?php esc_html_e( 'সরাসরি কুইজ অনুশীলন', 'nctb-learning-hub' ); ?>
+							</a>
+						</div>
+					<?php else : ?>
+						<p><?php esc_html_e( 'কোনো পাঠ পাওয়া যায়নি। পাঠ্যবই তালিকা থেকে নতুন পাঠ শুরু করুন।', 'nctb-learning-hub' ); ?></p>
+						<a href="<?php echo esc_url( get_post_type_archive_link( NCTB_Curriculum_CPT::CPT_BOOK ) ); ?>" class="nctb-btn nctb-btn-primary">
+							📚 <?php esc_html_e( 'পাঠ্যবই ব্রাউজ করুন', 'nctb-learning-hub' ); ?>
+						</a>
+					<?php endif; ?>
+				</div>
+
+				<!-- Side Action 1: Spaced Revision Queue -->
+				<div class="nctb-card side-action-card">
+					<div class="card-header-flex">
+						<h3>⏰ <?php esc_html_e( 'আজকের রিভিশন (Revision Due)', 'nctb-learning-hub' ); ?></h3>
+						<a href="<?php echo esc_url( home_url( '/revision' ) ); ?>" class="btn-text">সব দেখুন →</a>
+					</div>
+					<?php if ( ! empty( $revisions ) ) : ?>
+						<p class="side-action-sub"><?php echo esc_html( sprintf( _n( 'আজকে %dটি বিষয় রিভিশন করার জন্য নির্ধারিত রয়েছে।', 'আজকে %dটি বিষয় রিভিশন করার জন্য নির্ধারিত রয়েছে।', count( $revisions ), 'nctb-learning-hub' ), count( $revisions ) ) ); ?></p>
+						<ul class="side-action-list">
+							<?php foreach ( array_slice( $revisions, 0, 3 ) as $r ) : ?>
+								<li class="side-action-item">
+									<div class="item-text"><?php echo esc_html( wp_trim_words( $r->question_prompt ?: $r->lesson_title, 10 ) ); ?></div>
+									<span class="item-badge">📅 <?php echo esc_html( sprintf( __( '%d দিন ব্যবধান', 'nctb-learning-hub' ), $r->interval_days ) ); ?></span>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+						<a href="<?php echo esc_url( home_url( '/revision' ) ); ?>" class="nctb-btn nctb-btn-warning nctb-btn-block">
+							⚡ <?php esc_html_e( 'রিভিশন শুরু করুন', 'nctb-learning-hub' ); ?>
+						</a>
+					<?php else : ?>
+						<div class="side-empty-state">
+							<div class="empty-emoji">🌟</div>
+							<p><strong><?php esc_html_e( 'আজকের সব রিভিশন সম্পন্ন!', 'nctb-learning-hub' ); ?></strong></p>
+							<p class="text-muted"><?php esc_html_e( 'আগামীকাল নতুন স্পেসড রিভিশনের জন্য চোখ রাখুন।', 'nctb-learning-hub' ); ?></p>
+						</div>
+					<?php endif; ?>
+				</div>
+
+				<!-- Side Action 2: Needs Attention (Mistakes) -->
+				<div class="nctb-card side-action-card">
+					<div class="card-header-flex">
+						<h3>📕 <?php esc_html_e( 'মনোযোগ প্রয়োজন (Needs Attention)', 'nctb-learning-hub' ); ?></h3>
+						<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="btn-text">ভুলখাতা →</a>
+					</div>
+					<?php if ( ! empty( $mistakes ) ) : ?>
+						<p class="side-action-sub"><?php echo esc_html( sprintf( _n( '%dটি প্রশ্নে ভুল চিহ্নিত হয়েছে। সংশোধন করে মাস্টার করুন।', '%dটি প্রশ্নে ভুল চিহ্নিত হয়েছে। সংশোধন করে মাস্টার করুন।', count( $mistakes ), 'nctb-learning-hub' ), count( $mistakes ) ) ); ?></p>
+						<ul class="side-action-list">
+							<?php foreach ( $mistakes as $m ) : ?>
+								<li class="side-action-item mistake-item">
+									<div class="item-text"><?php echo esc_html( wp_trim_words( $m->question_prompt, 10 ) ); ?></div>
+									<span class="item-badge-danger">⚠️ <?php echo esc_html( sprintf( _n( '%d error', '%d errors', $m->error_count, 'nctb-learning-hub' ), $m->error_count ) ); ?></span>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+						<a href="<?php echo esc_url( home_url( '/mistakes' ) ); ?>" class="nctb-btn nctb-btn-secondary nctb-btn-block">
+							🔄 <?php esc_html_e( 'ভুলখাতা সংশোধন করুন', 'nctb-learning-hub' ); ?>
+						</a>
+					<?php else : ?>
+						<div class="side-empty-state">
+							<div class="empty-emoji">🎉</div>
+							<p><strong><?php esc_html_e( 'ভুলখাতা সম্পূর্ণ পরিষ্কার!', 'nctb-learning-hub' ); ?></strong></p>
+							<p class="text-muted"><?php esc_html_e( 'কোনো সক্রিয় ভুল নেই। আপনার প্রস্তুতি দারুণ চলছে!', 'nctb-learning-hub' ); ?></p>
+						</div>
+					<?php endif; ?>
+				</div>
+			</div>
+
+			<!-- My Books & Curriculum Progress Section -->
 			<div class="nctb-card">
 				<div class="card-header-flex">
-					<h2>📖 আপনার অধ্যয়নের বিষয়সমূহ</h2>
-					<a href="<?php echo esc_url( home_url( '/onboarding?edit=1' ) ); ?>" class="btn-text">⚙️ প্রোফাইল পরিবর্তন</a>
+					<h2>📚 <?php esc_html_e( 'আপনার পাঠ্যবই ও বিষয়ভিত্তিক অগ্রগতি', 'nctb-learning-hub' ); ?></h2>
+					<a href="<?php echo esc_url( get_post_type_archive_link( NCTB_Curriculum_CPT::CPT_BOOK ) ); ?>" class="btn-text"><?php esc_html_e( 'সব পাঠ্যবই ব্রাউজ করুন →', 'nctb-learning-hub' ); ?></a>
 				</div>
-				<div class="subjects-card-grid">
-					<?php if ( ! empty( $profile['chosen_subjects'] ) ) : ?>
-						<?php foreach ( $profile['chosen_subjects'] as $sub_slug ) :
-							$sub = NCTB_Student_Profile::ALLOWED_SUBJECTS[ $sub_slug ] ?? null;
-							if ( ! $sub ) continue;
-						?>
-							<a class="subject-item-card" href="<?php echo esc_url( get_post_type_archive_link( NCTB_Curriculum_CPT::CPT_BOOK ) ); ?>">
-								<div class="sub-title"><?php echo esc_html( $sub['title_bn'] ); ?></div>
-								<div class="sub-en"><?php echo esc_html( $sub['title_en'] ); ?></div>
-								<div class="sub-status">📚 পাঠ্যবই দেখুন (Browse lessons) →</div>
-							</a>
+
+				<div class="enrolled-books-grid">
+					<?php if ( ! empty( $books ) ) : ?>
+						<?php foreach ( $books as $bk ) : ?>
+							<div class="enrolled-book-card">
+								<div class="book-head">
+									<h3 class="book-name"><?php echo esc_html( $bk['book_title'] ); ?></h3>
+									<span class="book-units-badge"><?php echo esc_html( sprintf( __( '%d ইউনিট · %d পাঠ', 'nctb-learning-hub' ), $bk['total_units'], $bk['total_lessons'] ) ); ?></span>
+								</div>
+
+								<div class="book-prog-container">
+									<div class="book-prog-info">
+										<span><?php echo esc_html( sprintf( __( 'সম্পন্ন: %d / %d পাঠ', 'nctb-learning-hub' ), $bk['completed_lessons'], $bk['total_lessons'] ) ); ?></span>
+										<strong><?php echo esc_html( $bk['progress_pct'] . '%' ); ?></strong>
+									</div>
+									<div class="book-prog-bar">
+										<div class="book-prog-fill" style="width: <?php echo esc_attr( $bk['progress_pct'] ); ?>%;"></div>
+									</div>
+								</div>
+
+								<a href="<?php echo esc_url( $bk['book_url'] ); ?>" class="nctb-btn nctb-btn-sm nctb-btn-primary">
+									📖 <?php esc_html_e( 'পাঠ্যবই অধ্যয়ন করুন →', 'nctb-learning-hub' ); ?>
+								</a>
+							</div>
 						<?php endforeach; ?>
 					<?php else : ?>
-						<p>কোনো বিষয় এখনো যোগ করা হয়নি। <a href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>">অনবোর্ডিং সম্পন্ন করুন</a></p>
+						<p><?php esc_html_e( 'কোনো পাঠ্যবই পাওয়া যায়নি।', 'nctb-learning-hub' ); ?></p>
 					<?php endif; ?>
 				</div>
 			</div>
