@@ -1,17 +1,8 @@
 <?php
 /**
- * Public Homepage (Marketing Landing Page) — Phase 1-12 Design Spec.
+ * Public Homepage (Marketing Landing Page) — Professional Redesign (P1).
  *
- * Implements the complete Public Marketing Frontend Design Plan:
- * 1. Interactive Hero with right-side live product mockup
- * 2. Credibility strip (NCTB-aligned, step-by-step, hints, revision)
- * 3. "Not another video course" comparative matrix
- * 4. 7-Step learning loop
- * 5. Interactive 6-tab product showcase (Lesson, Practice, AI Tutor, Mistakes, Progress, Writing)
- * 6. 6 English skills mastery
- * 7. Contextual AI tutor socratic spotlight
- * 8. Subjects & Board exam hubs (SSC & HSC)
- * 9. Transparent pricing matrix & interactive FAQ accordion
+ * Reference: docs/plans/frontend-design-plan-2.md
  *
  * @package NCTB\Theme
  */
@@ -32,397 +23,376 @@ $nctb_login_url = wp_login_url( home_url( '/onboarding' ) );
 	<section class="mkt-hero">
 		<div class="mkt-wrap mkt-hero-grid">
 			<div class="mkt-hero-content">
-				<span class="mkt-eyebrow">🇧🇩 <?php esc_html_e( 'NCTB Curriculum • Lesson by lesson • AI-supported', 'nctb-theme' ); ?></span>
+				<span class="mkt-eyebrow"><?php esc_html_e( 'NCTB-aligned • SSC & HSC English', 'nctb-theme' ); ?></span>
 				<h1><?php esc_html_e( 'Your NCTB lesson. Learn it. Practise it. Master it.', 'nctb-theme' ); ?></h1>
 				<p class="mkt-lead">
-					<?php esc_html_e( 'Follow the exact SSC and HSC English lessons you study in school. Get clear explanations, step-by-step practice, mistake review, spaced revision, and contextual AI help when you need it.', 'nctb-theme' ); ?>
+					<?php esc_html_e( 'Follow the same lessons you study in school, with clear explanations, guided practice, mistake review, revision, and contextual AI support.', 'nctb-theme' ); ?>
 				</p>
 				<div class="mkt-hero-actions">
-					<a class="mkt-btn mkt-btn-primary mkt-btn-lg" href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>"><?php esc_html_e( 'Start a Free Lesson', 'nctb-theme' ); ?> →</a>
-					<a class="mkt-btn mkt-btn-ghost mkt-btn-lg" href="<?php echo esc_url( home_url( '/how-it-works' ) ); ?>"><?php esc_html_e( 'See How It Works', 'nctb-theme' ); ?></a>
+					<a class="mkt-btn mkt-btn-primary mkt-btn-lg" href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>"><?php esc_html_e( 'Start Free Lesson', 'nctb-theme' ); ?> →</a>
+					<a class="mkt-btn mkt-btn-secondary mkt-btn-lg" href="#how"><?php esc_html_e( 'See How It Works', 'nctb-theme' ); ?></a>
 				</div>
-				<p class="mkt-hero-note">✓ <?php esc_html_e( 'Free sample lessons • No card required • Optimized for mobile data', 'nctb-theme' ); ?></p>
+				<p class="mkt-hero-note">✓ <?php esc_html_e( 'No card required for the free lesson.', 'nctb-theme' ); ?></p>
 			</div>
 
-			<!-- Live Product Mockup -->
-			<div class="mkt-hero-mockup">
-				<div class="product-preview-frame">
-					<div class="preview-browser-bar">
+			<!-- Real Product Hero Mockup -->
+			<div class="mkt-hero-preview-frame">
+				<div class="mkt-preview-header">
+					<div class="dots">
 						<span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-						<span class="url-bar">nctb-learning-hub.com/lesson/nelson-mandela</span>
 					</div>
-					<div class="preview-card-body">
-						<div class="preview-head">
-							<span class="book-tag">📖 HSC English 1st Paper • Unit 1, Lesson 1</span>
-							<h4>Nelson Mandela: From Apartheid Fighter to President</h4>
-							<div class="progress-bar-wrap">
-								<div class="progress-bar-fill" style="width: 72%;"></div>
-							</div>
-							<span class="progress-label">Step 5 of 7 (72% Completed)</span>
-						</div>
+					<span class="address-bar">nctb-learning-hub.com/lesson/nelson-mandela</span>
+				</div>
+				<div class="mkt-preview-body">
+					<span class="book-context"><?php esc_html_e( 'HSC English 1st Paper • Unit 1, Lesson 1', 'nctb-theme' ); ?></span>
+					<h4><?php esc_html_e( 'Nelson Mandela: From Apartheid Fighter to President', 'nctb-theme' ); ?></h4>
 
-						<div class="preview-stepper">
-							<span class="step-badge done">✓ 1. Warm-up</span>
-							<span class="step-badge done">✓ 2. Reading</span>
-							<span class="step-badge done">✓ 3. Vocabulary</span>
-							<span class="step-badge active">● 4. Practice Quiz</span>
-							<span class="step-badge pending">○ 5. Writing</span>
-						</div>
+					<div class="mkt-stepper-preview">
+						<span class="done">✓ 1. Warm-up</span>
+						<span class="done">✓ 2. Reading</span>
+						<span class="done">✓ 3. Vocabulary</span>
+						<span class="active">● 4. Practice</span>
+						<span class="pending">○ 5. Writing</span>
+					</div>
 
-						<div class="preview-q-box">
-							<span class="q-label">Question 2 (MCQ):</span>
-							<p>What does "emancipation" mean in paragraph 3?</p>
-							<div class="q-options">
-								<div class="opt-btn selected">A. Liberation or freedom from bondage</div>
-								<div class="opt-btn">B. Imprisonment on an island</div>
-							</div>
-						</div>
+					<div class="mkt-sample-q">
+						<p><?php esc_html_e( 'Q2: What does "emancipation" mean in paragraph 3?', 'nctb-theme' ); ?></p>
+						<div class="mkt-sample-opt selected"><?php esc_html_e( 'A. Liberation or freedom from social bondage', 'nctb-theme' ); ?></div>
+						<div class="mkt-sample-opt"><?php esc_html_e( 'B. Imprisonment on an island', 'nctb-theme' ); ?></div>
+					</div>
 
-						<!-- Floating AI Chip -->
-						<div class="floating-ai-chip">
-							<div class="ai-chip-head">
-								<span>🤖 AI Tutor</span>
-								<span class="badge">Active</span>
-							</div>
-							<p>💡 <em>"Notice how Mandela contrasts 'emancipation' with 'continuing bondage'..."</em></p>
+					<div class="mkt-floating-ai-card">
+						<div class="ai-label">
+							<span>🤖 <?php esc_html_e( 'AI Tutor', 'nctb-theme' ); ?></span>
+							<span style="font-size:0.75rem;color:var(--ai);"><?php esc_html_e( 'Active on this step', 'nctb-theme' ); ?></span>
 						</div>
+						<p><em>"Notice how Mandela contrasts emancipation with continuing bondage..."</em></p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- 2. CREDIBILITY STRIP -->
-	<section class="mkt-section mkt-credibility-strip">
-		<div class="mkt-wrap mkt-trust-grid">
-			<div class="trust-item">
-				<span class="icon">📘</span>
-				<div>
-					<strong><?php esc_html_e( 'Official NCTB Books', 'nctb-theme' ); ?></strong>
-					<small><?php esc_html_e( 'Directly follows school syllabus', 'nctb-theme' ); ?></small>
-				</div>
-			</div>
-			<div class="trust-item">
-				<span class="icon">🧠</span>
-				<div>
-					<strong><?php esc_html_e( 'Socratic Hints', 'nctb-theme' ); ?></strong>
-					<small><?php esc_html_e( 'Scaffolded clues before answers', 'nctb-theme' ); ?></small>
-				</div>
-			</div>
-			<div class="trust-item">
-				<span class="icon">🏛️</span>
-				<div>
-					<strong><?php esc_html_e( 'Verified Board Questions', 'nctb-theme' ); ?></strong>
-					<small><?php esc_html_e( 'Authentic past board archive', 'nctb-theme' ); ?></small>
-				</div>
-			</div>
-			<div class="trust-item">
-				<span class="icon">🔁</span>
-				<div>
-					<strong><?php esc_html_e( 'Spaced Revision', 'nctb-theme' ); ?></strong>
-					<small><?php esc_html_e( 'SM-2 memory interval ladder', 'nctb-theme' ); ?></small>
-				</div>
-			</div>
+	<!-- 2. PRODUCT PROOF STRIP -->
+	<section class="mkt-proof-strip">
+		<div class="mkt-wrap mkt-proof-flex">
+			<div class="mkt-proof-item"><span class="check">✓</span> <?php esc_html_e( 'NCTB-aligned', 'nctb-theme' ); ?></div>
+			<div class="mkt-proof-item"><span class="check">✓</span> <?php esc_html_e( 'Lesson-by-lesson', 'nctb-theme' ); ?></div>
+			<div class="mkt-proof-item"><span class="check">✓</span> <?php esc_html_e( 'Practice with hints', 'nctb-theme' ); ?></div>
+			<div class="mkt-proof-item"><span class="check">✓</span> <?php esc_html_e( 'Mistake review', 'nctb-theme' ); ?></div>
+			<div class="mkt-proof-item"><span class="check">✓</span> <?php esc_html_e( 'Spaced revision', 'nctb-theme' ); ?></div>
+			<div class="mkt-proof-item"><span class="check">✓</span> <?php esc_html_e( 'Contextual AI tutor', 'nctb-theme' ); ?></div>
 		</div>
 	</section>
 
-	<!-- 3. NOT ANOTHER VIDEO COURSE (COMPARISON) -->
-	<section class="mkt-section">
+	<!-- 3. THREE-PART PRODUCT STORY (LEARN, PRACTISE, IMPROVE) -->
+	<section class="mkt-section" id="learn">
 		<div class="mkt-wrap">
-			<div class="mkt-center">
-				<span class="mkt-eyebrow"><?php esc_html_e( 'The Product Difference', 'nctb-theme' ); ?></span>
-				<h2 class="mkt-h2"><?php esc_html_e( 'A digital home guide, not just a video library.', 'nctb-theme' ); ?></h2>
-				<p class="mkt-lead"><?php esc_html_e( 'Open the lesson you studied in school today. Understand the text, practise difficult questions, and get hints until the concept is locked.', 'nctb-theme' ); ?></p>
-			</div>
 
-			<div class="comparison-matrix-grid">
-				<div class="comp-col generic-course">
-					<div class="comp-header">
-						<h3>❌ Typical Online Course</h3>
-						<p>Passive watching without verification</p>
-					</div>
-					<ul class="comp-list">
-						<li><span>📹</span> Watch a 45-minute passive video lecture</li>
-						<li><span>⏭️</span> Move to next video without checking mastery</li>
-						<li><span>❓</span> See right or wrong with zero diagnostic explanation</li>
-						<li><span>🗑️</span> Old mistakes are forgotten and never reviewed</li>
-						<li><span>💬</span> Generic disconnected chatbot with no lesson context</li>
+			<!-- Chapter A: Learn -->
+			<div class="mkt-story-row">
+				<div class="mkt-story-text">
+					<span class="mkt-eyebrow"><?php esc_html_e( 'Chapter A • Learn', 'nctb-theme' ); ?></span>
+					<h3><?php esc_html_e( 'Follow your school textbook with structured clarity', 'nctb-theme' ); ?></h3>
+					<p><?php esc_html_e( 'Every lesson breaks down the official NCTB text into clear learning outcomes, guided reading passages, and focused vocabulary.', 'nctb-theme' ); ?></p>
+					<ul class="mkt-story-points">
+						<li><span class="bullet">✓</span> <?php esc_html_e( '14 standard lesson activity blocks designed for deep understanding', 'nctb-theme' ); ?></li>
+						<li><span class="bullet">✓</span> <?php esc_html_e( 'Contextual vocabulary with Bangla meanings, synonyms, and examples', 'nctb-theme' ); ?></li>
+						<li><span class="bullet">✓</span> <?php esc_html_e( 'Grammar rules highlighted and explained within authentic reading passages', 'nctb-theme' ); ?></li>
 					</ul>
 				</div>
-
-				<div class="comp-col nctb-hub">
-					<div class="comp-header">
-						<span class="badge-featured">⭐ Designed for NCTB</span>
-						<h3>✅ NCTB Learning Hub</h3>
-						<p>Active lesson-by-lesson guided mastery</p>
+				<div class="mkt-story-preview">
+					<div class="mkt-card-preview">
+						<span style="font-size:0.8rem;color:var(--brand);font-weight:700;"><?php esc_html_e( 'Activity 2 • Reading Passage', 'nctb-theme' ); ?></span>
+						<div class="mkt-reading-passage">
+							<em>"I am here before you not as a prophet, but as a humble servant of you, the people. Your heroic sacrifices have made it possible for me to be here today..."</em>
+						</div>
+						<div class="mkt-vocab-row">
+							<span class="mkt-vocab-chip">📌 <strong>Prophet:</strong> নবী / ধর্মপ্রবক্তা</span>
+							<span class="mkt-vocab-chip">📌 <strong>Emancipation:</strong> মুক্তি / স্বাধীনতা</span>
+						</div>
 					</div>
-					<ul class="comp-list">
-						<li><span>📖</span> Follow your school NCTB textbook lesson by lesson</li>
-						<li><span>🎯</span> Step-by-step practice before advancing</li>
-						<li><span>💡</span> Socratic hints diagnose misconceptions</li>
-						<li><span>🔁</span> Smart Mistake Notebook schedules spaced review</li>
-						<li><span>🤖</span> Contextual AI Tutor knows your exact paragraph and step</li>
-					</ul>
 				</div>
 			</div>
+
+			<!-- Chapter B: Practise -->
+			<div class="mkt-story-row reverse">
+				<div class="mkt-story-text">
+					<span class="mkt-eyebrow"><?php esc_html_e( 'Chapter B • Practise', 'nctb-theme' ); ?></span>
+					<h3><?php esc_html_e( 'Instant marking with progressive hints before answers', 'nctb-theme' ); ?></h3>
+					<p><?php esc_html_e( 'Practise MCQs, fill-in-the-blanks, and short answers. When stuck, get scaffolded hints instead of having the answer given away.', 'nctb-theme' ); ?></p>
+					<ul class="mkt-story-points">
+						<li><span class="bullet">✓</span> <?php esc_html_e( 'Deterministic marking without AI hallucination or wait times', 'nctb-theme' ); ?></li>
+						<li><span class="bullet">✓</span> <?php esc_html_e( '3-level progressive hint ladder diagnosing misconceptions', 'nctb-theme' ); ?></li>
+						<li><span class="bullet">✓</span> <?php esc_html_e( 'Immediate retry opportunity to solidify concept retention', 'nctb-theme' ); ?></li>
+					</ul>
+				</div>
+				<div class="mkt-story-preview">
+					<div class="mkt-card-preview">
+						<span style="font-size:0.8rem;color:var(--text-faint);font-weight:700;"><?php esc_html_e( 'Question 3 • Practice Quiz', 'nctb-theme' ); ?></span>
+						<p style="font-size:0.95rem;font-weight:600;margin:8px 0 12px;"><?php esc_html_e( 'What is the antonym of the word "apartheid"?', 'nctb-theme' ); ?></p>
+						<div class="mkt-sample-opt"><?php esc_html_e( 'A. Segregation', 'nctb-theme' ); ?></div>
+						<div class="mkt-sample-opt selected"><?php esc_html_e( 'B. Integration / Equality ✅', 'nctb-theme' ); ?></div>
+						<div class="mkt-hint-box">
+							💡 <strong><?php esc_html_e( 'Level 1 Hint:', 'nctb-theme' ); ?></strong> <?php esc_html_e( 'Apartheid means separation. Look for the word describing bringing people together.', 'nctb-theme' ); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Chapter C: Improve -->
+			<div class="mkt-story-row">
+				<div class="mkt-story-text">
+					<span class="mkt-eyebrow"><?php esc_html_e( 'Chapter C • Improve', 'nctb-theme' ); ?></span>
+					<h3><?php esc_html_e( 'Mistakes become your personalized revision schedule', 'nctb-theme' ); ?></h3>
+					<p><?php esc_html_e( 'Every wrong answer is automatically logged in your Mistake Notebook and scheduled for SM-2 spaced revision until mastered.', 'nctb-theme' ); ?></p>
+					<ul class="mkt-story-points">
+						<li><span class="bullet">✓</span> <?php esc_html_e( 'Smart Mistake Notebook with graduation tracking (2 consecutive correct attempts)', 'nctb-theme' ); ?></li>
+						<li><span class="bullet">✓</span> <?php esc_html_e( 'SM-2 spaced review ladder (1, 3, 7, 14, 30 days) to prevent forgetting', 'nctb-theme' ); ?></li>
+						<li><span class="bullet">✓</span> <?php esc_html_e( '6-stage writing feedback with multi-criteria rubric evaluation', 'nctb-theme' ); ?></li>
+					</ul>
+				</div>
+				<div class="mkt-story-preview">
+					<div class="mkt-card-preview">
+						<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+							<span style="font-size:0.8rem;color:var(--danger);font-weight:700;"><?php esc_html_e( 'Mistake Notebook', 'nctb-theme' ); ?></span>
+							<span style="font-size:0.75rem;background:var(--brand-soft);color:var(--brand-dark);padding:2px 8px;border-radius:4px;font-weight:700;"><?php esc_html_e( 'Graduation: 2/2 streak', 'nctb-theme' ); ?></span>
+						</div>
+						<div class="mkt-mistake-box">
+							<span class="tag"><?php esc_html_e( 'Subject-Verb Agreement', 'nctb-theme' ); ?></span>
+							<p><strong><?php esc_html_e( 'Error:', 'nctb-theme' ); ?></strong> Neither Rahim nor his friends <em>was</em> present.</p>
+							<p style="margin-top:4px;color:var(--brand-dark);"><strong><?php esc_html_e( 'Correction:', 'nctb-theme' ); ?></strong> ...friends <strong>were</strong> present (agrees with nearest subject).</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</section>
 
-	<!-- 4. 7-STEP LEARNING LOOP -->
+	<!-- 4. SIMPLIFIED LEARNING LOOP -->
 	<section class="mkt-section mkt-section-alt" id="how">
 		<div class="mkt-wrap">
 			<div class="mkt-center">
 				<span class="mkt-eyebrow"><?php esc_html_e( 'Learning Method', 'nctb-theme' ); ?></span>
 				<h2 class="mkt-h2"><?php esc_html_e( 'One lesson. One complete learning loop.', 'nctb-theme' ); ?></h2>
-				<p class="mkt-lead"><?php esc_html_e( 'Every NCTB lesson flows through a proven cognitive cycle from understanding to permanent board-exam retention.', 'nctb-theme' ); ?></p>
+				<p class="mkt-lead"><?php esc_html_e( 'Every lesson follows a clean, proven cognitive sequence that turns daily school topics into permanent board exam mastery.', 'nctb-theme' ); ?></p>
 			</div>
 
-			<div class="mkt-learning-loop-grid">
-				<div class="loop-step-card"><span class="step-num">1</span><h4>📖 Learn</h4><p>Understand the text clearly with vocabulary & grammar focus.</p></div>
-				<div class="loop-step-card"><span class="step-num">2</span><h4>📝 Practise</h4><p>Answer guided questions with instant marking feedback.</p></div>
-				<div class="loop-step-card"><span class="step-num">3</span><h4>💡 Get Help</h4><p>Scaffolded hints & contextual Bangla/English AI tutor.</p></div>
-				<div class="loop-step-card"><span class="step-num">4</span><h4>🏆 Test</h4><p>Lesson assessment & authentic past board exam items.</p></div>
-				<div class="loop-step-card"><span class="step-num">5</span><h4>📕 Fix Mistakes</h4><p>Wrong answers enter your Smart Mistake Notebook.</p></div>
-				<div class="loop-step-card"><span class="step-num">6</span><h4>🔁 Revise</h4><p>Spaced repetition brings difficult items back on schedule.</p></div>
-				<div class="loop-step-card highlight"><span class="step-num">7</span><h4>🎓 Master</h4><p>Concept mastery & syllabus progress tracked separately.</p></div>
+			<div class="mkt-timeline">
+				<div class="mkt-timeline-step"><span class="num">01</span><strong>Learn</strong></div>
+				<div class="mkt-timeline-step"><span class="num">02</span><strong>Practise</strong></div>
+				<div class="mkt-timeline-step"><span class="num">03</span><strong>AI Tutor</strong></div>
+				<div class="mkt-timeline-step"><span class="num">04</span><strong>Test</strong></div>
+				<div class="mkt-timeline-step"><span class="num">05</span><strong>Fix Mistakes</strong></div>
+				<div class="mkt-timeline-step"><span class="num">06</span><strong>Revise</strong></div>
+				<div class="mkt-timeline-step master"><span class="num">07</span><strong>Master</strong></div>
 			</div>
 		</div>
 	</section>
 
-	<!-- 5. INTERACTIVE 6-TAB PRODUCT SHOWCASE -->
+	<!-- 5. WHY THIS IS DIFFERENT (TWO-COLUMN COMPARISON) -->
 	<section class="mkt-section">
 		<div class="mkt-wrap">
 			<div class="mkt-center">
-				<span class="mkt-eyebrow"><?php esc_html_e( 'Platform Showcase', 'nctb-theme' ); ?></span>
-				<h2 class="mkt-h2"><?php esc_html_e( 'Explore what learning feels like inside', 'nctb-theme' ); ?></h2>
-				<p class="mkt-lead"><?php esc_html_e( 'Click the tabs below to preview the core learning modules already built in the platform.', 'nctb-theme' ); ?></p>
+				<span class="mkt-eyebrow"><?php esc_html_e( 'The Product Difference', 'nctb-theme' ); ?></span>
+				<h2 class="mkt-h2"><?php esc_html_e( 'Built around the lesson you are already studying', 'nctb-theme' ); ?></h2>
+				<p class="mkt-lead"><?php esc_html_e( 'A digital home guide that reinforces your school lessons, not another detached video course.', 'nctb-theme' ); ?></p>
 			</div>
 
-			<div class="mkt-showcase-container">
-				<!-- Tab Navigation Buttons -->
-				<div class="showcase-tabs-nav">
-					<button type="button" class="tab-btn active" data-tab="tab-lesson">📖 Lesson Stepper</button>
-					<button type="button" class="tab-btn" data-tab="tab-practice">📝 Practice & Hints</button>
-					<button type="button" class="tab-btn" data-tab="tab-tutor">🤖 AI Tutor Drawer</button>
-					<button type="button" class="tab-btn" data-tab="tab-mistakes">📕 Mistake Notebook</button>
-					<button type="button" class="tab-btn" data-tab="tab-writing">✍️ Writing Workbench</button>
-					<button type="button" class="tab-btn" data-tab="tab-analytics">📊 Board Analytics</button>
+			<div class="mkt-comparison-grid">
+				<div class="mkt-comp-card">
+					<h4><?php esc_html_e( 'Typical Online Course', 'nctb-theme' ); ?></h4>
+					<span class="subtitle"><?php esc_html_e( 'Passive watching without guided practice', 'nctb-theme' ); ?></span>
+					<ul class="mkt-comp-list">
+						<li><span class="sym bad">✕</span> <?php esc_html_e( 'Watch a 45-minute passive video lecture', 'nctb-theme' ); ?></li>
+						<li><span class="sym bad">✕</span> <?php esc_html_e( 'Move to next chapter without verifying mastery', 'nctb-theme' ); ?></li>
+						<li><span class="sym bad">✕</span> <?php esc_html_e( 'Forget previous mistakes with zero review schedule', 'nctb-theme' ); ?></li>
+						<li><span class="sym bad">✕</span> <?php esc_html_e( 'Generic chatbot with no textbook lesson context', 'nctb-theme' ); ?></li>
+					</ul>
 				</div>
 
-				<!-- Tab Contents -->
-				<div class="showcase-tab-panels">
-					<!-- 1. Lesson Stepper Tab -->
-					<div class="showcase-panel active" id="tab-lesson">
-						<div class="showcase-card-preview">
-							<div class="preview-meta">
-								<span class="pill">Activity 3 of 7</span>
-								<span class="title">HSC English 1st Paper • Nelson Mandela</span>
-							</div>
-							<h3>Reading Passage: Historical Address</h3>
-							<p class="passage-sample"><em>"I am here before you not as a prophet, but as a humble servant of you, the people. Your tireless and heroic sacrifices have made it possible for me to be here today..."</em></p>
-							<div class="vocab-chips-row">
-								<span class="chip">📌 <strong>Prophet:</strong> নবী / ধর্মপ্রবক্তা</span>
-								<span class="chip">📌 <strong>Emancipation:</strong> মুক্তি / স্বাধীনতা</span>
-							</div>
-						</div>
-					</div>
-
-					<!-- 2. Practice & Hints Tab -->
-					<div class="showcase-panel" id="tab-practice" style="display:none;">
-						<div class="showcase-card-preview">
-							<span class="q-type-badge">MCQ Practice • 3-Level Progressive Hint</span>
-							<h3>Q: What is the antonym of the word "apartheid"?</h3>
-							<div class="demo-options-list">
-								<div class="demo-opt">A. Segregation</div>
-								<div class="demo-opt correct">B. Integration / Equality ✅</div>
-								<div class="demo-opt">C. Discrimination</div>
-							</div>
-							<div class="hint-ladder-preview">
-								<strong>💡 Level 1 Hint:</strong> <span>Apartheid means racial separation. Think of bringing people together.</span>
-							</div>
-						</div>
-					</div>
-
-					<!-- 3. AI Tutor Tab -->
-					<div class="showcase-panel" id="tab-tutor" style="display:none;">
-						<div class="showcase-card-preview">
-							<div class="tutor-chat-head">
-								<span>🤖 Contextual AI English Tutor</span>
-								<span class="status">⚡ 50 Daily Interactions</span>
-							</div>
-							<div class="tutor-quick-chips-preview">
-								<span class="chip">💡 Explain Step</span>
-								<span class="chip">🇧🇩 বাংলায় ব্যাখ্যা</span>
-								<span class="chip">🎯 Why was I wrong?</span>
-							</div>
-							<div class="chat-bubble-sample bot">
-								<p><strong>AI Tutor:</strong> "Mandela used 'emancipation' to signify liberation from social deprivation, not just physical release from prison. Would you like an example sentence in Bangla?"</p>
-							</div>
-						</div>
-					</div>
-
-					<!-- 4. Mistake Notebook Tab -->
-					<div class="showcase-panel" id="tab-mistakes" style="display:none;">
-						<div class="showcase-card-preview">
-							<div class="mistake-header-preview">
-								<h3>📕 Active Mistake Notebook</h3>
-								<span class="streak">🎓 Graduation Rule: 2 Consecutive Correct Attempts</span>
-							</div>
-							<div class="mistake-card-sample">
-								<div class="head"><span>Subject-Verb Agreement</span><span class="badge-attn">Needs Attention</span></div>
-								<p><strong>Your Error:</strong> Neither Rahim nor his friends <em>was</em> present.</p>
-								<p><strong>Correct:</strong> Neither Rahim nor his friends <strong>were</strong> present (Verb agrees with closest subject).</p>
-							</div>
-						</div>
-					</div>
-
-					<!-- 5. Writing Workbench Tab -->
-					<div class="showcase-panel" id="tab-writing" style="display:none;">
-						<div class="showcase-card-preview">
-							<div class="writing-stages-preview">
-								<span class="pill done">1. Draft</span>
-								<span class="pill active">2. AI Rubric Feedback</span>
-								<span class="pill">3. Revision</span>
-								<span class="pill">4. Final Polish</span>
-							</div>
-							<div class="rubric-feedback-sample">
-								<h4>✨ AI Writing Diagnostic Breakdown</h4>
-								<ul>
-									<li><strong>Structure (8/10):</strong> Good topic sentence and logical chronological progression.</li>
-									<li><strong>Grammar (7/10):</strong> Watch past tense consistency in paragraph 2.</li>
-									<li><strong>Vocabulary (8/10):</strong> Excellent usage of lesson terms (*reconciliation*, *emancipation*).</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<!-- 6. Board Analytics Tab -->
-					<div class="showcase-panel" id="tab-analytics" style="display:none;">
-						<div class="showcase-card-preview">
-							<h3>📊 Authentic Board Pattern Intelligence (2018–2024)</h3>
-							<div class="topic-frequency-sample">
-								<div class="topic-row"><span>#1 Nelson Mandela: Historic Address</span><span class="bar-val">15 Questions (45 marks)</span></div>
-								<div class="topic-row"><span>#2 The Unbeaten Path: Valentina Tereshkova</span><span class="bar-val">12 Questions (35 marks)</span></div>
-							</div>
-							<small class="disclaimer-mini">⚠️ Historical statistical analysis from official NCTB papers, not predictions.</small>
-						</div>
-					</div>
+				<div class="mkt-comp-card highlight">
+					<h4><?php esc_html_e( 'NCTB Learning Hub', 'nctb-theme' ); ?></h4>
+					<span class="subtitle" style="color:var(--brand);"><?php esc_html_e( 'Active lesson-by-lesson guided mastery', 'nctb-theme' ); ?></span>
+					<ul class="mkt-comp-list">
+						<li><span class="sym good">✓</span> <?php esc_html_e( 'Learn your exact NCTB textbook lesson', 'nctb-theme' ); ?></li>
+						<li><span class="sym good">✓</span> <?php esc_html_e( 'Practise questions with progressive hints before answers', 'nctb-theme' ); ?></li>
+						<li><span class="sym good">✓</span> <?php esc_html_e( 'Mistakes automatically enter a spaced revision queue', 'nctb-theme' ); ?></li>
+						<li><span class="sym good">✓</span> <?php esc_html_e( 'Contextual Socratic AI Tutor grounded in your exact passage', 'nctb-theme' ); ?></li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- 6. ENGLISH 6-SKILLS MASTERY -->
+	<!-- 6. CONTEXTUAL AI TUTOR SECTION -->
 	<section class="mkt-section mkt-section-alt">
 		<div class="mkt-wrap">
-			<div class="mkt-center">
-				<span class="mkt-eyebrow"><?php esc_html_e( 'Comprehensive English Mastery', 'nctb-theme' ); ?></span>
-				<h2 class="mkt-h2"><?php esc_html_e( 'English is more than just grammar rules', 'nctb-theme' ); ?></h2>
-				<p class="mkt-lead"><?php esc_html_e( 'Our interactive lessons develop all six core language skills required for academic fluency and board exam excellence.', 'nctb-theme' ); ?></p>
-			</div>
+			<div class="mkt-ai-split">
+				<div class="mkt-ai-text">
+					<span class="mkt-eyebrow" style="background:var(--ai-soft);color:var(--ai);"><?php esc_html_e( 'Contextual AI Support', 'nctb-theme' ); ?></span>
+					<h2 class="mkt-h2"><?php esc_html_e( 'AI that knows what lesson you are studying', 'nctb-theme' ); ?></h2>
+					<p class="mkt-lead"><?php esc_html_e( 'The tutor receives lesson context, your level, and relevant mistakes. It helps with the current lesson instead of acting like a generic chatbot.', 'nctb-theme' ); ?></p>
+					<p style="font-size:0.92rem;color:var(--text-soft);margin-top:16px;">
+						🔒 <em><?php esc_html_e( 'Verified curriculum and board content remain strictly separate from generated AI explanations.', 'nctb-theme' ); ?></em>
+					</p>
+				</div>
 
-			<div class="mkt-grid">
-				<div class="mkt-card"><div class="ico">🔤</div><h3><?php esc_html_e( 'Grammar in Context', 'nctb-theme' ); ?></h3><p><?php esc_html_e( 'Notice grammatical patterns directly inside authentic reading passages and correct misconceptions with guided practice.', 'nctb-theme' ); ?></p></div>
-				<div class="mkt-card"><div class="ico">💬</div><h3><?php esc_html_e( 'Active Vocabulary', 'nctb-theme' ); ?></h3><p><?php esc_html_e( 'Learn high-frequency NCTB vocabulary with Bengali translations, synonyms, antonyms, and spaced memory recall.', 'nctb-theme' ); ?></p></div>
-				<div class="mkt-card"><div class="ico">📖</div><h3><?php esc_html_e( 'Guided Reading', 'nctb-theme' ); ?></h3><p><?php esc_html_e( 'Work through school passages with paragraph summaries, main ideas, detail comprehension, and inference questions.', 'nctb-theme' ); ?></p></div>
-				<div class="mkt-card"><div class="ico">✍️</div><h3><?php esc_html_e( '6-Stage Writing', 'nctb-theme' ); ?></h3><p><?php esc_html_e( 'Brainstorm, draft, receive structured rubric evaluation (Structure, Grammar, Vocab), and revise before final submission.', 'nctb-theme' ); ?></p></div>
-				<div class="mkt-card"><div class="ico">🎧</div><h3><?php esc_html_e( 'Listening Audio', 'nctb-theme' ); ?></h3><p><?php esc_html_e( 'Listen to historical speeches and dialogues with native player controls and optional toggleable transcripts.', 'nctb-theme' ); ?></p></div>
-				<div class="mkt-card"><div class="ico">🗣️</div><h3><?php esc_html_e( 'Speaking Practice', 'nctb-theme' ); ?></h3><p><?php esc_html_e( 'Record spoken sentences to build pronunciation confidence with constructive formative feedback.', 'nctb-theme' ); ?></p></div>
+				<div class="mkt-ai-preview">
+					<div class="mkt-ai-card-preview">
+						<div class="ai-header">
+							<strong>🤖 <?php esc_html_e( 'AI Tutor Drawer', 'nctb-theme' ); ?></strong>
+							<span style="font-size:0.75rem;color:var(--ai);font-weight:700;"><?php esc_html_e( 'Grounded in Active Step', 'nctb-theme' ); ?></span>
+						</div>
+						<div class="mkt-ai-chips-list">
+							<span class="chip">💡 <?php esc_html_e( 'Explain this', 'nctb-theme' ); ?></span>
+							<span class="chip">🇧🇩 <?php esc_html_e( 'বাংলায় বুঝিয়ে দিন', 'nctb-theme' ); ?></span>
+							<span class="chip">🎯 <?php esc_html_e( 'Give me a hint', 'nctb-theme' ); ?></span>
+							<span class="chip">❓ <?php esc_html_e( 'Why was I wrong?', 'nctb-theme' ); ?></span>
+						</div>
+						<div class="mkt-ai-chat-bubble">
+							<p><strong><?php esc_html_e( 'AI Tutor:', 'nctb-theme' ); ?></strong> "Mandela used 'emancipation' in paragraph 3 to describe liberation from socio-economic hardship, not just his personal release from Robben Island."</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- 7. CURRICULUM SUBJECTS DIRECTORY -->
-	<section class="mkt-section" id="subjects">
+	<!-- 7. HOME STUDY DASHBOARD PREVIEW -->
+	<section class="mkt-section">
 		<div class="mkt-wrap">
 			<div class="mkt-center">
-				<span class="mkt-eyebrow"><?php esc_html_e( 'Curriculum Hubs', 'nctb-theme' ); ?></span>
-				<h2 class="mkt-h2"><?php esc_html_e( 'SSC & HSC English — Live Now', 'nctb-theme' ); ?></h2>
-				<p class="mkt-lead"><?php esc_html_e( 'Select your level to explore syllabus breakdowns, unit structures, and authentic board questions.', 'nctb-theme' ); ?></p>
+				<span class="mkt-eyebrow"><?php esc_html_e( 'Personalized Learning Guide', 'nctb-theme' ); ?></span>
+				<h2 class="mkt-h2"><?php esc_html_e( 'Know what to study next', 'nctb-theme' ); ?></h2>
+				<p class="mkt-lead"><?php esc_html_e( 'The platform remembers your lesson progress, active mistakes, and revision schedule so you can resume effortlessly from where you left off.', 'nctb-theme' ); ?></p>
 			</div>
 
-			<div class="mkt-grid">
-				<a class="mkt-subject" href="<?php echo esc_url( home_url( '/ssc-english/' ) ); ?>">
-					<span class="tag"><?php esc_html_e( 'SSC • Class 9–10', 'nctb-theme' ); ?></span>
-					<h3>📖 <?php esc_html_e( 'SSC English (1st & 2nd Paper)', 'nctb-theme' ); ?></h3>
-					<p class="mkt-lead" style="font-size:0.95rem;"><?php esc_html_e( 'Reading passages, grammar rules, vocabulary banks, and board questions.', 'nctb-theme' ); ?></p>
-					<span class="go"><?php esc_html_e( 'Explore SSC Syllabus', 'nctb-theme' ); ?> →</span>
-				</a>
-				<a class="mkt-subject" href="<?php echo esc_url( home_url( '/hsc-english/' ) ); ?>">
-					<span class="tag"><?php esc_html_e( 'HSC • Class 11–12', 'nctb-theme' ); ?></span>
-					<h3>📗 <?php esc_html_e( 'HSC English (1st & 2nd Paper)', 'nctb-theme' ); ?></h3>
-					<p class="mkt-lead" style="font-size:0.95rem;"><?php esc_html_e( 'Advanced passages, theme writing, flow charts, and board exam intelligence.', 'nctb-theme' ); ?></p>
-					<span class="go"><?php esc_html_e( 'Explore HSC Syllabus', 'nctb-theme' ); ?> →</span>
-				</a>
-				<a class="mkt-subject" href="<?php echo esc_url( home_url( '/board-analytics/' ) ); ?>">
-					<span class="tag"><?php esc_html_e( 'Exam Intelligence', 'nctb-theme' ); ?></span>
-					<h3>📊 <?php esc_html_e( 'Board Pattern Analytics', 'nctb-theme' ); ?></h3>
-					<p class="mkt-lead" style="font-size:0.95rem;"><?php esc_html_e( 'Historical question frequency data from 10 Bangladesh Education Boards.', 'nctb-theme' ); ?></p>
-					<span class="go"><?php esc_html_e( 'View Analytics Hub', 'nctb-theme' ); ?> →</span>
-				</a>
+			<div class="mkt-card-preview" style="margin-top:40px;">
+				<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:16px;margin-bottom:24px;">
+					<div style="background:var(--surface-alt);padding:16px;border-radius:var(--radius-sm);border:1px solid var(--border);">
+						<span style="font-size:0.8rem;color:var(--text-faint);display:block;"><?php esc_html_e( 'Active Lesson', 'nctb-theme' ); ?></span>
+						<strong style="font-size:1.1rem;color:var(--text);"><?php esc_html_e( 'Nelson Mandela (Step 4)', 'nctb-theme' ); ?></strong>
+					</div>
+					<div style="background:var(--warning-soft);padding:16px;border-radius:var(--radius-sm);border:1px solid var(--warning-border);">
+						<span style="font-size:0.8rem;color:var(--warning);display:block;"><?php esc_html_e( 'Spaced Revision Due', 'nctb-theme' ); ?></span>
+						<strong style="font-size:1.1rem;color:var(--warning);"><?php esc_html_e( '3 Items Ready', 'nctb-theme' ); ?></strong>
+					</div>
+					<div style="background:var(--danger-soft);padding:16px;border-radius:var(--radius-sm);border:1px solid var(--danger-border);">
+						<span style="font-size:0.8rem;color:var(--danger);display:block;"><?php esc_html_e( 'Mistakes to Fix', 'nctb-theme' ); ?></span>
+						<strong style="font-size:1.1rem;color:var(--danger);"><?php esc_html_e( '2 Active Errors', 'nctb-theme' ); ?></strong>
+					</div>
+				</div>
+				<div style="display:flex;justify-content:space-between;align-items:center;background:var(--surface-alt);padding:16px 20px;border-radius:var(--radius-sm);border:1px solid var(--border);">
+					<div>
+						<strong style="font-size:0.95rem;display:block;"><?php esc_html_e( 'HSC English 1st Paper', 'nctb-theme' ); ?></strong>
+						<small style="color:var(--text-soft);"><?php esc_html_e( 'Unit 1: People or Institutions Making History • 72% Completed', 'nctb-theme' ); ?></small>
+					</div>
+					<a href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>" class="mkt-btn mkt-btn-primary" style="height:38px;padding:0 16px;font-size:0.88rem;"><?php esc_html_e( 'Resume Study', 'nctb-theme' ); ?></a>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- 8. TRANSPARENT PRICING -->
-	<section class="mkt-section mkt-section-alt" id="pricing">
+	<!-- 8. SSC & HSC ENGLISH HUBS -->
+	<section class="mkt-section mkt-section-alt" id="subjects">
+		<div class="mkt-wrap">
+			<div class="mkt-center">
+				<span class="mkt-eyebrow"><?php esc_html_e( 'Curriculum Coverage', 'nctb-theme' ); ?></span>
+				<h2 class="mkt-h2"><?php esc_html_e( 'Built for SSC & HSC Board Candidates', 'nctb-theme' ); ?></h2>
+				<p class="mkt-lead"><?php esc_html_e( 'Master the exact English textbooks assigned by the National Curriculum and Textbook Board.', 'nctb-theme' ); ?></p>
+			</div>
+
+			<div class="mkt-levels-grid">
+				<div class="mkt-level-card">
+					<div>
+						<span class="tag"><?php esc_html_e( 'Classes 9–10', 'nctb-theme' ); ?></span>
+						<h3><?php esc_html_e( 'SSC English (1st & 2nd Paper)', 'nctb-theme' ); ?></h3>
+						<p><?php esc_html_e( 'Lesson-by-lesson reading passages, vocabulary drills, grammar foundations, writing practice, and authentic past board questions.', 'nctb-theme' ); ?></p>
+					</div>
+					<a href="<?php echo esc_url( home_url( '/ssc-english/' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore SSC English Syllabus', 'nctb-theme' ); ?> →</a>
+				</div>
+
+				<div class="mkt-level-card">
+					<div>
+						<span class="tag"><?php esc_html_e( 'Classes 11–12', 'nctb-theme' ); ?></span>
+						<h3><?php esc_html_e( 'HSC English (1st & 2nd Paper)', 'nctb-theme' ); ?></h3>
+						<p><?php esc_html_e( 'Advanced passage comprehension, theme writing, flow charts, vocabulary in context, and statistical board pattern analytics.', 'nctb-theme' ); ?></p>
+					</div>
+					<a href="<?php echo esc_url( home_url( '/hsc-english/' ) ); ?>" class="mkt-link-arrow"><?php esc_html_e( 'Explore HSC English Syllabus', 'nctb-theme' ); ?> →</a>
+				</div>
+			</div>
+
+			<p class="mkt-center" style="margin-top:36px;font-size:0.92rem;color:var(--text-soft);">
+				<?php esc_html_e( 'Coming later: ICT • Bangla • Mathematics • General Science', 'nctb-theme' ); ?>
+			</p>
+		</div>
+	</section>
+
+	<!-- 9. TRANSPARENT PRICING -->
+	<section class="mkt-section mkt-section-warm" id="pricing">
 		<div class="mkt-wrap">
 			<div class="mkt-center">
 				<span class="mkt-eyebrow"><?php esc_html_e( 'Transparent Pricing', 'nctb-theme' ); ?></span>
 				<h2 class="mkt-h2"><?php esc_html_e( 'Start free. Upgrade when you are ready.', 'nctb-theme' ); ?></h2>
-				<p class="mkt-lead"><?php esc_html_e( 'Study sample lessons for free. Unlock single lessons or choose an all-access monthly pass.', 'nctb-theme' ); ?></p>
+				<p class="mkt-lead"><?php esc_html_e( 'Try sample lessons for free. Unlock single lessons permanently or subscribe for full monthly access.', 'nctb-theme' ); ?></p>
 			</div>
 
-			<div class="mkt-prices">
-				<div class="mkt-price">
+			<div class="mkt-pricing-grid">
+				<div class="mkt-price-card">
 					<h3><?php esc_html_e( 'Free Starter', 'nctb-theme' ); ?></h3>
-					<div class="amt">৳0</div>
-					<ul>
-						<li><?php esc_html_e( 'Student profile & setup', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'Free sample lessons & reading', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'Practice quiz with hints', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( '50 AI Tutor interactions / day', 'nctb-theme' ); ?></li>
+					<div class="price-amount">৳০</div>
+					<p style="font-size:0.88rem;color:var(--text-soft);margin-bottom:20px;"><?php esc_html_e( 'Perfect for trying the lesson engine', 'nctb-theme' ); ?></p>
+					<ul class="mkt-price-features">
+						<li><span class="check">✓</span> <?php esc_html_e( 'Student profile & setup', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'Free sample lessons & reading', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'Practice quizzes with hints', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( '50 AI Tutor interactions / day', 'nctb-theme' ); ?></li>
 					</ul>
-					<a class="mkt-btn mkt-btn-ghost" href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>"><?php esc_html_e( 'Start Free', 'nctb-theme' ); ?></a>
+					<a href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>" class="mkt-btn mkt-btn-secondary"><?php esc_html_e( 'Start Free', 'nctb-theme' ); ?></a>
 				</div>
 
-				<div class="mkt-price pop">
-					<span class="badge"><?php esc_html_e( 'Most Popular', 'nctb-theme' ); ?></span>
+				<div class="mkt-price-card featured">
+					<span class="badge-popular"><?php esc_html_e( 'Most Popular', 'nctb-theme' ); ?></span>
 					<h3><?php esc_html_e( 'All-Access Pass', 'nctb-theme' ); ?></h3>
-					<div class="amt">৳২৯৯<span> / <?php esc_html_e( 'month', 'nctb-theme' ); ?></span></div>
-					<ul>
-						<li><?php esc_html_e( 'All SSC & HSC English lessons', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( '200 AI Tutor interactions / day', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'Mistake Notebook & Spaced Revision', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'All 10 Board Questions & Analytics', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'Writing, listening & speaking practice', 'nctb-theme' ); ?></li>
+					<div class="price-amount">৳২৯৯<span> / <?php esc_html_e( 'month', 'nctb-theme' ); ?></span></div>
+					<p style="font-size:0.88rem;color:var(--text-soft);margin-bottom:20px;"><?php esc_html_e( 'Complete preparation for board candidates', 'nctb-theme' ); ?></p>
+					<ul class="mkt-price-features">
+						<li><span class="check">✓</span> <?php esc_html_e( 'All SSC & HSC English lessons', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( '200 AI Tutor interactions / day', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'Mistake Notebook & Spaced Revision', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'All 10 Board Questions & Analytics', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'Writing, listening & speaking practice', 'nctb-theme' ); ?></li>
 					</ul>
-					<a class="mkt-btn mkt-btn-primary" href="<?php echo esc_url( home_url( '/pricing' ) ); ?>"><?php esc_html_e( 'Unlock Full Access', 'nctb-theme' ); ?></a>
+					<a href="<?php echo esc_url( home_url( '/pricing' ) ); ?>" class="mkt-btn mkt-btn-primary"><?php esc_html_e( 'Unlock Full Access', 'nctb-theme' ); ?></a>
 				</div>
 
-				<div class="mkt-price">
+				<div class="mkt-price-card">
 					<h3><?php esc_html_e( 'Single Lesson Pass', 'nctb-theme' ); ?></h3>
-					<div class="amt">৳১৯<span> / <?php esc_html_e( 'lesson', 'nctb-theme' ); ?></span></div>
-					<ul>
-						<li><?php esc_html_e( 'Unlock any single lesson permanently', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'Full practice & test bank', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'Related board exam questions', 'nctb-theme' ); ?></li>
-						<li><?php esc_html_e( 'No recurring subscription', 'nctb-theme' ); ?></li>
+					<div class="price-amount">৳১৯<span> / <?php esc_html_e( 'lesson', 'nctb-theme' ); ?></span></div>
+					<p style="font-size:0.88rem;color:var(--text-soft);margin-bottom:20px;"><?php esc_html_e( 'For mastering difficult specific topics', 'nctb-theme' ); ?></p>
+					<ul class="mkt-price-features">
+						<li><span class="check">✓</span> <?php esc_html_e( 'Permanent unlock for single lesson', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'Full practice quiz & answer bank', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'Related board exam questions', 'nctb-theme' ); ?></li>
+						<li><span class="check">✓</span> <?php esc_html_e( 'No recurring subscription', 'nctb-theme' ); ?></li>
 					</ul>
-					<a class="mkt-btn mkt-btn-ghost" href="<?php echo esc_url( $nctb_books_url ); ?>"><?php esc_html_e( 'Browse Lessons', 'nctb-theme' ); ?></a>
+					<a href="<?php echo esc_url( $nctb_books_url ); ?>" class="mkt-btn mkt-btn-secondary"><?php esc_html_e( 'Browse Lessons', 'nctb-theme' ); ?></a>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- 9. FAQ ACCORDION -->
+	<!-- 10. FAQ ACCORDION -->
 	<section class="mkt-section" id="faq">
 		<div class="mkt-wrap">
 			<div class="mkt-center">
 				<span class="mkt-eyebrow"><?php esc_html_e( 'Frequently Asked Questions', 'nctb-theme' ); ?></span>
-				<h2 class="mkt-h2"><?php esc_html_e( 'Everything you need to know', 'nctb-theme' ); ?></h2>
+				<h2 class="mkt-h2"><?php esc_html_e( 'Questions, Answered', 'nctb-theme' ); ?></h2>
 			</div>
-			<div class="mkt-faq">
+
+			<div class="mkt-faq-single-col">
 				<details open>
 					<summary><?php esc_html_e( 'Is this platform strictly aligned to the official NCTB textbook?', 'nctb-theme' ); ?></summary>
 					<p><?php esc_html_e( 'Yes, 100%. The official NCTB book and chapter structure control what is taught. AI is used solely as a patient tutor to explain difficult grammar, provide progressive hints, and evaluate student writing.', 'nctb-theme' ); ?></p>
@@ -436,41 +406,39 @@ $nctb_login_url = wp_login_url( home_url( '/onboarding' ) );
 					<p><?php esc_html_e( 'Yes. Our database contains verified questions from Dhaka, Chattogram, Rajshahi, Cumilla, and other boards (2018–2024). They are strictly authenticated with official paper references and separated from AI practice.', 'nctb-theme' ); ?></p>
 				</details>
 				<details>
-					<summary><?php esc_html_e( 'Will it work smoothly on Android phones with slow mobile data?', 'nctb-theme' ); ?></summary>
-					<p><?php esc_html_e( 'Yes. The entire platform is built mobile-first with clean, lightweight CSS and scripts, designed to run smoothly on any smartphone with standard 3G/4G connections.', 'nctb-theme' ); ?></p>
+					<summary><?php esc_html_e( 'Will it work smoothly on Android phones with mobile data?', 'nctb-theme' ); ?></summary>
+					<p><?php esc_html_e( 'Yes. The entire platform is built mobile-first with clean, lightweight CSS and scripts, designed to run smoothly on any smartphone with standard mobile data connections.', 'nctb-theme' ); ?></p>
 				</details>
 			</div>
 		</div>
 	</section>
 
-	<!-- 10. FINAL CONVERSION CTA -->
-	<section class="mkt-section mkt-section-alt">
+	<!-- 11. FINAL CONVERSION CTA BANNER -->
+	<section class="mkt-final-cta-band">
 		<div class="mkt-wrap">
-			<div class="mkt-cta">
-				<h2><?php esc_html_e( 'Ready to master your NCTB lessons at home?', 'nctb-theme' ); ?></h2>
-				<p><?php esc_html_e( 'Join students across Bangladesh studying smarter with structured practice and personal AI tutoring.', 'nctb-theme' ); ?></p>
-				<div class="mkt-hero-actions" style="justify-content:center;">
-					<a class="mkt-btn mkt-btn-primary mkt-btn-lg" href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>"><?php esc_html_e( 'Start Your Free Lesson', 'nctb-theme' ); ?> →</a>
-					<a class="mkt-btn mkt-btn-ghost mkt-btn-lg" href="<?php echo esc_url( $nctb_books_url ); ?>"><?php esc_html_e( 'Browse Books', 'nctb-theme' ); ?></a>
-				</div>
+			<h2><?php esc_html_e( 'Ready to study smarter for your board exam?', 'nctb-theme' ); ?></h2>
+			<p><?php esc_html_e( 'Join students across Bangladesh mastering their NCTB lessons step by step with personal AI tutoring.', 'nctb-theme' ); ?></p>
+			<div class="mkt-hero-actions" style="justify-content:center;">
+				<a class="mkt-btn mkt-btn-primary mkt-btn-lg" href="<?php echo esc_url( home_url( '/onboarding' ) ); ?>"><?php esc_html_e( 'Start Free Lesson', 'nctb-theme' ); ?> →</a>
+				<a class="mkt-btn mkt-btn-secondary mkt-btn-lg" href="<?php echo esc_url( $nctb_books_url ); ?>"><?php esc_html_e( 'Browse Textbooks', 'nctb-theme' ); ?></a>
 			</div>
 		</div>
 	</section>
 
-	<!-- 11. FOOTER -->
+	<!-- 12. EDITORIAL FOOTER -->
 	<footer class="mkt-footer">
 		<div class="mkt-wrap mkt-footer-grid">
-			<div class="brand">
+			<div class="mkt-footer-brand">
 				<b>🇧🇩 <?php bloginfo( 'name' ); ?></b>
-				<p><?php esc_html_e( 'Lesson-by-lesson digital companion to the Bangladesh NCTB curriculum, with an interactive practice engine and contextual AI English tutor.', 'nctb-theme' ); ?></p>
+				<p><?php esc_html_e( 'A digital home guide for the Bangladesh NCTB curriculum, offering lesson-by-lesson practice, mistake review, and contextual AI English tutoring.', 'nctb-theme' ); ?></p>
 			</div>
 			<div>
 				<h4><?php esc_html_e( 'Curriculum', 'nctb-theme' ); ?></h4>
 				<ul>
 					<li><a href="<?php echo esc_url( home_url( '/ssc-english/' ) ); ?>"><?php esc_html_e( 'SSC English', 'nctb-theme' ); ?></a></li>
 					<li><a href="<?php echo esc_url( home_url( '/hsc-english/' ) ); ?>"><?php esc_html_e( 'HSC English', 'nctb-theme' ); ?></a></li>
-					<li><a href="<?php echo esc_url( home_url( '/board-questions/' ) ); ?>"><?php esc_html_e( 'Board Questions', 'nctb-theme' ); ?></a></li>
-					<li><a href="<?php echo esc_url( home_url( '/board-analytics/' ) ); ?>"><?php esc_html_e( 'Board Analytics', 'nctb-theme' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/board-questions/' ) ); ?>"><?php esc_html_e( 'Board Questions Bank', 'nctb-theme' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/board-analytics/' ) ); ?>"><?php esc_html_e( 'Board Pattern Analytics', 'nctb-theme' ); ?></a></li>
 				</ul>
 			</div>
 			<div>
@@ -479,7 +447,7 @@ $nctb_login_url = wp_login_url( home_url( '/onboarding' ) );
 					<li><a href="<?php echo esc_url( home_url( '/how-it-works/' ) ); ?>"><?php esc_html_e( 'How It Works', 'nctb-theme' ); ?></a></li>
 					<li><a href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>"><?php esc_html_e( 'Pricing & Passes', 'nctb-theme' ); ?></a></li>
 					<li><a href="<?php echo esc_url( home_url( '/faq/' ) ); ?>"><?php esc_html_e( 'FAQ', 'nctb-theme' ); ?></a></li>
-					<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Support & Contact', 'nctb-theme' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Support & Helpline', 'nctb-theme' ); ?></a></li>
 				</ul>
 			</div>
 			<div>

@@ -71,8 +71,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 
 			<span class="nctb-ui-controls">
-				<button type="button" class="nctb-ui-btn" id="nctb-lang-toggle" aria-label="Switch language" title="English / বাংলা"><span class="ico">🌐</span><span id="nctb-lang-label">বাংলা</span></button>
-				<button type="button" class="nctb-ui-btn" id="nctb-theme-toggle" aria-label="Toggle dark mode" title="Light / Dark mode"><span class="ico">🌙</span></button>
+				<button type="button" class="nctb-ui-btn" id="nctb-lang-toggle" aria-label="Switch language" title="English / বাংলা"><span id="nctb-lang-label">বাংলা</span></button>
+				<?php if ( ! $nctb_is_marketing || $nctb_logged_in ) : ?>
+					<button type="button" class="nctb-ui-btn" id="nctb-theme-toggle" aria-label="Toggle dark mode" title="Light / Dark mode"><span class="ico">🌙</span></button>
+				<?php endif; ?>
 			</span>
 		</nav>
 	</div>
