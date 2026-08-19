@@ -997,6 +997,113 @@ html[data-theme="dark"] .topic-frequency-sample .topic-row { background: #0f172a
 	color: #b45309;
 }
 
+/* ==========================================================================
+   Teacher Classroom Resources & Worksheets (Phase 24)
+   ========================================================================== */
+.teacher-resources-section {
+	margin: 40px 0;
+}
+.teacher-resources-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 20px;
+	margin-top: 20px;
+}
+.resource-card {
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.resource-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+.resource-card-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+}
+.resource-type-badge {
+	background: #ecfdf5;
+	color: #065f46;
+	font-size: 12px;
+	font-weight: 600;
+	padding: 4px 10px;
+	border-radius: 20px;
+}
+.resource-duration {
+	font-size: 12px;
+	color: #64748b;
+}
+.resource-title {
+	font-size: 16px;
+	font-weight: 700;
+	color: #0f172a;
+	margin: 0 0 8px;
+}
+.resource-desc {
+	font-size: 13px;
+	color: #475569;
+	line-height: 1.5;
+	margin-bottom: 16px;
+}
+.resource-meta-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+.res-tag {
+	background: #f1f5f9;
+	color: #334155;
+	font-size: 11px;
+	padding: 3px 8px;
+	border-radius: 6px;
+}
+.resource-card-actions {
+	border-top: 1px solid #f1f5f9;
+	padding-top: 14px;
+}
+
+/* Print Examination Handout Styling */
+@media print {
+	body * {
+		visibility: hidden;
+	}
+	#resource-viewer-modal, #resource-viewer-modal * {
+		visibility: visible;
+	}
+	#resource-viewer-modal {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		display: block !important;
+		background: #fff;
+	}
+	.modal-header button, .modal-actions-row {
+		display: none !important;
+	}
+	.nctb-modal-dialog {
+		box-shadow: none !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		max-width: 100% !important;
+	}
+	.nctb-print-exam-sheet {
+		padding: 20px;
+		font-size: 14pt;
+		color: #000;
+	}
+}
+
+
 
 
 

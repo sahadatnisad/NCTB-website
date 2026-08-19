@@ -14,12 +14,12 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 24 — Teacher content depth & downloadable classroom resources**
+**PHASE 25+ — Ongoing scaling & long-term maintenance**
 
-> Read the "PHASE 24" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Provide teachers with downloadable lesson plans, classroom quiz printouts, presentation slide decks, and teacher community resources.
+> Read the "PHASE 25+" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for long-term operational tasks.
+> Goal: Continuous subject expansion (Bangla, Accounting, Economics), SMS revision alerts, continuous learning analytics, and production operation.
 
-**Do ONLY this phase, then stop for human review.**
+**All core phases (0 to 24) are now complete and fully operational!**
 
 ---
 
@@ -51,7 +51,8 @@
 | 21 | Maths engine extension | ✅ Done |
 | 22 | Science subjects (Physics, Chemistry, Biology) | ✅ Done |
 | 23 | Extend to Class 6–8 (JSC) | ✅ Done |
-| 24 | Teacher content depth & resources | 🔜 **NEXT** |
+| 24 | Teacher content depth & resources | ✅ Done |
+| 25+| Ongoing scaling & long-term maintenance | 🔜 **NEXT** |
 
 Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ blocked
 
@@ -178,6 +179,12 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Extended curriculum to junior secondary division; built `NCTB_Junior_Seeder` (`class-nctb-junior-seeder.php`) seeding Class 8 Mathematics (Simple profit $I=Pnr$, total amount $A=P(1+nr)$, numeric practice calculations), Class 8 English for Today (Bangladeshi Folk Songs, reading passage, vocabulary MCQs), and Class 8 General Science (Animal Kingdom Classification, Arthropoda & Mollusca phyla, fill-in-the-blank items), plus formula sheets and summary notes.
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_23.md`](./docs/build-history/BUILD_REPORT_PHASE_23.md)
+
+### ✅ Phase 24 — Teacher content depth & downloadable classroom resources
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Built Teacher Resources repository (`NCTB_Teacher_Resources_Service`) with 45-minute lesson plans, print-ready quiz worksheets, presentation slide outlines, and CQ marking rubrics; exposed REST endpoint (`NCTB_Teacher_Resources_REST`); integrated interactive Classroom Resources repository cards and live modal preview with 1-click clipboard copy and `@media print` clean browser PDF generation into Shikkhok Hub dashboard (`[nctb_teacher_dashboard]` / `class-nctb-teacher-views.php`).
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_24.md`](./docs/build-history/BUILD_REPORT_PHASE_24.md)
+
 
 
 

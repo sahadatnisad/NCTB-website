@@ -61,8 +61,8 @@ Log in to WordPress admin once (`http://localhost:8080/wp-admin`). The `NCTB_Mig
 | **21** | Maths Engine: KaTeX math input, deterministic formula matching, step-by-step guidance | Subject Expansion | ✅ Completed | [`BUILD_REPORT_PHASE_21.md`](../build-history/BUILD_REPORT_PHASE_21.md) |
 | **22** | Science Subjects: Physics, Chemistry, Biology notes, video masterclasses, and question banks | Subject Expansion | ✅ Completed | [`BUILD_REPORT_PHASE_22.md`](../build-history/BUILD_REPORT_PHASE_22.md) |
 | **23** | Extend to Class 6–8 (JSC / JDC) with parent-friendly onboarding and curriculum | Class Expansion | ✅ Completed | [`BUILD_REPORT_PHASE_23.md`](../build-history/BUILD_REPORT_PHASE_23.md) |
-| **24** | Teacher Content Depth: Downloadable classroom slide templates, pedagogy Q&A | Community | 🔜 **NEXT** | `Pending` |
-| **25+**| Ongoing subject scaling (Bangla, Accounting, Economics), SMS revision alerts | Long-term Scale | ⬜ Not started | `Pending` |
+| **24** | Teacher Content Depth: Downloadable classroom slide templates, pedagogy Q&A | Community | ✅ Completed | [`BUILD_REPORT_PHASE_24.md`](../build-history/BUILD_REPORT_PHASE_24.md) |
+| **25+**| Ongoing subject scaling (Bangla, Accounting, Economics), SMS revision alerts | Long-term Scale | 🔜 **NEXT** | `Pending` |
 
 ---
 

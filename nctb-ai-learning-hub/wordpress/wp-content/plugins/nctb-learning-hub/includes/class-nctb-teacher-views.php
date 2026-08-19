@@ -435,6 +435,61 @@ class NCTB_Teacher_Views {
 				</div>
 			</div>
 
+			<!-- Classroom Resources & Ready-Made Lesson Plans (Phase 24) -->
+			<div class="teacher-resources-section" id="classroom-resources">
+				<div class="teacher-section-title">
+					<h2>📚 ক্লাসরুম রিসোর্স ও রেডিমেড লেসন প্ল্যান (Classroom Teaching Aids)</h2>
+					<p>ফটোকপি ও ক্লাসরুম পরীক্ষার উপযোগী প্রশ্নপত্র, ৪৫ মিনিটের পাঠ পরিকল্পনা এবং স্লাইড ডেক।</p>
+				</div>
+
+				<div class="teacher-resources-grid">
+					<?php
+					$resources = NCTB_Teacher_Resources_Service::get_resources();
+					foreach ( $resources as $res ) :
+						$type_icons = array(
+							'lesson_plan' => '📋 লেসন প্ল্যান',
+							'worksheet'   => '📝 কুইজ শিট',
+							'slides'      => '📽️ স্লাইড ডেক',
+							'rubric'      => '📊 মূল্যায়ন রুব্রিক',
+						);
+						$type_badge = $type_icons[ $res['type'] ] ?? $res['type'];
+						?>
+						<div class="resource-card" data-id="<?php echo esc_attr( $res['id'] ); ?>">
+							<div class="resource-card-head">
+								<span class="resource-type-badge"><?php echo esc_html( $type_badge ); ?></span>
+								<span class="resource-duration"><?php echo esc_html( $res['duration'] ); ?></span>
+							</div>
+							<h3 class="resource-title"><?php echo esc_html( $res['title'] ); ?></h3>
+							<p class="resource-desc"><?php echo esc_html( $res['description'] ); ?></p>
+							<div class="resource-meta-row">
+								<span class="res-tag">📘 <?php echo esc_html( $res['subject'] ); ?></span>
+								<span class="res-tag">🏫 <?php echo esc_html( $res['class'] ); ?></span>
+							</div>
+							<div class="resource-card-actions">
+								<button type="button" class="nctb-btn nctb-btn-sm nctb-btn-primary btn-view-resource" data-resource-id="<?php echo esc_attr( $res['id'] ); ?>">
+									👁️ ওপেন ও প্রিন্ট
+								</button>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+
+			<!-- Resource Modal -->
+			<div class="nctb-modal" id="resource-viewer-modal" style="display:none;">
+				<div class="nctb-modal-dialog" style="max-width:800px;background:#fff;border-radius:12px;padding:24px;margin:50px auto;box-shadow:0 20px 40px rgba(0,0,0,0.2);">
+					<div class="modal-header" style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0;padding-bottom:12px;margin-bottom:16px;">
+						<h3 id="res-modal-title" style="margin:0;">রিসোর্স প্রিভিউ</h3>
+						<button type="button" class="modal-close-btn" id="btn-close-res-modal" style="background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
+					</div>
+					<div class="modal-actions-row" style="margin-bottom:16px;display:flex;gap:10px;">
+						<button type="button" class="nctb-btn nctb-btn-sm nctb-btn-outline" id="btn-copy-res-content">📋 কপি করুন</button>
+						<button type="button" class="nctb-btn nctb-btn-sm nctb-btn-primary" onclick="window.print();">🖨️ প্রিন্ট / PDF ডাউনলোড</button>
+					</div>
+					<div class="modal-body nctb-prose" id="res-modal-content" style="max-height:60vh;overflow-y:auto;padding:12px;background:#f8fafc;border-radius:8px;"></div>
+				</div>
+			</div>
+
 			<!-- Teaching Classes & Subjects Widget -->
 			<div class="teacher-classes-card">
 				<h3>📖 আপনার পাঠদানের বিষয় ও শ্রেণিসমূহ</h3>
@@ -579,6 +634,45 @@ class NCTB_Teacher_Views {
 						const orig = copyBtn.innerText;
 						copyBtn.innerText = '✓ কপি হয়েছে!';
 						setTimeout(() => copyBtn.innerText = orig, 2000);
+					});
+				});
+			}
+
+			// Resource Viewer Modal
+			const resModal = document.getElementById('resource-viewer-modal');
+			const resTitle = document.getElementById('res-modal-title');
+			const resContent = document.getElementById('res-modal-content');
+			const resClose = document.getElementById('btn-close-res-modal');
+			const resCopy = document.getElementById('btn-copy-res-content');
+
+			document.querySelectorAll('.btn-view-resource').forEach(b => {
+				b.addEventListener('click', function() {
+					const id = this.getAttribute('data-resource-id');
+					fetch(`${window.location.origin}/wp-json/nctb/v1/teacher/resources/${id}`)
+						.then(r => r.json())
+						.then(data => {
+							if (data.success && data.resource) {
+								resTitle.innerText = data.resource.title;
+								let html = data.resource.content;
+								if (!html.includes('<div class="nctb-print-exam-sheet">')) {
+									html = html.replace(/\n/g, '<br>').replace(/### (.*?)(<br>|$)/g, '<h3>$1</h3>').replace(/## (.*?)(<br>|$)/g, '<h2>$1</h2>').replace(/#### (.*?)(<br>|$)/g, '<h4>$1</h4>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+								}
+								resContent.innerHTML = html;
+								resModal.style.display = 'block';
+							}
+						});
+				});
+			});
+
+			if (resClose) {
+				resClose.addEventListener('click', () => resModal.style.display = 'none');
+			}
+			if (resCopy) {
+				resCopy.addEventListener('click', function() {
+					navigator.clipboard.writeText(resContent.innerText).then(() => {
+						const orig = resCopy.innerText;
+						resCopy.innerText = '✓ কপি হয়েছে!';
+						setTimeout(() => resCopy.innerText = orig, 2000);
 					});
 				});
 			}

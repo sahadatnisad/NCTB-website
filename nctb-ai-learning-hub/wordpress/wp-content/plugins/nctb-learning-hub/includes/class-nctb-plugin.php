@@ -139,6 +139,8 @@ final class NCTB_Plugin {
 
 		$teacher_ai_rest = new NCTB_Teacher_AI_REST();
 		$teacher_ai_rest->register_routes();
+
+		NCTB_Teacher_Resources_REST::register_routes();
 	}
 
 	/**

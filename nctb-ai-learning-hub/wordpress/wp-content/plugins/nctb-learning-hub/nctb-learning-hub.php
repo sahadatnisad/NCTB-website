@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Current plugin version.
  */
-define( 'NCTB_LH_VERSION', '0.23.0' );
+define( 'NCTB_LH_VERSION', '0.24.0' );
 
 /**
  * Absolute filesystem path to the plugin directory, with trailing slash.
@@ -110,6 +110,8 @@ require_once NCTB_LH_PATH . 'includes/class-nctb-module-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-note-cpt.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-notes-service.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-notes-rest.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-teacher-resources-service.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-teacher-resources-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-teacher-ai-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-seo.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-notifications.php';
