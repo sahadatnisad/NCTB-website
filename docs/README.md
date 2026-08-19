@@ -1,6 +1,6 @@
 # NCTB AI LEARNING HUB — DOCUMENTATION & PLANS DIRECTORY
 
-> **Central repository for all architectural plans, build version history, checklists, and development standards.**
+> **Central repository for all architectural plans, build version history, master checklists, and development standards.**
 
 ---
 
@@ -9,37 +9,31 @@
 ```text
 docs/
 ├── plans/
-│   ├── dashboard-plan-1.md              # Dashboard & Learning Engine Master Plan (18 Phases)
-│   ├── frontend-design-plan-1.md        # Consolidated Frontend Design Plan (Public & Student UI)
-│   └── master-checklist.md              # 🎯 MASTER CHECKLIST FOR BOTH PLANS (What's Done vs Remaining)
+│   ├── 00_INDEX.md                              # Master Blueprint Index & Document Guide
+│   ├── 01_BUILD_BLUEPRINT.md                    # Core Technical Architecture & Phase Specifications
+│   ├── 02_DESIGN_SYSTEM.md                      # UI Tokens, Color Schemes & Typography
+│   ├── 03_CONTENT_OPERATIONS.md                 # Curriculum Content Architecture & Data Schemas
+│   ├── 04_MARKETING_PLAN.md                     # Launch Strategy, SEO & Acquisition Funnel
+│   ├── 05_PUBLISHING_REQUIREMENTS_RISKS_COSTS.md# Deployment, Hosting & Infrastructure Economics
+│   └── MASTER_ROADMAP_CHECKLIST.md              # 🎯 Master Progress Matrix (Phases 0–24+ Status)
 ├── build-history/
-│   ├── BUILD_REPORT_PHASE_0.md          # Safe WP Environment
-│   ├── BUILD_REPORT_PHASE_1.md          # Visual Shell & Navigation
-│   ├── BUILD_REPORT_PHASE_2.md          # Student Accounts & Onboarding
-│   ├── BUILD_REPORT_PHASE_3.md          # Curriculum CMS & Taxonomies
-│   ├── BUILD_REPORT_PHASE_4.md          # Interactive Lesson & Stepper
-│   ├── BUILD_REPORT_PHASE_5.md          # Practice & Question Engine
-│   ├── BUILD_REPORT_PHASE_6.md          # Progress, Mastery, Mistakes & Spaced Revision
-│   ├── BUILD_REPORT_PHASE_7.md          # Functional Student Dashboard
-│   ├── BUILD_REPORT_PHASE_8.md          # Payments & Entitlements
-│   ├── BUILD_REPORT_PHASE_9.md          # Contextual Socratic AI Tutor
-│   ├── BUILD_REPORT_PHASE_10.md         # Writing, Listening & Speaking Enhancements
-│   ├── BUILD_REPORT_PHASE_11.md         # Authentic Board Question Database
-│   ├── BUILD_REPORT_PHASE_12.md         # Board Pattern Analytics
-│   └── AUDIT_PHASE_0-3.md               # Phase 0-3 Static Analysis Audit
+│   ├── BUILD_REPORT_PHASE_0.md to PHASE_24.md   # Complete build reports for every completed phase
+│   └── AUDIT_PHASE_0-3.md                       # Phase 0-3 Static Analysis Audit
 └── standards-and-setup/
-    ├── CODING_STANDARDS.md              # WordPress & PHP 8.0+ Coding Standards
-    ├── ENVIRONMENT.md                   # Docker, Local WP & DB Setup
-    ├── BACKUP_RESTORE.md                # Database & Media Backup/Restore Guide
-    ├── SECRETS.md                       # API Keys & Secrets Management
-    └── PHASE_STATUS.md                  # High-level phase status tracker
+    ├── CODING_STANDARDS.md                      # WordPress & PHP 8.0+ Coding Standards
+    ├── ENVIRONMENT.md                           # Docker, Local WP & DB Setup
+    ├── BACKUP_RESTORE.md                        # Database & Media Backup/Restore Guide
+    ├── SECRETS.md                               # API Keys & Secrets Management
+    └── PHASE_STATUS.md                          # High-level phase status tracker
 ```
 
 ---
 
 ## 🚀 QUICK LINKS
 
-1. **[Master Checklist & Progress Audit](./plans/master-checklist.md)** — Comprehensive checklist of completed vs remaining features for both plans.
-2. **[Dashboard Plan 1 (Learning Engine & CMS)](./plans/dashboard-plan-1.md)** — Architectural blueprint for curriculum, practice, tutor, and student dashboard.
-3. **[Frontend Design Plan 1 (UI/UX Specification)](./plans/frontend-design-plan-1.md)** — Complete UI/UX design, wireframes, typography, and page templates.
-4. **[Build State Memory (Root)](../BUILD_STATE.md)** — Active phase memory for AI agents.
+1. **[Master Roadmap Checklist](./plans/MASTER_ROADMAP_CHECKLIST.md)** — Comprehensive status matrix of all build phases.
+2. **[Build Blueprint (Technical Specification)](./plans/01_BUILD_BLUEPRINT.md)** — Architectural blueprint for curriculum, practice, tutor, modules, and teacher portal.
+3. **[Design System Specification](./plans/02_DESIGN_SYSTEM.md)** — Complete UI/UX design tokens, components, and layout templates.
+4. **[Content Operations](./plans/03_CONTENT_OPERATIONS.md)** — Subject schemas and lesson authoring guidelines.
+5. **[Build State Memory (Root)](../BUILD_STATE.md)** — Active phase memory for AI agents.
+

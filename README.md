@@ -6,19 +6,20 @@
 
 [![WordPress](https://img.shields.io/badge/WordPress-7.0.4-blue.svg)](https://wordpress.org)
 [![PHP](https://img.shields.io/badge/PHP-8.3%20%7C%208.0%2B-777bb4.svg)](https://php.net)
-[![Build Status](https://img.shields.io/badge/Phase%200--12-Completed%20%E2%9C%85-success.svg)](./docs/plans/master-checklist.md)
+[![Build Status](https://img.shields.io/badge/Phase%200--24-Completed%20%E2%9C%85-success.svg)](./docs/plans/MASTER_ROADMAP_CHECKLIST.md)
 [![License](https://img.shields.io/badge/License-GPL--2.0--or--later-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 ---
 
 ## 📂 Documentation & Master Plans
 
-All detailed architectural blueprints, frontend designs, and versioned build reports live in the **[`docs/`](./docs)** directory:
+All detailed architectural blueprints, design systems, and versioned build reports live in the **[`docs/`](./docs)** directory:
 
-- 🎯 **[Master Checklist & Progress Audit](./docs/plans/master-checklist.md)** — Complete checklist of completed vs remaining features for both plans.
-- 📘 **[Dashboard Plan 1 (Learning Engine & CMS)](./docs/plans/dashboard-plan-1.md)** — Core curriculum engine, interactive stepper, practice engine, AI tutor, mastery calculation, mistake notebook, spaced revision, board questions DB, and board analytics.
-- 🎨 **[Frontend Design Plan 1 (UI/UX & Marketing)](./docs/plans/frontend-design-plan-1.md)** — Public marketing pages (`/`, `/how-it-works/`, `/pricing/`, etc.), student app presentation, wireframes, and design system.
-- 📜 **[Build Version History Reports (Phases 0–12)](./docs/build-history/)** — Detailed build reports for every completed phase.
+- 🎯 **[Master Roadmap Checklist](./docs/plans/MASTER_ROADMAP_CHECKLIST.md)** — Complete status matrix and local setup guide for Phases 0–24+.
+- 📘 **[Build Blueprint (Technical Specification)](./docs/plans/01_BUILD_BLUEPRINT.md)** — Core platform architecture, curriculum CMS, question engines, AI tutoring, and Shikkhok Hub.
+- 🎨 **[Design System](./docs/plans/02_DESIGN_SYSTEM.md)** — Color palettes, typography, UI components, and layout tokens.
+- 📝 **[Content Operations](./docs/plans/03_CONTENT_OPERATIONS.md)** — NCTB subject schemas, lesson authoring workflows, and board questions.
+- 📜 **[Build Version History Reports (Phases 0–24)](./docs/build-history/)** — Detailed build reports for every completed phase.
 - 🛠️ **[Standards & Setup Guides](./docs/standards-and-setup/)** — Coding standards, environment configuration, secrets handling, and backups.
 
 ---

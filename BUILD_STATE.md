@@ -3,7 +3,7 @@
 > **This is the memory of the project.** Any AI, on any device, reads this file
 > **first** to know where the build stands, and updates it **last** before
 > committing. Keep it accurate and short. The full plan is in [README.md](./README.md)
-> and detailed checklists in [docs/plans/master-checklist.md](./docs/plans/master-checklist.md).
+> and detailed checklists in [docs/plans/MASTER_ROADMAP_CHECKLIST.md](./docs/plans/MASTER_ROADMAP_CHECKLIST.md).
 
 - **Repo:** https://github.com/sahadatnisad/NCTB-website
 - **Branch:** main
