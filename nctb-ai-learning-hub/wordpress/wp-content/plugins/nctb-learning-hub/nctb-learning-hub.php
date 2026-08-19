@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Current plugin version.
  */
-define( 'NCTB_LH_VERSION', '0.22.0' );
+define( 'NCTB_LH_VERSION', '0.23.0' );
 
 /**
  * Absolute filesystem path to the plugin directory, with trailing slash.
@@ -69,6 +69,7 @@ require_once NCTB_LH_PATH . 'includes/class-nctb-curriculum-seeder.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-ict-seeder.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-math-seeder.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-science-seeder.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-junior-seeder.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-content-library-service.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-content-library-admin.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-question-types.php';

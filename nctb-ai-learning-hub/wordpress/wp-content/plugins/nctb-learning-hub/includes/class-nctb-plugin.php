@@ -71,6 +71,7 @@ final class NCTB_Plugin {
 		add_action( 'admin_init', array( 'NCTB_ICT_Seeder', 'maybe_seed_ict' ) );
 		add_action( 'admin_init', array( 'NCTB_Math_Seeder', 'maybe_seed_math' ) );
 		add_action( 'admin_init', array( 'NCTB_Science_Seeder', 'maybe_seed_science' ) );
+		add_action( 'admin_init', array( 'NCTB_Junior_Seeder', 'maybe_seed_junior' ) );
 
 		$this->load_admin();
 		$this->load_public();

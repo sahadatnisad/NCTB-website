@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 23 — Extend to Class 6–8 (JSC / JDC)**
+**PHASE 24 — Teacher content depth & downloadable classroom resources**
 
-> Read the "PHASE 23" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Broaden curriculum down to junior secondary grades (Class 6–8 JSC / JDC) with parent-friendly onboarding, foundational English, Math, and General Science.
+> Read the "PHASE 24" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Provide teachers with downloadable lesson plans, classroom quiz printouts, presentation slide decks, and teacher community resources.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -50,8 +50,8 @@
 | 20 | Add ICT (content-only proof) | ✅ Done |
 | 21 | Maths engine extension | ✅ Done |
 | 22 | Science subjects (Physics, Chemistry, Biology) | ✅ Done |
-| 23 | Extend to Class 6–8 (JSC) | 🔜 **NEXT** |
-| 24 | Teacher content depth & resources | ⬜ Not started |
+| 23 | Extend to Class 6–8 (JSC) | ✅ Done |
+| 24 | Teacher content depth & resources | 🔜 **NEXT** |
 
 Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ blocked
 
@@ -173,6 +173,12 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Broadened secondary science curriculum portfolio; built `NCTB_Science_Seeder` (`class-nctb-science-seeder.php`) seeding SSC Physics (Motion equations $v=u+at$, $s=ut+\frac{1}{2}at^2$, Dhaka Board 2024 falling body item), SSC Chemistry (Periodic Table groups & trends, alkali metals MCQ), and SSC Biology (Cell organelles, Mitochondria & Plastid concept blocks, summary notes, and video modules).
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_22.md`](./docs/build-history/BUILD_REPORT_PHASE_22.md)
+
+### ✅ Phase 23 — Extend to Class 6–8 (JSC / JDC)
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Extended curriculum to junior secondary division; built `NCTB_Junior_Seeder` (`class-nctb-junior-seeder.php`) seeding Class 8 Mathematics (Simple profit $I=Pnr$, total amount $A=P(1+nr)$, numeric practice calculations), Class 8 English for Today (Bangladeshi Folk Songs, reading passage, vocabulary MCQs), and Class 8 General Science (Animal Kingdom Classification, Arthropoda & Mollusca phyla, fill-in-the-blank items), plus formula sheets and summary notes.
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_23.md`](./docs/build-history/BUILD_REPORT_PHASE_23.md)
+
 
 
 
