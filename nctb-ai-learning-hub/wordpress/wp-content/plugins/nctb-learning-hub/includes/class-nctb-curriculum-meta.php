@@ -70,6 +70,15 @@ class NCTB_Curriculum_Meta {
 		);
 
 		add_meta_box(
+			'nctb_lesson_activities',
+			__( 'Interactive Lesson Activities (Phase 4)', 'nctb-learning-hub' ),
+			array( $this, 'render_lesson_activities' ),
+			NCTB_Curriculum_CPT::CPT_LESSON,
+			'normal',
+			'high'
+		);
+
+		add_meta_box(
 			'nctb_lesson_concepts',
 			__( 'Linked Concepts', 'nctb-learning-hub' ),
 			array( $this, 'render_lesson_concepts' ),
@@ -194,6 +203,133 @@ class NCTB_Curriculum_Meta {
 		<?php
 	}
 
+	/**
+	 * Render the interactive lesson activities builder meta box.
+	 *
+	 * @param WP_Post $post Lesson post.
+	 * @return void
+	 */
+	public function render_lesson_activities( $post ) {
+		$this->nonce_field();
+		$activities = NCTB_Curriculum_Data::get_lesson_activities( $post->ID, false );
+		$all_types  = NCTB_Lesson_Activity_Types::get_all();
+		?>
+		<div class="nctb-activities-container">
+			<div class="nctb-activities-toolbar">
+				<label for="nctb-new-activity-type"><strong><?php esc_html_e( 'Add Activity Type:', 'nctb-learning-hub' ); ?></strong></label>
+				<select id="nctb-new-activity-type" class="components-select-control__input">
+					<?php foreach ( $all_types as $type_key => $type_info ) : ?>
+						<option value="<?php echo esc_attr( $type_key ); ?>">
+							<?php echo esc_html( $type_info['icon'] . ' ' . $type_info['label_en'] . ' (' . $type_info['label_bn'] . ')' ); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+				<button type="button" class="button button-primary" id="btn-add-activity">➕ <?php esc_html_e( 'Add Block', 'nctb-learning-hub' ); ?></button>
+				<button type="button" class="button button-secondary" id="btn-toggle-all-activities">↕️ <?php esc_html_e( 'Expand / Collapse All', 'nctb-learning-hub' ); ?></button>
+			</div>
+
+			<p class="description">
+				<?php esc_html_e( 'Arrange reusable activity blocks that structure this interactive lesson. The order here is rendered on the front-end interactive lesson viewer.', 'nctb-learning-hub' ); ?>
+			</p>
+
+			<div id="nctb-activities-list">
+				<?php
+				if ( ! empty( $activities ) ) :
+					$index = 0;
+					foreach ( $activities as $act ) :
+						$type_info = NCTB_Lesson_Activity_Types::get_type_info( $act->activity_type );
+						$icon      = $type_info ? $type_info['icon'] : '📄';
+						$label_en  = $type_info ? $type_info['label_en'] : $act->activity_type;
+						$meta_json = ! empty( $act->meta_data ) ? wp_json_encode( $act->meta_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) : '';
+						?>
+						<div class="nctb-activity-card" data-index="<?php echo esc_attr( $index ); ?>">
+							<div class="nctb-activity-head">
+								<span class="nctb-drag-handle">☰ #<span class="nctb-act-index"><?php echo esc_html( $index + 1 ); ?></span></span>
+								<span class="nctb-act-badge"><?php echo esc_html( $icon . ' ' . $label_en ); ?></span>
+								<span class="nctb-act-title-preview"><?php echo esc_html( $act->title ?: $label_en ); ?></span>
+								<div class="nctb-act-controls">
+									<button type="button" class="button button-small btn-move-up" title="<?php esc_attr_e( 'Move Up', 'nctb-learning-hub' ); ?>">▲</button>
+									<button type="button" class="button button-small btn-move-down" title="<?php esc_attr_e( 'Move Down', 'nctb-learning-hub' ); ?>">▼</button>
+									<button type="button" class="button button-small button-link-delete btn-delete-card" title="<?php esc_attr_e( 'Delete', 'nctb-learning-hub' ); ?>">🗑️</button>
+								</div>
+							</div>
+							<div class="nctb-activity-body" style="display:none;">
+								<div class="nctb-field-row">
+									<label><?php esc_html_e( 'Block Type:', 'nctb-learning-hub' ); ?></label>
+									<select name="nctb_activities[<?php echo esc_attr( $index ); ?>][activity_type]" class="nctb-select-type">
+										<?php foreach ( $all_types as $type_key => $t_info ) : ?>
+											<option value="<?php echo esc_attr( $type_key ); ?>" <?php selected( $act->activity_type, $type_key ); ?>>
+												<?php echo esc_html( $t_info['icon'] . ' ' . $t_info['label_en'] . ' (' . $t_info['label_bn'] . ')' ); ?>
+											</option>
+										<?php endforeach; ?>
+									</select>
+								</div>
+								<div class="nctb-field-row">
+									<label><?php esc_html_e( 'Activity Title:', 'nctb-learning-hub' ); ?></label>
+									<input type="text" name="nctb_activities[<?php echo esc_attr( $index ); ?>][title]" class="nctb-input-title" value="<?php echo esc_attr( $act->title ); ?>" placeholder="<?php esc_attr_e( 'e.g. Vocabulary Builder: Key Terms', 'nctb-learning-hub' ); ?>">
+								</div>
+								<div class="nctb-field-row">
+									<label><?php esc_html_e( 'Main Content / Instructions:', 'nctb-learning-hub' ); ?></label>
+									<textarea name="nctb_activities[<?php echo esc_attr( $index ); ?>][content]" rows="6" class="widefat" placeholder="<?php esc_attr_e( 'Enter main text, passage paragraphs, or activity instructions...', 'nctb-learning-hub' ); ?>"><?php echo esc_textarea( $act->content ); ?></textarea>
+								</div>
+								<div class="nctb-meta-box-section">
+									<h4>⚙️ <?php esc_html_e( 'Structured Metadata (JSON):', 'nctb-learning-hub' ); ?></h4>
+									<p class="description"><?php esc_html_e( 'For vocabulary lists, audio URLs, hints, or outline options. Stored as structured JSON.', 'nctb-learning-hub' ); ?></p>
+									<textarea name="nctb_activities[<?php echo esc_attr( $index ); ?>][meta_data]" rows="4" class="widefat code" placeholder='{"words": [...], "hints": [...]}'><?php echo esc_textarea( $meta_json ); ?></textarea>
+								</div>
+							</div>
+						</div>
+						<?php
+						$index++;
+					endforeach;
+				endif;
+				?>
+			</div>
+
+			<!-- Template for new activity card -->
+			<script type="text/template" id="nctb-activity-template">
+				<div class="nctb-activity-card" data-index="{{INDEX}}">
+					<div class="nctb-activity-head">
+						<span class="nctb-drag-handle">☰ #<span class="nctb-act-index">{{INDEX}}</span></span>
+						<span class="nctb-act-badge">{{TYPE_LABEL}}</span>
+						<span class="nctb-act-title-preview">{{TITLE}}</span>
+						<div class="nctb-act-controls">
+							<button type="button" class="button button-small btn-move-up" title="<?php esc_attr_e( 'Move Up', 'nctb-learning-hub' ); ?>">▲</button>
+							<button type="button" class="button button-small btn-move-down" title="<?php esc_attr_e( 'Move Down', 'nctb-learning-hub' ); ?>">▼</button>
+							<button type="button" class="button button-small button-link-delete btn-delete-card" title="<?php esc_attr_e( 'Delete', 'nctb-learning-hub' ); ?>">🗑️</button>
+						</div>
+					</div>
+					<div class="nctb-activity-body">
+						<div class="nctb-field-row">
+							<label><?php esc_html_e( 'Block Type:', 'nctb-learning-hub' ); ?></label>
+							<select name="nctb_activities[{{INDEX}}][activity_type]" class="nctb-select-type">
+								<?php foreach ( $all_types as $type_key => $t_info ) : ?>
+									<option value="<?php echo esc_attr( $type_key ); ?>">
+										<?php echo esc_html( $t_info['icon'] . ' ' . $t_info['label_en'] . ' (' . $t_info['label_bn'] . ')' ); ?>
+									</option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="nctb-field-row">
+							<label><?php esc_html_e( 'Activity Title:', 'nctb-learning-hub' ); ?></label>
+							<input type="text" name="nctb_activities[{{INDEX}}][title]" class="nctb-input-title" value="{{TITLE}}" placeholder="<?php esc_attr_e( 'e.g. Vocabulary Builder', 'nctb-learning-hub' ); ?>">
+						</div>
+						<div class="nctb-field-row">
+							<label><?php esc_html_e( 'Main Content / Instructions:', 'nctb-learning-hub' ); ?></label>
+							<textarea name="nctb_activities[{{INDEX}}][content]" rows="6" class="widefat" placeholder="<?php esc_attr_e( 'Enter main text, passage paragraphs, or activity instructions...', 'nctb-learning-hub' ); ?>"></textarea>
+						</div>
+						<div class="nctb-meta-box-section">
+							<h4>⚙️ <?php esc_html_e( 'Structured Metadata (JSON):', 'nctb-learning-hub' ); ?></h4>
+							<p class="description"><?php esc_html_e( 'For vocabulary lists, audio URLs, hints, or outline options. Stored as structured JSON.', 'nctb-learning-hub' ); ?></p>
+							<textarea name="nctb_activities[{{INDEX}}][meta_data]" rows="4" class="widefat code" placeholder='{}'></textarea>
+						</div>
+					</div>
+				</div>
+			</script>
+		</div>
+		<?php
+	}
+
 	/* ------------------------------------------------------------------ */
 	/* Save handlers                                                       */
 	/* ------------------------------------------------------------------ */
@@ -240,7 +376,7 @@ class NCTB_Curriculum_Meta {
 	}
 
 	/**
-	 * Persist the Lesson→Unit relationship, outcomes and concept links.
+	 * Persist the Lesson→Unit relationship, outcomes, concept links, and activities.
 	 *
 	 * @param int     $post_id Lesson ID.
 	 * @param WP_Post $post    Lesson post.
@@ -271,5 +407,11 @@ class NCTB_Curriculum_Meta {
 		// Concept links.
 		$concept_ids = isset( $_POST['nctb_concept_ids'] ) ? array_map( 'absint', (array) wp_unslash( $_POST['nctb_concept_ids'] ) ) : array();
 		NCTB_Curriculum_Data::set_lesson_concepts( $post_id, $concept_ids );
+
+		// Activity blocks.
+		if ( isset( $_POST['nctb_activities'] ) && is_array( $_POST['nctb_activities'] ) ) {
+			$raw_activities = (array) wp_unslash( $_POST['nctb_activities'] );
+			NCTB_Curriculum_Data::set_lesson_activities( $post_id, $raw_activities );
+		}
 	}
 }

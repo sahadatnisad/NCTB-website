@@ -1,0 +1,146 @@
+/* Admin styles for NCTB Lesson Activities Builder */
+
+.nctb-activities-container {
+	margin-top: 10px;
+}
+
+.nctb-activities-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	padding: 12px 14px;
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	margin-bottom: 15px;
+}
+
+.nctb-activities-toolbar select {
+	max-width: 280px;
+}
+
+.nctb-activity-card {
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	margin-bottom: 12px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nctb-activity-card:hover {
+	border-color: #94a3b8;
+}
+
+.nctb-activity-head {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 14px;
+	background: #f1f5f9;
+	border-bottom: 1px solid #e2e8f0;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.nctb-drag-handle {
+	color: #94a3b8;
+	cursor: grab;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.nctb-act-badge {
+	background: #0284c7;
+	color: #ffffff;
+	padding: 3px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.nctb-act-title-preview {
+	flex: 1;
+	font-weight: 600;
+	color: #1e293b;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.nctb-act-controls {
+	display: flex;
+	gap: 4px;
+}
+
+.nctb-act-controls button {
+	padding: 2px 8px;
+	font-size: 12px;
+	line-height: 1.4;
+	cursor: pointer;
+}
+
+.nctb-activity-body {
+	padding: 14px;
+}
+
+.nctb-field-row {
+	margin-bottom: 12px;
+}
+
+.nctb-field-row label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 4px;
+	color: #334155;
+}
+
+.nctb-field-row input[type="text"],
+.nctb-field-row select,
+.nctb-field-row textarea {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.nctb-meta-box-section {
+	background: #f8fafc;
+	border: 1px dashed #cbd5e1;
+	border-radius: 6px;
+	padding: 10px 12px;
+	margin-top: 10px;
+}
+
+.nctb-meta-box-section h4 {
+	margin: 0 0 8px;
+	font-size: 13px;
+	color: #0f172a;
+}
+
+.nctb-vocab-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 8px;
+}
+
+.nctb-vocab-table th,
+.nctb-vocab-table td {
+	padding: 6px;
+	border: 1px solid #e2e8f0;
+	font-size: 12px;
+}
+
+.nctb-vocab-table th {
+	background: #e2e8f0;
+	text-align: left;
+}
+
+.nctb-vocab-table input {
+	width: 100%;
+	font-size: 12px;
+}

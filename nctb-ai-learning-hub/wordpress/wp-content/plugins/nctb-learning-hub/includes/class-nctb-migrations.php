@@ -37,6 +37,7 @@ class NCTB_Migrations {
 	protected static function get_steps() {
 		return array(
 			'0.3.0' => array( __CLASS__, 'upgrade_to_0_3_0' ),
+			'0.4.0' => array( __CLASS__, 'upgrade_to_0_4_0' ),
 		);
 	}
 
@@ -89,6 +90,41 @@ class NCTB_Migrations {
 		dbDelta( $sql_concepts );
 		dbDelta( $sql_outcomes );
 		dbDelta( $sql_links );
+	}
+
+	/**
+	 * Phase 4 schema: lesson activity blocks table.
+	 *
+	 * Stores reusable, reorderable activity blocks (reading, vocabulary,
+	 * grammar, guided/independent practice, writing, listening, speaking,
+	 * summary, quiz placeholder, tutor placeholder) per lesson.
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_4_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate = $wpdb->get_charset_collate();
+		$activities      = self::table( 'lesson_activities' );
+
+		$sql_activities = "CREATE TABLE {$activities} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			lesson_id BIGINT UNSIGNED NOT NULL,
+			activity_type VARCHAR(64) NOT NULL,
+			title VARCHAR(255) NOT NULL DEFAULT '',
+			content LONGTEXT NOT NULL,
+			meta_data LONGTEXT NULL,
+			sort_order INT NOT NULL DEFAULT 0,
+			is_active TINYINT(1) NOT NULL DEFAULT 1,
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			KEY lesson_id (lesson_id),
+			KEY sort_order (sort_order)
+		) {$charset_collate};";
+
+		dbDelta( $sql_activities );
 	}
 
 	/**

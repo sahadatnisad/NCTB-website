@@ -63,6 +63,17 @@ function nctb_theme_enqueue_assets() {
 			wp_get_theme()->get( 'Version' )
 		);
 	}
+
+	// Interactive lesson script — only on single lesson screens.
+	if ( is_singular( 'nctb_lesson' ) ) {
+		wp_enqueue_script(
+			'nctb-lesson-interactive',
+			get_stylesheet_directory_uri() . '/js/lesson-interactive.js',
+			array(),
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'nctb_theme_enqueue_assets' );
 

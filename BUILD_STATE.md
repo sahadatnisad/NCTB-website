@@ -7,16 +7,16 @@
 - **Repo:** https://github.com/sahadatnisad/NCTB-website
 - **Branch:** main
 - **Last updated:** 2026-08-19
-- **Updated by:** Claude (Claude Code)
+- **Updated by:** Antigravity (Gemini 3.7 Flash)
 
 ---
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 4 — One gold-standard interactive lesson**
+**PHASE 5 — Practice and question engine**
 
-> Read the "PHASE 4" section in [README.md](./README.md#phase-4--one-gold-standard-interactive-lesson) for full requirements before building.
-> Builds on Phase 3's `nctb_lesson` CPT: add reusable activity blocks (warm-up, reading, vocabulary, grammar, examples, guided/independent practice, one writing task, listening/speaking if practical, summary), a quiz placeholder and a Tutor button placeholder — authored from wp-admin, rendered responsively, with no lesson-specific PHP template.
+> Read the "PHASE 5" section in [README.md](./README.md#phase-5--practice-and-question-engine) for full requirements before building.
+> Turn lessons into active practice — **without AI**. Build question types (MCQ, single fill-in-the-blank, short text answer, error correction), records supporting difficulty, explanations, progressive hint levels, source type, attempts table, central marking service, nonces & permission callbacks.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -30,8 +30,8 @@
 | 1 | Visual shell and navigation | ✅ Done |
 | 2 | Student accounts and onboarding | ✅ Done |
 | 3 | Curriculum + Book + Unit + Lesson CMS | ✅ Done |
-| 4 | One gold-standard interactive lesson | 🔜 **NEXT** |
-| 5 | Practice and question engine | ⬜ Not started |
+| 4 | One gold-standard interactive lesson | ✅ Done |
+| 5 | Practice and question engine | 🔜 **NEXT** |
 | 6 | Progress, mastery, mistakes, spaced revision | ⬜ Not started |
 | 7 | Functional student dashboard | ⬜ Not started |
 | 8 | Payments and entitlements | ⬜ Not started |
@@ -69,6 +69,10 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 3 — Curriculum + Book + Unit + Lesson CMS
 - **Done:** 2026-08-19 by Claude (Claude Code).
 - **What was built:** `nctb_book` / `nctb_unit` / `nctb_lesson` CPTs + 6 taxonomies (class, subject, paper, curriculum version, session, topic); editor meta boxes for unit→book / lesson→unit relationships, learning outcomes, and concept links; `menu_order` sequencing with admin columns; **Concepts** admin screen; 3 custom tables via migration `0.3.0` (`nctb_concepts`, `nctb_learning_outcomes`, `nctb_lesson_concepts`) with the `NCTB_Curriculum_Data` service; read-only REST `nctb/v1/curriculum/*`; one-time sample Book→Unit→Lesson seeder; theme browse templates (archive + single book/unit/lesson) + `curriculum.css`; header "Learn" link. Plugin bumped to 0.3.0.
-- **Verified (runtime, Docker):** php -l clean; tables created; CPTs registered; sample tree seeded (2 concepts, 3 outcomes, 2 links); REST returns correct nested data + 404 guards; front-end pages 200 with outcomes/concepts/breadcrumbs; homepage regression 200; unauth Concepts admin → 302.
 - **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_3.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_3.md)
-- **Carry-over:** Stale reference to a removed Phase-1 file `themes/nctb-child-theme/student-dashboard.php` — worth a cleanup pass (reassign any page still using that deleted template). On in-place upgrades, visit Settings → Permalinks once to flush CPT rewrite rules.
+
+### ✅ Phase 4 — One gold-standard interactive lesson
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** 14 standard reusable activity blocks (objective, warm-up, reading passage, vocabulary, grammar focus, examples, guided practice with interactive hints/reveals, independent practice with self-check checklist, writing task with live word counter and model response, listening with audio player & transcript, speaking with 2-minute timer, lesson summary, quiz placeholder for Phase 5, contextual AI tutor callout for Phase 9); admin lesson activity editor meta box with reordering and type selector; custom table `wp_nctb_lesson_activities` via migration `0.4.0`; REST endpoints (`/curriculum/lesson/{id}/activities`, reorder route, enriched lesson details); complete authentic NCTB sample lesson seeded; mobile-first stepper and progress bar with state resumption from URL hash and localStorage in generic `single-nctb_lesson.php` (no lesson-specific PHP templates).
+- **Verified (runtime, Docker):** 23 automated unit/integration tests passing (0 failures); all PHP files linted clean; HTTP 200 on lesson, books, units, dashboard, onboarding, and homepage; activity ordering, sanitization, and REST routes verified.
+- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_4.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_4.md)
