@@ -2,7 +2,8 @@
 
 > **This is the memory of the project.** Any AI, on any device, reads this file
 > **first** to know where the build stands, and updates it **last** before
-> committing. Keep it accurate and short. The full plan is in [README.md](./README.md).
+> committing. Keep it accurate and short. The full plan is in [README.md](./README.md)
+> and detailed checklists in [docs/plans/04-master-checklist.md](./docs/plans/04-master-checklist.md).
 
 - **Repo:** https://github.com/sahadatnisad/NCTB-website
 - **Branch:** main
@@ -15,7 +16,7 @@
 
 **PHASE 13 — English MVP content library**
 
-> Read the "PHASE 13" section in [README.md](./README.md#phase-13--english-mvp-content-library) for full requirements before building.
+> Read the "PHASE 13" section in [README.md](./README.md#phase-13--english-mvp-content-library) and [docs/plans/01-masterplan-1.md](./docs/plans/01-masterplan-1.md) for full requirements before building.
 > Scale the proven system: 20–30 high-quality SSC English lessons; 20–30 high-quality HSC English lessons; question banks; vocabulary; verified board-question links; selected audio/writing/speaking activities; human review workflow.
 > Content workflow: **Official NCTB material → Curriculum mapping → Learning outcomes → Lesson decomposition → Micro-concepts → Draft → Activities → Questions → Board questions → AI assistance → Human review → Publish.**
 
@@ -56,64 +57,64 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 ### ✅ Phase 0 — Safe WordPress development environment
 - **Done:** 2026-08-18 by Claude (Claude Code) & Antigravity.
 - **What was built:** `nctb-learning-hub` plugin skeleton, versioned migration runner `NCTB_Migrations`, logger, activation/deactivation lifecycle, docs, git structure.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_0.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_0.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_0.md`](./docs/build-history/BUILD_REPORT_PHASE_0.md)
 
 ### ✅ Phase 1 — Visual shell and navigation
 - **Done:** 2026-08-19.
 - **What was built:** Standardized WordPress core layout with Docker compose integration (`http://localhost:8080`), responsive child theme (`nctb-child-theme`) with header, footer, mobile navigation, homepage template, and verified live plugin activation. All PHP files linted with 0 errors.
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_1.md`](./docs/build-history/BUILD_REPORT_PHASE_1.md)
 
 ### ✅ Phase 2 — Student accounts and onboarding
 - **Done:** 2026-08-19 by Antigravity.
 - **What was built:** `nctb_student` role and capabilities, `NCTB_Student_Profile` metadata manager, `NCTB_Onboarding_REST` API controller (`nctb/v1/student/*`), mobile-first multi-step onboarding wizard (`[nctb_onboarding]` / `page-onboarding.php`), `[nctb_student_dashboard]` shortcode / `page-dashboard.php`, client-side state persistence with resumability, nonces and cross-student isolation. Verified with 9 automated tests passing.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_2.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_2.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_2.md`](./docs/build-history/BUILD_REPORT_PHASE_2.md)
 
 ### ✅ Phase 3 — Curriculum + Book + Unit + Lesson CMS
 - **Done:** 2026-08-19 by Claude (Claude Code).
 - **What was built:** `nctb_book` / `nctb_unit` / `nctb_lesson` CPTs + 6 taxonomies; editor meta boxes for relationships, learning outcomes, and concept links; `menu_order` sequencing; **Concepts** admin screen; 3 custom tables via migration `0.3.0` (`nctb_concepts`, `nctb_learning_outcomes`, `nctb_lesson_concepts`) with `NCTB_Curriculum_Data` service; read-only REST `nctb/v1/curriculum/*`; sample Book→Unit→Lesson seeder; theme browse templates + `curriculum.css`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_3.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_3.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_3.md`](./docs/build-history/BUILD_REPORT_PHASE_3.md)
 
 ### ✅ Phase 4 — One gold-standard interactive lesson
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** 14 standard reusable activity blocks; admin lesson activity editor meta box with reordering; custom table `wp_nctb_lesson_activities` via migration `0.4.0`; REST endpoints; complete authentic NCTB sample lesson seeded; mobile-first stepper and progress bar with state resumption from URL hash and localStorage in generic `single-nctb_lesson.php`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_4.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_4.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_4.md`](./docs/build-history/BUILD_REPORT_PHASE_4.md)
 
 ### ✅ Phase 5 — Practice and question engine
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** 4 question types (`mcq`, `fill_in_blank`, `short_answer`, `error_correction`); Central Marking Service (`NCTB_Marking_Service`) evaluating submissions deterministically without AI; Progressive Hint Service (`NCTB_Hint_Service`) with 3-level scaffolded hints; custom tables `wp_nctb_questions`, `wp_nctb_question_options`, `wp_nctb_question_concepts`, and `wp_nctb_attempts` via migration `0.5.0`; Admin Practice Questions manager; REST API endpoints; 5 sample practice questions seeded; interactive live practice quiz component.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_5.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_5.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_5.md`](./docs/build-history/BUILD_REPORT_PHASE_5.md)
 
 ### ✅ Phase 6 — Progress, mastery, mistakes, spaced revision
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Custom tables `wp_nctb_progress`, `wp_nctb_mastery`, `wp_nctb_mistakes`, and `wp_nctb_review_schedule` via migration `0.6.0`; lesson progress tracking with step positions and completion timestamps; concept mastery calculation service (`NCTB_Mastery_Service`) with strict completion vs. mastery separation; Smart Mistake Notebook service (`NCTB_Mistakes_Service`) with error tracking and auto-graduation; Spaced Repetition service (`NCTB_Spaced_Revision_Service`) with SM-2 interval ladder; student screens (`/mistakes/`, `/revision/`, `/progress/`) with responsive cards and KPIs; REST API endpoints under `nctb/v1/*`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_6.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_6.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_6.md`](./docs/build-history/BUILD_REPORT_PHASE_6.md)
 
 ### ✅ Phase 7 — Functional student dashboard
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Centralized Dashboard Aggregation Service (`NCTB_Dashboard_Service`); rules-based home study guide layout with Continue Learning hero card (deep-linking to active activity step), Spaced Revision Due action widget, Needs Attention mistake alert widget, quick learning KPIs bar, and Enrolled Books curriculum progress bars with completion percentages; REST endpoint `GET /nctb/v1/student/dashboard`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_7.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_7.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_7.md`](./docs/build-history/BUILD_REPORT_PHASE_7.md)
 
 ### ✅ Phase 8 — Payments and entitlements
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Centralized Entitlement Service (`NCTB_Entitlements`) evaluating free status, direct purchases, unit/book packs, subscriptions, and admin grants; custom tables `wp_nctb_entitlements` and `wp_nctb_entitlement_audit` via migration `0.8.0`; WooCommerce integration listener (`NCTB_Commerce`); Access-denied paywall banner component; Admin Entitlements manager screen under Lessons (`edit.php?post_type=nctb_lesson&page=nctb-entitlements`); My Purchases page (`/purchases/`); REST API endpoints under `nctb/v1/entitlements/*`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_8.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_8.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_8.md`](./docs/build-history/BUILD_REPORT_PHASE_8.md)
 
 ### ✅ Phase 9 — Contextual AI tutor
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Server-side AI provider adapter (`NCTB_AI_Adapter`) for Anthropic/OpenAI/Mock; Context builder (`NCTB_AI_Context_Builder`) assembling grounded prompts with curriculum data, vocabulary, outcomes, and student mistake context; Socratic scaffolding guardrails (never giving away quiz answers, anti-hallucination for board exams); daily quota tracker (`NCTB_AI_Usage`) with `wp_nctb_ai_conversations` and `wp_nctb_ai_usage` tables via migration `0.9.0`; slide-out AI Tutor Drawer in `single-nctb_lesson.php` with 5 quick action chips (`explain`, `bangla`, `hint`, `example`, `why_wrong`); REST endpoints under `nctb/v1/tutor/*`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_9.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_9.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_9.md`](./docs/build-history/BUILD_REPORT_PHASE_9.md)
 
 ### ✅ Phase 10 — Writing, listening & speaking enhancements
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** 6-stage iterative writing pipeline service (`NCTB_Writing_Service`) with multi-criteria rubric feedback breakdown (Structure, Grammar, Vocabulary, Revision plan); Listening player service (`NCTB_Listening_Service`) with audio duration and transcript toggle; Speaking practice service (`NCTB_Speaking_Service`) with recording timer, submission logging, and formative pronunciation feedback with non-official disclaimer; custom tables `wp_nctb_writing_submissions` and `wp_nctb_speaking_submissions` via migration `0.10.0`; embedded interactive workbenches in `single-nctb_lesson.php`; Skills REST endpoints under `nctb/v1/skills/*`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_10.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_10.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_10.md`](./docs/build-history/BUILD_REPORT_PHASE_10.md)
 
 ### ✅ Phase 11 — Board-question database
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Authentic Board Question Service (`NCTB_Board_Service`) with 10 Education Boards metadata (Level, Board, Year, Subject, Question No, Marks, Type, Topic, Verified Answer, Marking Scheme, Official Source Reference); custom tables `wp_nctb_board_exams` and `wp_nctb_board_questions` via migration `0.11.0`; Admin Board Questions manager (`NCTB_Board_Admin`) under Lessons; Student Board Questions archive hub (`[nctb_board_questions]` / `page-board-questions.php` / `/board-questions/`) with live level/board/year filter bar and verified answer accordions; lesson-level board exam practice widget embedded in `single-nctb_lesson.php`; strict separation of authentic exam items from AI practice; REST endpoints under `nctb/v1/board/*`.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_11.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_11.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_11.md`](./docs/build-history/BUILD_REPORT_PHASE_11.md)
 
 ### ✅ Phase 12 — Board pattern analytics
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Board Pattern Analytics Service (`NCTB_Board_Analytics_Service`) aggregating historical topic frequency, question type distributions, board coverage, and yearly volume trends; Student Board Pattern Analytics Hub (`[nctb_board_analytics]` / `page-board-analytics.php` / `/board-analytics/`) with level switcher (HSC/SSC), 4 metric KPIs, topic frequency progress bars with 1-click deep links to board practice; strictly framed and labeled as **Historical Statistical Analysis Only, never prediction**; REST endpoint `GET /nctb/v1/board/analytics`.
-- **Verified (runtime, Docker):** 9 automated tests passing (0 failures); all 75 PHP files linted clean; all 11 platform routes returning HTTP 200.
-- **Report:** [`nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_12.md`](./nctb-ai-learning-hub/docs/BUILD_REPORT_PHASE_12.md)
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_12.md`](./docs/build-history/BUILD_REPORT_PHASE_12.md)
