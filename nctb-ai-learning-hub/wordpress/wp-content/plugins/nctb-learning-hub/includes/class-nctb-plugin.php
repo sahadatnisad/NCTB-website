@@ -52,6 +52,7 @@ final class NCTB_Plugin {
 		add_action( 'init', array( 'NCTB_Teacher_Views', 'init' ) );
 		add_action( 'init', array( 'NCTB_Commerce', 'init' ) );
 		add_action( 'init', array( 'NCTB_SEO', 'init' ) );
+		add_action( 'init', array( 'NCTB_Module_CPT', 'init' ) );
 
 		// Curriculum backbone (CPTs, taxonomies, editor meta boxes, admin).
 		$this->load_curriculum();
@@ -64,6 +65,7 @@ final class NCTB_Plugin {
 
 		// Ensure required pages exist after an in-place file upgrade (once).
 		add_action( 'admin_init', array( 'NCTB_Pages', 'maybe_provision' ) );
+		add_action( 'admin_init', array( 'NCTB_Module_Service', 'maybe_seed_modules' ) );
 
 		$this->load_admin();
 		$this->load_public();
@@ -122,6 +124,9 @@ final class NCTB_Plugin {
 
 		$teacher_rest = new NCTB_Teacher_REST();
 		$teacher_rest->register_routes();
+
+		$module_rest = new NCTB_Module_REST();
+		$module_rest->register_routes();
 	}
 
 	/**

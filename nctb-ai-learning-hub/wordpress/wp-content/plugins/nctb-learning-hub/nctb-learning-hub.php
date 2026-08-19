@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Current plugin version.
  */
-define( 'NCTB_LH_VERSION', '0.16.0' );
+define( 'NCTB_LH_VERSION', '0.17.0' );
 
 /**
  * Absolute filesystem path to the plugin directory, with trailing slash.
@@ -100,6 +100,9 @@ require_once NCTB_LH_PATH . 'includes/class-nctb-board-service.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-board-admin.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-board-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-board-analytics-service.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-module-cpt.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-module-service.php';
+require_once NCTB_LH_PATH . 'includes/class-nctb-module-rest.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-seo.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-notifications.php';
 require_once NCTB_LH_PATH . 'includes/class-nctb-activator.php';

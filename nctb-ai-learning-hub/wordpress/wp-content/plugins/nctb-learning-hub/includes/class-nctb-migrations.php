@@ -45,6 +45,7 @@ class NCTB_Migrations {
 			'0.10.0' => array( __CLASS__, 'upgrade_to_0_10_0' ),
 			'0.11.0' => array( __CLASS__, 'upgrade_to_0_11_0' ),
 			'0.16.0' => array( __CLASS__, 'upgrade_to_0_16_0' ),
+			'0.17.0' => array( __CLASS__, 'upgrade_to_0_17_0' ),
 		);
 	}
 
@@ -579,6 +580,38 @@ class NCTB_Migrations {
 		) {$charset_collate};";
 
 		dbDelta( $sql_teachers );
+	}
+
+	/**
+	 * Phase 17 schema: Module progress tracking table.
+	 *
+	 * Tracks completed lectures/items and percentage progress for video courses.
+	 *
+	 * @return void
+	 */
+	protected static function upgrade_to_0_17_0() {
+		global $wpdb;
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+		$charset_collate = $wpdb->get_charset_collate();
+		$module_progress = self::table( 'module_progress' );
+
+		$sql_progress = "CREATE TABLE {$module_progress} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			user_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			module_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+			completed_items LONGTEXT NULL,
+			progress_percent FLOAT NOT NULL DEFAULT 0.0,
+			is_completed TINYINT(1) NOT NULL DEFAULT 0,
+			last_activity_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			created_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			updated_at DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+			PRIMARY KEY  (id),
+			UNIQUE KEY user_module (user_id, module_id),
+			KEY module_id (module_id)
+		) {$charset_collate};";
+
+		dbDelta( $sql_progress );
 	}
 
 	/**

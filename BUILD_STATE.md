@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 17 — Modules & video-course system**
+**PHASE 18 — Notes & explanations content type**
 
-> Read the "PHASE 17" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Implement `nctb_module` CPT for teacher courses & student masterclasses, module progress tracking, and video duration aggregations.
+> Read the "PHASE 18" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Implement `nctb_note` CPT with rich markdown/LaTeX math formulas, graphical diagram support, and printable/offline revision sheet views.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -44,8 +44,8 @@
 | 14 | Private beta: security, performance & QA | ✅ Done |
 | 15 | Production launch readiness | ✅ Done |
 | 16 | Teacher role & unified portal | ✅ Done |
-| 17 | Modules & video-course system | 🔜 **NEXT** |
-| 18 | Notes & explanations content type | ⬜ Not started |
+| 17 | Modules & video-course system | ✅ Done |
+| 18 | Notes & explanations content type | 🔜 **NEXT** |
 | 19 | AI as a paid product (students + teachers) | ⬜ Not started |
 | 20 | Add ICT (content-only proof) | ⬜ Not started |
 | 21 | Maths engine extension | ⬜ Not started |
@@ -143,6 +143,12 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Implemented `nctb_teacher` role and capabilities (`NCTB_Roles`); added custom table `wp_nctb_teacher_profiles` via migration `0.16.0` (`NCTB_Migrations`); built Teacher Profile Service (`NCTB_Teacher_Profile`) with institutional metadata; created Teacher REST API controller (`NCTB_Teacher_REST`); built 3-step educator onboarding wizard (`[nctb_teacher_onboarding]` / `page-teacher-onboarding.php`) and dedicated Teacher Dashboard (`[nctb_teacher_dashboard]` / `page-teacher-dashboard.php`) with pedagogical quick tools; configured role-aware navigation in `header.php` and complete CSS styling.
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_16.md`](./docs/build-history/BUILD_REPORT_PHASE_16.md)
+
+### ✅ Phase 17 — Modules & video-course system
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Registered `nctb_module` CPT & `module_category` taxonomy (`NCTB_Module_CPT`); added custom table `wp_nctb_module_progress` via migration `0.17.0` (`NCTB_Migrations`); built Module Service (`NCTB_Module_Service`) with lecture completion calculation and sample course seeders; created Module REST API controller (`NCTB_Module_REST`); built single course player template (`single-nctb_module.php`) with low-bandwidth YouTube facade and playlist checklist sidebar, course archive (`archive-nctb_module.php`), and complete CSS styling.
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_17.md`](./docs/build-history/BUILD_REPORT_PHASE_17.md)
+
 
 
 
