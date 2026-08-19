@@ -14,10 +14,10 @@
 
 ## 👉 CURRENT PHASE TO BUILD
 
-**PHASE 20 — Second subject: ICT (content-only proof)**
+**PHASE 21 — Maths engine extension**
 
-> Read the "PHASE 20" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
-> Goal: Prove engine generality by seeding authentic ICT curriculum (HTML, C programming, logic gates, practicals) with ZERO engine code modifications.
+> Read the "PHASE 21" section in [docs/plans/01_BUILD_BLUEPRINT.md](./docs/plans/01_BUILD_BLUEPRINT.md) for full requirements before building.
+> Goal: Implement math rendering (KaTeX), mathematical formula inputs, and deterministic formula equivalence checking.
 
 **Do ONLY this phase, then stop for human review.**
 
@@ -47,8 +47,8 @@
 | 17 | Modules & video-course system | ✅ Done |
 | 18 | Notes & explanations content type | ✅ Done |
 | 19 | AI as a paid product (students + teachers) | ✅ Done |
-| 20 | Add ICT (content-only proof) | 🔜 **NEXT** |
-| 21 | Maths engine extension | ⬜ Not started |
+| 20 | Add ICT (content-only proof) | ✅ Done |
+| 21 | Maths engine extension | 🔜 **NEXT** |
 | 22 | Science subjects (Physics, Chemistry, Biology) | ⬜ Not started |
 | 23 | Extend to Class 6–8 (JSC) | ⬜ Not started |
 | 24 | Teacher content depth & resources | ⬜ Not started |
@@ -158,6 +158,12 @@ Legend: ✅ done · 🔜 next · 🚧 in progress · ⬜ not started · ⚠️ b
 - **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
 - **What was built:** Enforced server-side AI entitlement gating (`NCTB_Entitlements::can_access_ai`) across student tutor and teacher AI tools; added 3 Teacher AI pedagogical prompt generators in `NCTB_AI_Context_Builder` (45-Minute Lesson Planner, Classroom Quiz Maker, Misconception Diagnostics); built Teacher AI REST controller (`NCTB_Teacher_AI_REST`); integrated interactive Teacher AI Workbench with tabbed UI, live quota meter, markdown rendering, copy & print actions on Teacher Dashboard (`[nctb_teacher_dashboard]` / `class-nctb-teacher-views.php`), and complete CSS styling.
 - **Report:** [`docs/build-history/BUILD_REPORT_PHASE_19.md`](./docs/build-history/BUILD_REPORT_PHASE_19.md)
+
+### ✅ Phase 20 — Second subject: ICT (content-only proof)
+- **Done:** 2026-08-19 by Antigravity (Gemini 3.7 Flash).
+- **What was built:** Proved learning engine generality with zero engine code changes; built `NCTB_ICT_Seeder` (`class-nctb-ict-seeder.php`) seeding HSC Information & Communication Technology book, 4 units, 4 lessons, interactive activity blocks with HTML/C code blocks and logic gates truth tables (`wp_nctb_lesson_activities`), MCQs/Fill-in-the-blank practice questions with progressive hints (`wp_nctb_questions`), authentic Dhaka Board 2024 questions (`wp_nctb_board_questions`), ICT revision note (`nctb_note`), and ICT video module (`nctb_module`).
+- **Report:** [`docs/build-history/BUILD_REPORT_PHASE_20.md`](./docs/build-history/BUILD_REPORT_PHASE_20.md)
+
 
 
 
