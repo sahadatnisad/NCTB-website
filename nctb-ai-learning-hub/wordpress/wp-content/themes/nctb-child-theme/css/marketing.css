@@ -1,0 +1,164 @@
+/* NCTB Learning Hub — public marketing site. Mobile-first, presentation only. */
+
+.nctb-mkt {
+	--mkt-accent: #0b6e4f;
+	--mkt-accent-dark: #075239;
+	--mkt-ink: #0f172a;
+	--mkt-muted: #64748b;
+	--mkt-line: #e2e8f0;
+	--mkt-bg-soft: #f8fafc;
+	color: var(--mkt-ink);
+	overflow-x: hidden;
+}
+
+.nctb-mkt img { max-width: 100%; height: auto; }
+.mkt-wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.1rem; }
+.mkt-section { padding: 3rem 0; }
+.mkt-section-alt { background: var(--mkt-bg-soft); }
+.mkt-center { text-align: center; }
+.mkt-eyebrow {
+	display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+	text-transform: uppercase; color: var(--mkt-accent);
+	background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.3rem 0.7rem; border-radius: 999px;
+}
+.mkt-h2 { font-size: 1.7rem; line-height: 1.25; margin: 0.75rem 0 0.5rem; }
+.mkt-lead { color: var(--mkt-muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+
+/* Buttons */
+.mkt-btn {
+	display: inline-flex; align-items: center; gap: 0.4rem; justify-content: center;
+	padding: 0.8rem 1.4rem; border-radius: 10px; font-weight: 700; text-decoration: none;
+	font-size: 1rem; transition: transform 0.12s, box-shadow 0.12s, background 0.12s; cursor: pointer;
+	border: 1px solid transparent;
+}
+.mkt-btn-primary { background: var(--mkt-accent); color: #fff; box-shadow: 0 6px 18px rgba(11,110,79,0.25); }
+.mkt-btn-primary:hover { background: var(--mkt-accent-dark); transform: translateY(-1px); }
+.mkt-btn-ghost { background: #fff; color: var(--mkt-accent); border-color: var(--mkt-line); }
+.mkt-btn-ghost:hover { border-color: var(--mkt-accent); }
+.mkt-btn-lg { padding: 0.95rem 1.7rem; font-size: 1.05rem; }
+
+/* Hero */
+.mkt-hero {
+	background: radial-gradient(1200px 500px at 80% -10%, #d1fae5 0%, transparent 60%),
+		linear-gradient(180deg, #ffffff 0%, var(--mkt-bg-soft) 100%);
+	padding: 3rem 0 3.5rem;
+	border-bottom: 1px solid var(--mkt-line);
+}
+.mkt-hero h1 { font-size: 2.1rem; line-height: 1.18; margin: 0.9rem 0 0.8rem; letter-spacing: -0.01em; }
+.mkt-hero .mkt-lead { margin: 0 0 1.5rem; font-size: 1.12rem; }
+.mkt-hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.mkt-hero-note { margin-top: 1rem; font-size: 0.85rem; color: var(--mkt-muted); }
+.mkt-hero-stats { display: flex; gap: 1.75rem; margin-top: 2rem; flex-wrap: wrap; }
+.mkt-hero-stats .stat b { display: block; font-size: 1.5rem; color: var(--mkt-accent); }
+.mkt-hero-stats .stat span { font-size: 0.85rem; color: var(--mkt-muted); }
+
+/* Trust strip */
+.mkt-trust { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+.mkt-pill {
+	background: #fff; border: 1px solid var(--mkt-line); border-radius: 999px;
+	padding: 0.45rem 0.9rem; font-size: 0.85rem; color: #334155; font-weight: 600;
+}
+
+/* Generic card grid */
+.mkt-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.75rem; }
+.mkt-card {
+	background: #fff; border: 1px solid var(--mkt-line); border-radius: 16px; padding: 1.4rem;
+}
+.mkt-card .ico { font-size: 1.8rem; }
+.mkt-card h3 { font-size: 1.1rem; margin: 0.6rem 0 0.35rem; }
+.mkt-card p { margin: 0; color: var(--mkt-muted); font-size: 0.95rem; line-height: 1.6; }
+
+/* Steps (how it works) */
+.mkt-steps { counter-reset: step; display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.75rem; }
+.mkt-step {
+	position: relative; background: #fff; border: 1px solid var(--mkt-line); border-radius: 14px;
+	padding: 1.2rem 1.2rem 1.2rem 3.4rem;
+}
+.mkt-step::before {
+	counter-increment: step; content: counter(step);
+	position: absolute; left: 1rem; top: 1.1rem;
+	width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--mkt-accent); color: #fff;
+	display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;
+}
+.mkt-step h3 { margin: 0 0 0.25rem; font-size: 1.05rem; }
+.mkt-step p { margin: 0; color: var(--mkt-muted); font-size: 0.92rem; }
+
+/* Subjects */
+.mkt-subject {
+	display: flex; flex-direction: column; gap: 0.5rem; background: #fff;
+	border: 1px solid var(--mkt-line); border-radius: 16px; padding: 1.4rem; text-decoration: none; color: inherit;
+	transition: border-color 0.12s, transform 0.12s;
+}
+.mkt-subject:hover { border-color: var(--mkt-accent); transform: translateY(-2px); }
+.mkt-subject .tag { align-self: flex-start; font-size: 0.72rem; font-weight: 700; color: var(--mkt-accent);
+	background: #ecfdf5; border-radius: 6px; padding: 0.15rem 0.5rem; }
+.mkt-subject h3 { margin: 0.2rem 0 0; font-size: 1.15rem; }
+.mkt-subject .go { color: var(--mkt-accent); font-weight: 700; font-size: 0.9rem; margin-top: 0.4rem; }
+
+/* Pricing */
+.mkt-prices { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.75rem; }
+.mkt-price {
+	background: #fff; border: 1px solid var(--mkt-line); border-radius: 18px; padding: 1.6rem;
+	display: flex; flex-direction: column;
+}
+.mkt-price.pop { border-color: var(--mkt-accent); box-shadow: 0 10px 30px rgba(11,110,79,0.12); position: relative; }
+.mkt-price.pop .badge {
+	position: absolute; top: -0.7rem; left: 1.6rem; background: var(--mkt-accent); color: #fff;
+	font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 999px;
+}
+.mkt-price h3 { margin: 0 0 0.25rem; font-size: 1.15rem; }
+.mkt-price .amt { font-size: 2rem; font-weight: 800; color: var(--mkt-ink); }
+.mkt-price .amt span { font-size: 0.9rem; font-weight: 500; color: var(--mkt-muted); }
+.mkt-price ul { list-style: none; margin: 1rem 0 1.4rem; padding: 0; }
+.mkt-price li { padding: 0.35rem 0 0.35rem 1.5rem; position: relative; color: #334155; font-size: 0.95rem; }
+.mkt-price li::before { content: "✓"; position: absolute; left: 0; color: var(--mkt-accent); font-weight: 700; }
+.mkt-price .mkt-btn { margin-top: auto; }
+
+/* FAQ */
+.mkt-faq { margin-top: 1.75rem; max-width: 760px; margin-left: auto; margin-right: auto; }
+.mkt-faq details {
+	background: #fff; border: 1px solid var(--mkt-line); border-radius: 12px; padding: 0.9rem 1.1rem; margin-bottom: 0.7rem;
+}
+.mkt-faq summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+.mkt-faq summary::-webkit-details-marker { display: none; }
+.mkt-faq summary::after { content: "+"; color: var(--mkt-accent); font-size: 1.3rem; line-height: 1; }
+.mkt-faq details[open] summary::after { content: "–"; }
+.mkt-faq p { color: var(--mkt-muted); margin: 0.7rem 0 0; line-height: 1.65; }
+
+/* CTA band */
+.mkt-cta {
+	background: linear-gradient(135deg, var(--mkt-accent), #0e8a63); color: #fff; border-radius: 20px;
+	padding: 2.5rem 1.5rem; text-align: center; margin: 1rem 0;
+}
+.mkt-cta h2 { font-size: 1.6rem; margin: 0 0 0.5rem; }
+.mkt-cta p { color: #d1fae5; margin: 0 0 1.4rem; }
+.mkt-cta .mkt-btn-primary { background: #fff; color: var(--mkt-accent); box-shadow: none; }
+.mkt-cta .mkt-btn-ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,0.5); }
+
+/* Marketing footer */
+.mkt-footer { background: #0b1220; color: #cbd5e1; padding: 2.5rem 0 1.5rem; margin-top: 2rem; }
+.mkt-footer a { color: #cbd5e1; text-decoration: none; }
+.mkt-footer a:hover { color: #fff; }
+.mkt-footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.mkt-footer h4 { color: #fff; font-size: 0.95rem; margin: 0 0 0.6rem; }
+.mkt-footer ul { list-style: none; margin: 0; padding: 0; }
+.mkt-footer li { padding: 0.2rem 0; font-size: 0.9rem; }
+.mkt-footer .brand b { color: #fff; font-size: 1.05rem; }
+.mkt-footer .brand p { font-size: 0.88rem; line-height: 1.6; margin: 0.5rem 0 0; }
+.mkt-footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 1.5rem; padding-top: 1rem;
+	font-size: 0.82rem; color: #94a3b8; text-align: center; }
+
+/* Responsive */
+@media (min-width: 640px) {
+	.mkt-grid { grid-template-columns: 1fr 1fr; }
+	.mkt-steps { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+	.mkt-hero h1 { font-size: 2.7rem; }
+	.mkt-h2 { font-size: 2rem; }
+	.mkt-grid { grid-template-columns: repeat(3, 1fr); }
+	.mkt-steps { grid-template-columns: repeat(4, 1fr); }
+	.mkt-prices { grid-template-columns: repeat(3, 1fr); }
+	.mkt-footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+	.mkt-section { padding: 4rem 0; }
+}

@@ -54,6 +54,16 @@ function nctb_theme_enqueue_assets() {
 		wp_get_theme()->get( 'Version' )
 	);
 
+	// Public marketing site styles (homepage + marketing pages).
+	if ( is_front_page() || is_page( array( 'how-it-works', 'subjects', 'ssc-english', 'hsc-english', 'pricing', 'faq', 'contact' ) ) ) {
+		wp_enqueue_style(
+			'nctb-marketing',
+			get_stylesheet_directory_uri() . '/css/marketing.css',
+			array( 'nctb-theme' ),
+			wp_get_theme()->get( 'Version' )
+		);
+	}
+
 	// Curriculum browse & student study styles.
 	if ( is_singular( array( 'nctb_book', 'nctb_unit', 'nctb_lesson' ) ) || is_post_type_archive( 'nctb_book' ) || is_page( array( 'mistakes', 'revision', 'progress', 'dashboard', 'purchases' ) ) ) {
 		wp_enqueue_style(
